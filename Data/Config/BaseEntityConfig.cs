@@ -33,7 +33,7 @@ public static class BaseEntityConfig
 
     # endregion
 
-    # region ---- properties ---------------------------------------------------
+    # region ---- columns ------------------------------------------------------
 
     public static void ConfigureBaseEntityProperties<T>(
         this EntityTypeBuilder<T> builder
