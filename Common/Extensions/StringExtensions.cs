@@ -4,6 +4,22 @@ namespace Lira.Common.Extensions;
 
 public static class StringExtensions
 {
+    # region ---- letters ------------------------------------------------------
+
+    public static bool HasOnlyLetters(this string value) => value
+        .All(char.IsLetter);
+
+    public static bool AreAllCharsEqual(this string value) => value
+        .All(@char => @char == value[0]);
+
+    # endregion
+
+    # region ---- numbers ------------------------------------------------------
+
+    public static bool IsNumeric(this string value) => value.All(char.IsDigit);
+
+    # endregion
+
     # region ---- enums --------------------------------------------------------
 
     public static T ParseToEnum<T>(this string value) where T : struct, Enum
