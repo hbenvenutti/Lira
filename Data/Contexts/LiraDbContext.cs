@@ -10,6 +10,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
     # region ---- tables -------------------------------------------------------
 
     public DbSet<PersonEntity> Persons { get; set; }
+    public DbSet<EmailEntity> Emails { get; set; }
 
     # endregion
 
@@ -19,6 +20,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
         : base(options)
     {
         Persons = Set<PersonEntity>();
+        Emails = Set<EmailEntity>();
     }
 
     # endregion
@@ -28,6 +30,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new PersonEntityConfig());
+        modelBuilder.ApplyConfiguration(new EmailEntityConfig());
     }
 
     # endregion
