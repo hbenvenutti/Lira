@@ -22,266 +22,342 @@ partial class LiraDbContextModelSnapshot : ModelSnapshot
 
         NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder: modelBuilder);
 
-        modelBuilder.Entity(name: "Lira.Data.Entities.EmailEntity", buildAction: entity =>
+        modelBuilder.Entity(
+            name: "Lira.Data.Entities.AddressEntity",
+            buildAction: b =>
         {
-            entity.Property<Guid>(propertyName: "Id")
+            b.Property<Guid>(propertyName: "Id")
                 .ValueGeneratedOnAdd()
                 .HasColumnType(typeName: "uuid")
                 .HasColumnName(name: "id");
 
-            entity.Property<string>(propertyName: "Address")
+            b.Property<string>(propertyName: "City")
                 .IsRequired()
                 .HasColumnType(typeName: "varchar(50)")
-                .HasColumnName(name: "address");
+                .HasColumnName(name: "city");
 
-            entity.Property<DateTime>(propertyName: "CreatedAt")
+            b.Property<string>(propertyName: "Complement")
+                .HasColumnType(typeName: "varchar(50)")
+                .HasColumnName(name: "complement");
+
+            b.Property<DateTime>(propertyName: "CreatedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "created_at");
 
-            entity.Property<DateTime?>(propertyName: "DeletedAt")
+            b.Property<DateTime?>(propertyName: "DeletedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "deleted_at");
 
-            entity.Property<Guid>(propertyName: "PersonId")
+            b.Property<string>(propertyName: "Neighborhood")
+                .IsRequired()
+                .HasColumnType(typeName: "varchar(50)")
+                .HasColumnName(name: "neighborhood");
+
+            b.Property<string>(propertyName: "Number")
+                .IsRequired()
+                .HasColumnType(typeName: "varchar(10)")
+                .HasColumnName(name: "number");
+
+            b.Property<Guid>(propertyName: "PersonId")
                 .HasColumnType(typeName: "uuid")
                 .HasColumnName(name: "person_id");
 
-            entity.Property<string>(propertyName: "Status")
+            b.Property<string>(propertyName: "State")
+                .IsRequired()
+                .HasColumnType(typeName: "varchar(2)")
+                .HasColumnName(name: "state");
+
+            b.Property<string>(propertyName: "Status")
                 .IsRequired()
                 .ValueGeneratedOnAdd()
                 .HasColumnType(typeName: "varchar(10)")
                 .HasDefaultValue(value: "Active")
                 .HasColumnName(name: "status");
 
-            entity.Property<string>(propertyName: "Type")
+            b.Property<string>(propertyName: "Street")
+                .IsRequired()
+                .HasColumnType(typeName: "varchar(50)")
+                .HasColumnName(name: "street");
+
+            b.Property<DateTime?>(propertyName: "UpdatedAt")
+                .HasColumnType(typeName: "timestamp with time zone")
+                .HasColumnName(name: "updated_at");
+
+            b.Property<string>(propertyName: "ZipCode")
+                .IsRequired()
+                .HasColumnType(typeName: "varchar(8)")
+                .HasColumnName(name: "zip_code");
+
+            b.HasKey(propertyNames: "Id")
+                .HasName(name: "PK_address_id");
+
+            b.HasIndex(propertyNames: "PersonId");
+
+            b.ToTable(name: "addresses", schema: null, buildAction: t =>
+            {
+                t.HasCheckConstraint(
+                    name: "CK_addresses_state",
+                    sql: "state IN ('AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO')"
+                );
+
+                t.HasCheckConstraint(
+                    name: "CK_addresses_status",
+                    sql: "status IN ('Active', 'Inactive', 'Deleted')"
+                );
+            });
+        });
+
+        modelBuilder.Entity(name: "Lira.Data.Entities.EmailEntity", buildAction: b =>
+        {
+            b.Property<Guid>(propertyName: "Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType(typeName: "uuid")
+                .HasColumnName(name: "id");
+
+            b.Property<string>(propertyName: "Address")
+                .IsRequired()
+                .HasColumnType(typeName: "varchar(50)")
+                .HasColumnName(name: "address");
+
+            b.Property<DateTime>(propertyName: "CreatedAt")
+                .HasColumnType(typeName: "timestamp with time zone")
+                .HasColumnName(name: "created_at");
+
+            b.Property<DateTime?>(propertyName: "DeletedAt")
+                .HasColumnType(typeName: "timestamp with time zone")
+                .HasColumnName(name: "deleted_at");
+
+            b.Property<Guid>(propertyName: "PersonId")
+                .HasColumnType(typeName: "uuid")
+                .HasColumnName(name: "person_id");
+
+            b.Property<string>(propertyName: "Status")
+                .IsRequired()
+                .ValueGeneratedOnAdd()
+                .HasColumnType(typeName: "varchar(10)")
+                .HasDefaultValue(value: "Active")
+                .HasColumnName(name: "status");
+
+            b.Property<string>(propertyName: "Type")
                 .IsRequired()
                 .ValueGeneratedOnAdd()
                 .HasColumnType(typeName: "varchar(10)")
                 .HasDefaultValue(value: "Personal")
                 .HasColumnName(name: "type");
 
-            entity.Property<DateTime?>(propertyName: "UpdatedAt")
+            b.Property<DateTime?>(propertyName: "UpdatedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "updated_at");
 
-            entity.HasKey(propertyNames: "Id")
+            b.HasKey(propertyNames: "Id")
                 .HasName(name: "PK_email_id");
 
-            entity.HasIndex(propertyNames: "Address")
+            b.HasIndex(propertyNames: "Address")
                 .IsUnique()
                 .HasDatabaseName(name: "IX_email_address");
 
-            entity.HasIndex(propertyNames: "PersonId");
+            b.HasIndex(propertyNames: "PersonId");
 
-            entity.ToTable(name: "emails", schema: null, buildAction: table =>
+            b.ToTable(name: "emails", schema: null, buildAction: t =>
             {
-                table.HasCheckConstraint(
-                    name: "CK_emails_status",
-                    sql: "status IN ('Active', 'Inactive', 'Deleted')"
-                );
+                t.HasCheckConstraint(name: "CK_emails_status", sql: "status IN ('Active', 'Inactive', 'Deleted')");
 
-                table.HasCheckConstraint(
-                    name: "CK_emails_type",
-                    sql: "type IN ('Personal', 'Corporate')"
-                );
+                t.HasCheckConstraint(name: "CK_emails_type", sql: "type IN ('Personal', 'Corporate')");
             });
         });
 
-        modelBuilder.Entity(name: "Lira.Data.Entities.OrixaEntity", buildAction: entity =>
+        modelBuilder.Entity(name: "Lira.Data.Entities.OrixaEntity", buildAction: b =>
         {
-            entity.Property<Guid>(propertyName: "Id")
+            b.Property<Guid>(propertyName: "Id")
                 .ValueGeneratedOnAdd()
                 .HasColumnType(typeName: "uuid")
                 .HasColumnName(name: "id");
 
-            entity.Property<DateTime>(propertyName: "CreatedAt")
+            b.Property<DateTime>(propertyName: "CreatedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "created_at");
 
-            entity.Property<DateTime?>(propertyName: "DeletedAt")
+            b.Property<DateTime?>(propertyName: "DeletedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "deleted_at");
 
-            entity.Property<string>(propertyName: "Name")
+            b.Property<string>(propertyName: "Name")
                 .IsRequired()
                 .HasColumnType(typeName: "varchar(50)")
                 .HasColumnName(name: "name");
 
-            entity.Property<string>(propertyName: "Status")
+            b.Property<string>(propertyName: "Status")
                 .IsRequired()
                 .ValueGeneratedOnAdd()
                 .HasColumnType(typeName: "varchar(10)")
                 .HasDefaultValue(value: "Active")
                 .HasColumnName(name: "status");
 
-            entity.Property<DateTime?>(propertyName: "UpdatedAt")
+            b.Property<DateTime?>(propertyName: "UpdatedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "updated_at");
 
-            entity.HasKey(propertyNames: "Id")
+            b.HasKey(propertyNames: "Id")
                 .HasName(name: "PK_orixas_id");
 
-            entity.HasIndex(propertyNames: "Name")
+            b.HasIndex(propertyNames: "Name")
                 .IsUnique()
                 .HasDatabaseName(name: "IX_orixas_name");
 
-            entity.ToTable(name: "orixas", schema: null, buildAction: table =>
+            b.ToTable(name: "orixas", schema: null, buildAction: t =>
             {
-                table.HasCheckConstraint(
-                    name: "CK_orixas_status",
-                    sql: "status IN ('Active', 'Inactive', 'Deleted')"
-                );
+                t.HasCheckConstraint(name: "CK_orixas_status", sql: "status IN ('Active', 'Inactive', 'Deleted')");
             });
         });
 
-        modelBuilder.Entity(name: "Lira.Data.Entities.PersonEntity", buildAction: entity =>
+        modelBuilder.Entity(name: "Lira.Data.Entities.PersonEntity", buildAction: b =>
         {
-            entity.Property<Guid>(propertyName: "Id")
+            b.Property<Guid>(propertyName: "Id")
                 .ValueGeneratedOnAdd()
                 .HasColumnType(typeName: "uuid")
                 .HasColumnName(name: "id");
 
-            entity.Property<string>(propertyName: "Cpf")
+            b.Property<string>(propertyName: "Cpf")
                 .IsRequired()
                 .HasColumnType(typeName: "varchar(11)")
                 .HasColumnName(name: "cpf");
 
-            entity.Property<DateTime>(propertyName: "CreatedAt")
+            b.Property<DateTime>(propertyName: "CreatedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "created_at");
 
-            entity.Property<DateTime?>(propertyName: "DeletedAt")
+            b.Property<DateTime?>(propertyName: "DeletedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "deleted_at");
 
-            entity.Property<string>(propertyName: "Name")
+            b.Property<string>(propertyName: "Name")
                 .IsRequired()
                 .HasColumnType(typeName: "varchar(30)")
                 .HasColumnName(name: "name");
 
-            entity.Property<string>(propertyName: "Status")
+            b.Property<string>(propertyName: "Status")
                 .IsRequired()
                 .ValueGeneratedOnAdd()
                 .HasColumnType(typeName: "varchar(10)")
                 .HasDefaultValue(value: "Active")
                 .HasColumnName(name: "status");
 
-            entity.Property<string>(propertyName: "Surname")
+            b.Property<string>(propertyName: "Surname")
                 .IsRequired()
                 .HasColumnType(typeName: "varchar(30)")
                 .HasColumnName(name: "surname");
 
-            entity.Property<DateTime?>(propertyName: "UpdatedAt")
+            b.Property<DateTime?>(propertyName: "UpdatedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "updated_at");
 
-            entity.HasKey(propertyNames: "Id")
+            b.HasKey(propertyNames: "Id")
                 .HasName(name: "PK_persons_id");
 
-            entity.HasIndex(propertyNames: "Cpf")
+            b.HasIndex(propertyNames: "Cpf")
                 .IsUnique()
                 .HasDatabaseName(name: "IX_persons_cpf");
 
-            entity.ToTable(name: "persons", schema: null, buildAction: table =>
+            b.ToTable(name: "persons", schema: null, buildAction: t =>
             {
-                table.HasCheckConstraint(
-                    name: "CK_persons_status",
-                    sql: "status IN ('Active', 'Inactive', 'Deleted')"
-                );
+                t.HasCheckConstraint(name: "CK_persons_status", sql: "status IN ('Active', 'Inactive', 'Deleted')");
             });
         });
 
-        modelBuilder.Entity(name: "Lira.Data.Entities.PhoneEntity", buildAction: entity =>
+        modelBuilder.Entity(name: "Lira.Data.Entities.PhoneEntity", buildAction: b =>
         {
-            entity.Property<Guid>(propertyName: "Id")
+            b.Property<Guid>(propertyName: "Id")
                 .ValueGeneratedOnAdd()
                 .HasColumnType(typeName: "uuid")
                 .HasColumnName(name: "id");
 
-            entity.Property<DateTime>(propertyName: "CreatedAt")
+            b.Property<DateTime>(propertyName: "CreatedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "created_at");
 
-            entity.Property<string>(propertyName: "Ddd")
+            b.Property<string>(propertyName: "Ddd")
                 .IsRequired()
                 .HasColumnType(typeName: "varchar(2)")
                 .HasColumnName(name: "ddd");
 
-            entity.Property<DateTime?>(propertyName: "DeletedAt")
+            b.Property<DateTime?>(propertyName: "DeletedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "deleted_at");
 
-            entity.Property<string>(propertyName: "Number")
+            b.Property<string>(propertyName: "Number")
                 .IsRequired()
                 .HasColumnType(typeName: "varchar(9)")
                 .HasColumnName(name: "number");
 
-            entity.Property<Guid>(propertyName: "PersonId")
+            b.Property<Guid>(propertyName: "PersonId")
                 .HasColumnType(typeName: "uuid")
                 .HasColumnName(name: "person_id");
 
-            entity.Property<string>(propertyName: "Status")
+            b.Property<string>(propertyName: "Status")
                 .IsRequired()
                 .ValueGeneratedOnAdd()
                 .HasColumnType(typeName: "varchar(10)")
                 .HasDefaultValue(value: "Active")
                 .HasColumnName(name: "status");
 
-            entity.Property<DateTime?>(propertyName: "UpdatedAt")
+            b.Property<DateTime?>(propertyName: "UpdatedAt")
                 .HasColumnType(typeName: "timestamp with time zone")
                 .HasColumnName(name: "updated_at");
 
-            entity.HasKey(propertyNames: "Id")
+            b.HasKey(propertyNames: "Id")
                 .HasName(name: "PK_phone_id");
 
-            entity.HasIndex(propertyNames: "PersonId");
+            b.HasIndex(propertyNames: "PersonId");
 
-            entity.ToTable(name: "phones", schema: null, buildAction: table =>
+            b.ToTable(name: "phones", schema: null, buildAction: t =>
             {
-                table.HasCheckConstraint(
-                    name: "CK_phones_status",
-                    sql: "status IN ('Active', 'Inactive', 'Deleted')"
-                );
+                t.HasCheckConstraint(name: "CK_phones_status", sql: "status IN ('Active', 'Inactive', 'Deleted')");
             });
         });
 
-        modelBuilder.Entity(name: "Lira.Data.Entities.EmailEntity", buildAction: entity =>
+        modelBuilder.Entity(name: "Lira.Data.Entities.AddressEntity", buildAction: b =>
         {
-            entity
-                .HasOne(
-                    relatedTypeName: "Lira.Data.Entities.PersonEntity",
-                    navigationName: "Person"
-                )
+            b.HasOne(relatedTypeName: "Lira.Data.Entities.PersonEntity", navigationName: "Person")
+                .WithMany(collection: "Addresses")
+                .HasForeignKey(foreignKeyPropertyNames: "PersonId")
+                .OnDelete(deleteBehavior: DeleteBehavior.Cascade)
+                .IsRequired()
+                .HasConstraintName(name: "FK_addresses_person_id");
+
+            b.Navigation(navigationName: "Person");
+        });
+
+        modelBuilder.Entity(name: "Lira.Data.Entities.EmailEntity", buildAction: b =>
+        {
+            b.HasOne(relatedTypeName: "Lira.Data.Entities.PersonEntity", navigationName: "Person")
                 .WithMany(collection: "Emails")
                 .HasForeignKey(foreignKeyPropertyNames: "PersonId")
                 .OnDelete(deleteBehavior: DeleteBehavior.Cascade)
                 .IsRequired()
                 .HasConstraintName(name: "FK_emails_person_id");
 
-            entity.Navigation(navigationName: "Person");
+            b.Navigation(navigationName: "Person");
         });
 
-        modelBuilder.Entity(name: "Lira.Data.Entities.PhoneEntity", buildAction: entity =>
+        modelBuilder.Entity(name: "Lira.Data.Entities.PhoneEntity", buildAction: b =>
         {
-            entity
-                .HasOne(
-                    relatedTypeName: "Lira.Data.Entities.PersonEntity",
-                    navigationName: "Person"
-                )
+            b.HasOne(relatedTypeName: "Lira.Data.Entities.PersonEntity", navigationName: "Person")
                 .WithMany(collection: "Phones")
                 .HasForeignKey(foreignKeyPropertyNames: "PersonId")
                 .OnDelete(deleteBehavior: DeleteBehavior.Cascade)
                 .IsRequired()
                 .HasConstraintName(name: "FK_phones_person_id");
 
-            entity.Navigation(navigationName: "Person");
+            b.Navigation(navigationName: "Person");
         });
 
-        modelBuilder.Entity(name: "Lira.Data.Entities.PersonEntity", buildAction: entity =>
+        modelBuilder.Entity(name: "Lira.Data.Entities.PersonEntity", buildAction: b =>
         {
-            entity.Navigation(navigationName: "Emails");
+            b.Navigation(navigationName: "Addresses");
 
-            entity.Navigation(navigationName: "Phones");
+            b.Navigation(navigationName: "Emails");
+
+            b.Navigation(navigationName: "Phones");
         });
 #pragma warning restore 612, 618
     }

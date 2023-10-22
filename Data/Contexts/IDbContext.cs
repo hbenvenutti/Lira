@@ -11,6 +11,7 @@ public interface IDbContext
     DbSet<EmailEntity> Emails { get; set; }
     DbSet<PhoneEntity> Phones { get; set; }
     DbSet<OrixaEntity> Orixas { get; set; }
+    DbSet<AddressEntity> Addresses { get; set; }
 
     # endregion
 

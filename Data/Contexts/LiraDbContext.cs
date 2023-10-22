@@ -13,6 +13,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
     public DbSet<EmailEntity> Emails { get; set; }
     public DbSet<PhoneEntity> Phones { get; set; }
     public DbSet<OrixaEntity> Orixas { get; set; }
+    public DbSet<AddressEntity> Addresses { get; set; }
 
     # endregion
 
@@ -25,6 +26,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
         Emails = Set<EmailEntity>();
         Phones = Set<PhoneEntity>();
         Orixas = Set<OrixaEntity>();
+        Addresses = Set<AddressEntity>();
     }
 
     # endregion
@@ -37,6 +39,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
         modelBuilder.ApplyConfiguration(new EmailEntityConfig());
         modelBuilder.ApplyConfiguration(new PhoneEntityConfig());
         modelBuilder.ApplyConfiguration(new OrixaEntityConfig());
+        modelBuilder.ApplyConfiguration(new AddressEntityConfig());
     }
 
     # endregion
