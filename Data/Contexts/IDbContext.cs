@@ -10,6 +10,7 @@ public interface IDbContext
     DbSet<PersonEntity> Persons { get; set; }
     DbSet<EmailEntity> Emails { get; set; }
     DbSet<PhoneEntity> Phones { get; set; }
+    DbSet<OrixaEntity> Orixas { get; set; }
 
     # endregion
 
