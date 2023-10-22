@@ -47,7 +47,7 @@ public static class BaseEntityConfig
 
         builder
             .Property(entity => entity.Status)
-            .HasColumnType("varchar")
+            .HasColumnType("varchar(10)")
             .HasColumnName("status")
             .HasConversion(
                 status => status.ToString(),
