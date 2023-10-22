@@ -3,6 +3,7 @@ using System;
 using Lira.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lira.Data.Migrations;
 
 [DbContext(typeof(LiraDbContext))]
-partial class LiraDbContextModelSnapshot : ModelSnapshot
+[Migration("20231022114023_ChangedStatusMaxLength")]
+partial class ChangedStatusMaxLength
 {
-    protected override void BuildModel(ModelBuilder modelBuilder)
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
 #pragma warning disable 612, 618
         modelBuilder
@@ -70,7 +73,7 @@ partial class LiraDbContextModelSnapshot : ModelSnapshot
                 .IsUnique()
                 .HasDatabaseName("IX_persons_cpf");
 
-            b.ToTable(name: "persons", schema: null, t =>
+            b.ToTable("persons", null, t =>
             {
                 t.HasCheckConstraint(
                     name: "CK_persons_status",
