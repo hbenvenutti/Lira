@@ -5,8 +5,13 @@ namespace Lira.Data.Contexts;
 
 public interface IDbContext
 {
+    # region ---- tables -------------------------------------------------------
+
     DbSet<PersonEntity> Persons { get; set; }
     DbSet<EmailEntity> Emails { get; set; }
+    DbSet<PhoneEntity> Phones { get; set; }
+
+    # endregion
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

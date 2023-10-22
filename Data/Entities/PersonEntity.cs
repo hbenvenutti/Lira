@@ -13,6 +13,7 @@ public class PersonEntity : BaseEntity
     # region ---- relations ----------------------------------------------------
 
     public required IEnumerable<EmailEntity> Emails { get; set; }
+    public required IEnumerable<PhoneEntity> Phones { get; set; }
 
     # endregion
 }
