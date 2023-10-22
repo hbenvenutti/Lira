@@ -8,4 +8,12 @@
         <RootNamespace>Lira.Domain</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Common\Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Fees\" />
+    </ItemGroup>
+
 </Project>
