@@ -12,6 +12,8 @@ public class PersonEntity : BaseEntity
 
     # region ---- relations ----------------------------------------------------
 
+    public required ManagerEntity Manager { get; set; }
+
     public required IEnumerable<EmailEntity> Emails { get; set; }
     public required IEnumerable<PhoneEntity> Phones { get; set; }
     public required IEnumerable<AddressEntity> Addresses { get; set; }
