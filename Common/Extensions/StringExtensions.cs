@@ -6,10 +6,10 @@ public static class StringExtensions
 {
     # region ---- letters ------------------------------------------------------
 
-    public static bool HasOnlyLetters(this string value) => value
+    public static bool IsAlphabetic(this string value) => value
         .All(char.IsLetter);
 
-    public static bool AreAllCharsEqual(this string value) => value
+    public static bool HasAllCharsEqual(this string value) => value
         .All(@char => @char == value[0]);
 
     # endregion
