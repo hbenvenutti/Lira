@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lira.Data.Migrations;
 
 [DbContext(typeof(LiraDbContext))]
-[Migration("20231028195159_CreatePersonOrixas")]
+[Migration("20231028195603_CreatePersonOrixas")]
 partial class CreatePersonOrixas
 {
     /// <inheritdoc />
@@ -414,7 +414,7 @@ partial class CreatePersonOrixas
             {
                 t.HasCheckConstraint("CK_person_orixas_status", "status IN ('Active', 'Inactive', 'Deleted')");
 
-                t.HasCheckConstraint("CK_person_orixas_type", "type IN ('Front', 'Ancestor, 'Close')");
+                t.HasCheckConstraint("CK_person_orixas_type", "type IN ('Front', 'Ancestor', 'Close')");
             });
         });
 

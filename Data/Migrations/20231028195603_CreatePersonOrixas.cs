@@ -30,7 +30,7 @@ public partial class CreatePersonOrixas : Migration
             {
                 table.PrimaryKey("PK_person_orixas_id", x => x.id);
                 table.CheckConstraint("CK_person_orixas_status", "status IN ('Active', 'Inactive', 'Deleted')");
-                table.CheckConstraint("CK_person_orixas_type", "type IN ('Front', 'Ancestor, 'Close')");
+                table.CheckConstraint("CK_person_orixas_type", "type IN ('Front', 'Ancestor', 'Close')");
                 table.ForeignKey(
                     name: "FK_person_orixas_orixa_id",
                     column: x => x.orixa_id,
