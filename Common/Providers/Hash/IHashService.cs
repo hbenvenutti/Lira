@@ -1,6 +1,6 @@
-namespace Lira.Common.Providers.HashProvider;
+namespace Lira.Common.Providers.Hash;
 
-public interface IHashProvider
+public interface IHashService
 {
     string Hash(string input);
 

@@ -1,8 +1,8 @@
 using static BCrypt.Net.BCrypt;
 
-namespace Lira.Common.Providers.HashProvider;
+namespace Lira.Common.Providers.Hash;
 
-public class HashProvider : IHashProvider
+public class HashService : IHashService
 {
     public string Hash(string input)
     {

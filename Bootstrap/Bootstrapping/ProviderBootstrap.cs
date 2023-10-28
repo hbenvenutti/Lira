@@ -1,4 +1,5 @@
-using Lira.Common.Providers.HashProvider;
+using Lira.Common.Providers.Hash;
+using Lira.Common.Providers.Token;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lira.Bootstrap.Bootstrapping;
@@ -9,6 +10,10 @@ public static class ProviderBootstrap
         this IServiceCollection services
     )
     {
-        services.AddScoped<IHashProvider, HashProvider>();
+        services.AddScoped<IHashService, HashService>();
+        
+        services.AddScoped<ITokenService, TokenService>();
+
+        services.AddScoped<TokenConfig>();
     }
 }
