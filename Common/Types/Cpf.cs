@@ -22,7 +22,7 @@ public readonly partial struct Cpf
 
     private readonly string _value;
 
-    public string Numbers => RemoveMask(_value);
+    public string Mask => ApplyMask(_value);
     public string Digits => _value[10..];
 
     # endregion
@@ -31,7 +31,7 @@ public readonly partial struct Cpf
 
     private Cpf(string value)
     {
-        _value = Format(value);
+        _value = RemoveMask(value);
     }
 
     # endregion
@@ -142,15 +142,15 @@ public readonly partial struct Cpf
             : 11 - rest;
     }
 
-    private static string RemoveMask(string value) => value
-        .Replace(oldValue: ".", newValue: "")
-        .Replace(oldValue: "-", newValue: "");
-
     # endregion
 
     # region ---- mask ---------------------------------------------------------
 
-    private static string Format(string value)
+    private static string RemoveMask(string value) => value
+        .Replace(oldValue: ".", newValue: "")
+        .Replace(oldValue: "-", newValue: "");
+
+    private static string ApplyMask(string value)
     {
         return MyRegex().Replace(
             input: value,
