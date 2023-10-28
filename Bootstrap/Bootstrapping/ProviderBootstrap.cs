@@ -1,5 +1,5 @@
+using Lira.Application.Services.Token;
 using Lira.Common.Providers.Hash;
-using Lira.Common.Providers.Token;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lira.Bootstrap.Bootstrapping;

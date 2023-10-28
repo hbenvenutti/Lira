@@ -1,10 +1,13 @@
+using Lira.Application.Services.Token;
 using Lira.Bootstrap.Bootstrapping;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Lira.Bootstrap;
 
@@ -23,6 +26,27 @@ public static class ApiBootstrap
         services.ConfigureSwagger();
         services.AddControllers();
         services.AddEndpointsApiExplorer();
+
+        services
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.IncludeErrorDetails = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = TokenConfig.Issuer,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new TokenConfig(configuration).Key
+                };
+            });
     }
 
     public static void ConfigureApi(
@@ -36,6 +60,7 @@ public static class ApiBootstrap
         // app.ConfigureGlobalMiddlewares();
 
         app.UseHttpsRedirection();
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MigrateDatabaseOnStartUp();

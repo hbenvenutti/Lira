@@ -1,12 +1,15 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Lira.Domain.Authentication.Manager;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Lira.Common.Providers.Token;
+namespace Lira.Application.Services.Token;
 
 public class TokenService : ITokenService
 {
+    private const string Issuer = "Lira";
+
     private readonly TokenConfig _tokenConfig;
 
     public TokenService(TokenConfig tokenConfig)
@@ -14,7 +17,7 @@ public class TokenService : ITokenService
         _tokenConfig = tokenConfig;
     }
 
-    public string Sign(Guid userId)
+    public string Sign(ManagerAuthDomain user)
     {
         var handler = new JwtSecurityTokenHandler();
 
@@ -27,9 +30,10 @@ public class TokenService : ITokenService
 
         var descriptor = new SecurityTokenDescriptor
         {
-            Subject = GenerateClaimsIdentity(userId),
+            Subject = GenerateClaimsIdentity(user),
             SigningCredentials = credentials,
-            Expires = _tokenConfig.Expires
+            Issuer = TokenConfig.Issuer,
+            Expires = TokenConfig.Expires
         };
 
         var token = handler.CreateToken(descriptor);
@@ -42,13 +46,20 @@ public class TokenService : ITokenService
         throw new NotImplementedException();
     }
 
-    private static ClaimsIdentity GenerateClaimsIdentity(Guid userId)
+    private static ClaimsIdentity GenerateClaimsIdentity(ManagerAuthDomain user)
     {
+
+
         var claimsIdentity = new ClaimsIdentity();
 
         claimsIdentity.AddClaim(new Claim(
             type: ClaimTypes.Name,
-            value: userId.ToString()
+            value: user.Username
+        ));
+
+        claimsIdentity.AddClaim(new Claim(
+            type: ClaimTypes.NameIdentifier,
+            value: user.Id.ToString()
         ));
 
         return claimsIdentity;
