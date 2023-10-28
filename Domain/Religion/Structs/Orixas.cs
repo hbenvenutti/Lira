@@ -1,6 +1,6 @@
 namespace Lira.Domain.Religion.Structs;
 
-public readonly struct Orixa
+public readonly struct Orixas
 {
     public const string Oxala = "Oxalá";
     public const string Oya = "Oyá Tempo";
