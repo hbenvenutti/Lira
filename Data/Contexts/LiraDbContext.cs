@@ -1,6 +1,7 @@
 using Lira.Data.Config;
 using Lira.Data.Entities;
 using Lira.Data.Extensions;
+using Lira.Data.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lira.Data.Contexts;
@@ -43,6 +44,9 @@ public sealed class LiraDbContext : DbContext, IDbContext
         modelBuilder.ApplyConfiguration(new OrixaEntityConfig());
         modelBuilder.ApplyConfiguration(new AddressEntityConfig());
         modelBuilder.ApplyConfiguration(new ManagerEntityConfig());
+        modelBuilder.SeedOrixas();
+
+        base.OnModelCreating(modelBuilder);
     }
 
     # endregion

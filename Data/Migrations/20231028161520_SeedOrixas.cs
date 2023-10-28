@@ -15,6 +15,8 @@ public partial class SeedOrixas : Migration
 {
     private readonly IDbContext _dbContext;
 
+    public SeedOrixas() {}
+
     public SeedOrixas(IDbContext dbContext)
     {
         _dbContext = dbContext;
