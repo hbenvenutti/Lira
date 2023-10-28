@@ -8,8 +8,8 @@ namespace Lira.Data.Config;
 
 public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 {
-    private static readonly  string Personal = EmailEntityType.Personal.ToString();
-    private static readonly  string Corporate = EmailEntityType.Corporate.ToString();
+    private static readonly string Personal = EmailEntityType.Personal.ToString();
+    private static readonly string Corporate = EmailEntityType.Corporate.ToString();
 
     public void Configure(EntityTypeBuilder<EmailEntity> builder)
     {

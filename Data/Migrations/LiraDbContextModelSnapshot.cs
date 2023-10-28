@@ -212,6 +212,57 @@ partial class LiraDbContextModelSnapshot : ModelSnapshot
             b.ToTable("managers", (string)null);
         });
 
+        modelBuilder.Entity("Lira.Data.Entities.MediumEntity", b =>
+        {
+            b.Property<Guid>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("uuid")
+                .HasColumnName("id");
+
+            b.Property<DateTime>("CreatedAt")
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("created_at");
+
+            b.Property<DateTime?>("DeletedAt")
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("deleted_at");
+
+            b.Property<DateTime?>("FirstAmaci")
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("first_amaci");
+
+            b.Property<DateTime?>("LastAmaci")
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("last_amaci");
+
+            b.Property<Guid>("PersonId")
+                .HasColumnType("uuid")
+                .HasColumnName("person_id");
+
+            b.Property<string>("Status")
+                .IsRequired()
+                .ValueGeneratedOnAdd()
+                .HasColumnType("varchar(10)")
+                .HasDefaultValue("Active")
+                .HasColumnName("status");
+
+            b.Property<DateTime?>("UpdatedAt")
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("updated_at");
+
+            b.HasKey("Id")
+                .HasName("PK_medium_id");
+
+            b.HasIndex("PersonId")
+                .IsUnique()
+                .HasDatabaseName("IX_medium_person_id");
+
+            b.ToTable("mediums", null, t =>
+            {
+                t.HasCheckConstraint("CK_mediums_status", "status IN ('Active', 'Inactive', 'Deleted')");
+            });
+        });
+
         modelBuilder.Entity("Lira.Data.Entities.OrixaEntity", b =>
         {
             b.Property<Guid>("Id")
@@ -254,106 +305,6 @@ partial class LiraDbContextModelSnapshot : ModelSnapshot
             {
                 t.HasCheckConstraint("CK_orixas_status", "status IN ('Active', 'Inactive', 'Deleted')");
             });
-
-            b.HasData(
-                new
-                {
-                    Id = new Guid("2a2c511d-8657-40fc-bfdf-883634393bd5"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6264),
-                    Name = "Xangô",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("264a53d8-5b3f-407a-9212-61d9d6b6ea92"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6275),
-                    Name = "Oxum",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("ce781056-6a2a-4396-9ee6-c027fa9daf17"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6285),
-                    Name = "Oxóssi",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("e590088d-1a32-4a2b-8144-54351d9c7f40"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6294),
-                    Name = "Iansã",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("8ecad1d6-81a8-4a55-8b13-6200bc310caa"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6304),
-                    Name = "Ogum",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("7c3c483f-d24e-41a6-9d9a-f93b0406eb2c"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6313),
-                    Name = "Egunitá",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("3b9af91e-cb36-4311-9ba4-edfad1084fd7"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6323),
-                    Name = "Obaluaiê",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("4458452e-53a2-44a5-8f76-fa709b1e42d0"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6332),
-                    Name = "Nanã",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("e845de4f-ccb5-4d02-9cf7-384afb9803dd"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6341),
-                    Name = "Iemanjá",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("6b3e58c9-ecd1-4dce-b20f-075be1a11a6f"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6437),
-                    Name = "Oxalá",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("d004f815-142d-4c3e-94cf-8e2bc84a95e9"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6447),
-                    Name = "Oyá Tempo",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("111f4c7e-031e-4479-a593-b767b001f6c1"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6456),
-                    Name = "Oxumaré",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("b6f808ee-0c0d-4785-ac54-b5047a7d2205"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6466),
-                    Name = "Obá",
-                    Status = "Active"
-                },
-                new
-                {
-                    Id = new Guid("d92459ab-fb0e-4fc9-a823-3b20f0482a16"),
-                    CreatedAt = new DateTime(2023, 10, 28, 17, 3, 18, 840, DateTimeKind.Utc).AddTicks(6475),
-                    Name = "Omolu",
-                    Status = "Active"
-                });
         });
 
         modelBuilder.Entity("Lira.Data.Entities.PersonEntity", b =>
@@ -497,6 +448,18 @@ partial class LiraDbContextModelSnapshot : ModelSnapshot
             b.Navigation("Person");
         });
 
+        modelBuilder.Entity("Lira.Data.Entities.MediumEntity", b =>
+        {
+            b.HasOne("Lira.Data.Entities.PersonEntity", "Person")
+                .WithMany("Mediums")
+                .HasForeignKey("PersonId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired()
+                .HasConstraintName("FK_mediums_person_id");
+
+            b.Navigation("Person");
+        });
+
         modelBuilder.Entity("Lira.Data.Entities.PhoneEntity", b =>
         {
             b.HasOne("Lira.Data.Entities.PersonEntity", "Person")
@@ -517,6 +480,8 @@ partial class LiraDbContextModelSnapshot : ModelSnapshot
 
             b.Navigation("Manager")
                 .IsRequired();
+
+            b.Navigation("Mediums");
 
             b.Navigation("Phones");
         });

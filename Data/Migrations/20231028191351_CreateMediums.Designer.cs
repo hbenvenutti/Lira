@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lira.Data.Migrations;
 
 [DbContext(typeof(LiraDbContext))]
-[Migration("20231028161520_SeedOrixas")]
-partial class SeedOrixas
+[Migration("20231028191351_CreateMediums")]
+partial class CreateMediums
 {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -215,6 +215,57 @@ partial class SeedOrixas
             b.ToTable("managers", (string)null);
         });
 
+        modelBuilder.Entity("Lira.Data.Entities.MediumEntity", b =>
+        {
+            b.Property<Guid>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("uuid")
+                .HasColumnName("id");
+
+            b.Property<DateTime>("CreatedAt")
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("created_at");
+
+            b.Property<DateTime?>("DeletedAt")
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("deleted_at");
+
+            b.Property<DateTime?>("FirstAmaci")
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("first_amaci");
+
+            b.Property<DateTime?>("LastAmaci")
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("last_amaci");
+
+            b.Property<Guid>("PersonId")
+                .HasColumnType("uuid")
+                .HasColumnName("person_id");
+
+            b.Property<string>("Status")
+                .IsRequired()
+                .ValueGeneratedOnAdd()
+                .HasColumnType("varchar(10)")
+                .HasDefaultValue("Active")
+                .HasColumnName("status");
+
+            b.Property<DateTime?>("UpdatedAt")
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("updated_at");
+
+            b.HasKey("Id")
+                .HasName("PK_medium_id");
+
+            b.HasIndex("PersonId")
+                .IsUnique()
+                .HasDatabaseName("IX_medium_person_id");
+
+            b.ToTable("mediums", null, t =>
+            {
+                t.HasCheckConstraint("CK_mediums_status", "status IN ('Active', 'Inactive', 'Deleted')");
+            });
+        });
+
         modelBuilder.Entity("Lira.Data.Entities.OrixaEntity", b =>
         {
             b.Property<Guid>("Id")
@@ -400,6 +451,18 @@ partial class SeedOrixas
             b.Navigation("Person");
         });
 
+        modelBuilder.Entity("Lira.Data.Entities.MediumEntity", b =>
+        {
+            b.HasOne("Lira.Data.Entities.PersonEntity", "Person")
+                .WithMany("Mediums")
+                .HasForeignKey("PersonId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired()
+                .HasConstraintName("FK_mediums_person_id");
+
+            b.Navigation("Person");
+        });
+
         modelBuilder.Entity("Lira.Data.Entities.PhoneEntity", b =>
         {
             b.HasOne("Lira.Data.Entities.PersonEntity", "Person")
@@ -420,6 +483,8 @@ partial class SeedOrixas
 
             b.Navigation("Manager")
                 .IsRequired();
+
+            b.Navigation("Mediums");
 
             b.Navigation("Phones");
         });

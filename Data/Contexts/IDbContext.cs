@@ -13,6 +13,7 @@ public interface IDbContext
     DbSet<OrixaEntity> Orixas { get; set; }
     DbSet<AddressEntity> Addresses { get; set; }
     DbSet<ManagerEntity> Managers { get; set; }
+    DbSet<MediumEntity> Mediums { get; set; }
 
     # endregion
 

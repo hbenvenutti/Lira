@@ -1,7 +1,6 @@
 using Lira.Data.Config;
 using Lira.Data.Entities;
 using Lira.Data.Extensions;
-using Lira.Data.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lira.Data.Contexts;
@@ -16,6 +15,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
     public DbSet<OrixaEntity> Orixas { get; set; }
     public DbSet<AddressEntity> Addresses { get; set; }
     public DbSet<ManagerEntity> Managers { get; set; }
+    public DbSet<MediumEntity> Mediums { get; set; }
 
     # endregion
 
@@ -30,6 +30,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
         Orixas = Set<OrixaEntity>();
         Addresses = Set<AddressEntity>();
         Managers = Set<ManagerEntity>();
+        Mediums = Set<MediumEntity>();
     }
 
     # endregion
@@ -44,7 +45,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
         modelBuilder.ApplyConfiguration(new OrixaEntityConfig());
         modelBuilder.ApplyConfiguration(new AddressEntityConfig());
         modelBuilder.ApplyConfiguration(new ManagerEntityConfig());
-        modelBuilder.SeedOrixas();
+        modelBuilder.ApplyConfiguration(new MediumEntityConfig());
 
         base.OnModelCreating(modelBuilder);
     }
