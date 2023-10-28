@@ -1,4 +1,5 @@
 using Lira.Data.Contexts;
+using Lira.Data.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +39,23 @@ public static class ContextBootstrap
             .GetRequiredService<LiraDbContext>();
 
         contentContext.Database.Migrate();
+    }
+
+    # endregion
+
+    # region ---- seed ---------------------------------------------------------
+
+    public static async void SeedDatabaseOnStartUp(
+        this IApplicationBuilder builder
+    )
+    {
+        await using var scope = builder.ApplicationServices.CreateAsyncScope();
+
+        await using var contentContext = scope
+            .ServiceProvider
+            .GetRequiredService<LiraDbContext>();
+
+        await contentContext.SeedOrixas();
     }
 
     # endregion

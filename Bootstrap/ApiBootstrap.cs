@@ -29,6 +29,7 @@ public static class ApiBootstrap
         IWebHostEnvironment environment
     )
     {
+        app.SeedDatabaseOnStartUp();
         app.ConfigureSwagger(environment);
 
         // app.ConfigureGlobalMiddlewares();
