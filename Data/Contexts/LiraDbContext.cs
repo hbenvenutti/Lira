@@ -16,6 +16,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
     public DbSet<AddressEntity> Addresses { get; set; }
     public DbSet<ManagerEntity> Managers { get; set; }
     public DbSet<MediumEntity> Mediums { get; set; }
+    public DbSet<PersonOrixaEntity> PersonOrixas { get; set; }
 
     # endregion
 
@@ -31,6 +32,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
         Addresses = Set<AddressEntity>();
         Managers = Set<ManagerEntity>();
         Mediums = Set<MediumEntity>();
+        PersonOrixas = Set<PersonOrixaEntity>();
     }
 
     # endregion
@@ -46,6 +48,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
         modelBuilder.ApplyConfiguration(new AddressEntityConfig());
         modelBuilder.ApplyConfiguration(new ManagerEntityConfig());
         modelBuilder.ApplyConfiguration(new MediumEntityConfig());
+        modelBuilder.ApplyConfiguration(new PersonOrixaEntityConfig());
 
         base.OnModelCreating(modelBuilder);
     }
@@ -60,17 +63,17 @@ public sealed class LiraDbContext : DbContext, IDbContext
     {
         OnSaveChanges();
 
-        return base
-            .SaveChangesAsync(cancellationToken);
+        return base.SaveChangesAsync(cancellationToken);
     }
 
     private void OnSaveChanges()
     {
-        foreach (var entry in ChangeTracker.Entries())
+        ChangeTracker.Entries().ToList().ForEach(entry =>
         {
-            if (entry.Entity is BaseEntity)
-                entry.HandleOnSaveChanges();
-        }
+            if (entry.Entity is not BaseEntity) return;
+
+            entry.HandleOnSaveChanges();
+        });
     }
 
     # endregion

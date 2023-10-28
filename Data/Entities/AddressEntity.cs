@@ -10,14 +10,14 @@ public class AddressEntity : BaseEntity
     public required string City { get; set; }
     public required string State { get; set; }
     public required string ZipCode { get; set; }
-    public required string? Complement { get; set; }
+    public string? Complement { get; set; }
 
     # endregion
 
     # region ---- relations ----------------------------------------------------
 
     public Guid PersonId { get; set; }
-    public required PersonEntity Person { get; set; }
+    public PersonEntity? Person { get; set; }
 
     # endregion
 }

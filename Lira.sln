@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "itens", "itens", "{05003847-4513-4F27-803E-FFE0E3CA0D24}"
 	ProjectSection(SolutionItems) = preProject
 		Database.drawio = Database.drawio
+		requisites.md = requisites.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Entry", "01-Entry", "{02765D5D-716D-45DA-B9B3-99B670C3E97D}"

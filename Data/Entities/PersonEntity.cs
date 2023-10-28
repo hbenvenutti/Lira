@@ -12,12 +12,13 @@ public class PersonEntity : BaseEntity
 
     # region ---- relations ----------------------------------------------------
 
-    public required ManagerEntity Manager { get; set; }
+    public ManagerEntity? Manager { get; set; }
 
-    public required IEnumerable<EmailEntity> Emails { get; set; }
-    public required IEnumerable<PhoneEntity> Phones { get; set; }
-    public required IEnumerable<AddressEntity> Addresses { get; set; }
-    public required IEnumerable<MediumEntity> Mediums { get; set; }
+    public IEnumerable<EmailEntity>? Emails { get; set; }
+    public IEnumerable<PhoneEntity>? Phones { get; set; }
+    public IEnumerable<AddressEntity>? Addresses { get; set; }
+    public IEnumerable<MediumEntity>? Mediums { get; set; }
+    public IEnumerable<PersonOrixaEntity>? PersonOrixas { get; set; }
 
     # endregion
 }

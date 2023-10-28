@@ -14,7 +14,7 @@ public class EmailEntity : BaseEntity
     # region ---- relations ----------------------------------------------------
 
     public required Guid PersonId { get; set; }
-    public required PersonEntity Person { get; set; }
+    public PersonEntity? Person { get; set; }
 
     # endregion
 }

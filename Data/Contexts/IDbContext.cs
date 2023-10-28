@@ -14,6 +14,7 @@ public interface IDbContext
     DbSet<AddressEntity> Addresses { get; set; }
     DbSet<ManagerEntity> Managers { get; set; }
     DbSet<MediumEntity> Mediums { get; set; }
+    DbSet<PersonOrixaEntity> PersonOrixas { get; set; }
 
     # endregion
 
