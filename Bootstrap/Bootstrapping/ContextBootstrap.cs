@@ -55,7 +55,7 @@ public static class ContextBootstrap
             .ServiceProvider
             .GetRequiredService<LiraDbContext>();
 
-        await contentContext.SeedOrixas();
+        await contentContext.SeedDatabase();
     }
 
     # endregion

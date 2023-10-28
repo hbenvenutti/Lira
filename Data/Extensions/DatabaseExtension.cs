@@ -7,9 +7,14 @@ namespace Lira.Data.Extensions;
 
 public static class DatabaseExtension
 {
+    public static async Task SeedDatabase(this IDbContext dbContext)
+    {
+        await dbContext.SeedOrixas();
+    }
+
     # region ---- orixas -------------------------------------------------------
 
-    public static async Task SeedOrixas(this IDbContext dbContext)
+    private static async Task SeedOrixas(this IDbContext dbContext)
     {
         if (dbContext.Orixas.Any()) { return; }
 
