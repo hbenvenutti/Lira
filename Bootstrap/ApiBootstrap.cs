@@ -21,7 +21,6 @@ public static class ApiBootstrap
         services.ConfigureProviders();
         // services.ConfigureMediatorServices();
         // services.ConfigureRepositories();
-        // services.ConfigureProviders();
         services.ConfigureSwagger();
         services.AddControllers();
         services.AddEndpointsApiExplorer();
@@ -41,7 +40,7 @@ public static class ApiBootstrap
         app.SeedDatabaseOnStartUp();
         app.ConfigureSwagger(environment);
 
-        // app.ConfigureGlobalMiddlewares();
+        app.ConfigureGlobalMiddleware();
 
         app.UseHttpsRedirection();
         app.UseAuthentication();

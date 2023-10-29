@@ -36,5 +36,5 @@ public readonly struct Response<T> where T : class
         Data = data;
     }
 
-    # endregion ----------------------------------------------------------------
+    # endregion
 }

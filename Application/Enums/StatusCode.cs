@@ -10,4 +10,10 @@ public enum StatusCode
     SignInFailed  = 140001,
 
     # endregion
+
+    # region ---- error --------------------------------------------------------
+
+    UnexpectedError = 950001
+
+    # endregion
 }
