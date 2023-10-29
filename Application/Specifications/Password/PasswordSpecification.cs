@@ -1,0 +1,57 @@
+using Lira.Application.Enums;
+using PasswordType = Lira.Common.Types.Password;
+
+namespace Lira.Application.Specifications.Password;
+
+public struct PasswordSpecification
+    : ISpecification
+{
+    # region ---- properties ---------------------------------------------------
+
+    private readonly string _password;
+    private readonly string _confirmation;
+    public StatusCode StatusCode { get; set; }
+    public ICollection<string> ErrorMessages { get; init; }
+
+    # endregion
+
+    # region ---- constructor --------------------------------------------------
+
+    public PasswordSpecification(
+        string password,
+        string confirmation
+    )
+    {
+        _password = password;
+        _confirmation = confirmation;
+        ErrorMessages = new List<string>();
+        StatusCode = StatusCode.Empty;
+    }
+
+    # endregion
+
+    # region ---- satisfy ------------------------------------------------------
+
+    public bool IsSatisfiedBy()
+    {
+        if (_password != _confirmation)
+        {
+            StatusCode = StatusCode.PasswordsDoNotMatch;
+            ErrorMessages.Add(item: "Passwords do not match");
+
+            return false;
+        }
+
+        if (!PasswordType.TryParse(_password, out _))
+        {
+            StatusCode = StatusCode.PasswordIsInvalid;
+            ErrorMessages.Add(item: PasswordType.ErrorMessage);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    # endregion
+}
