@@ -10,8 +10,8 @@ public class PersonDomain : BaseDomain
     # region ---- properties ---------------------------------------------------
 
     public Cpf Cpf { get; set; }
-    public string Name { get; set; }
-    public string Surname { get; set; }
+    public Name Name { get; set; }
+    public Name Surname { get; set; }
 
     # endregion
 
@@ -27,8 +27,8 @@ public class PersonDomain : BaseDomain
         Guid id,
         DateTime createdAt,
         Cpf cpf,
-        string name,
-        string surname,
+        Name name,
+        Name surname,
         ManagerDomain? manager = null,
         DateTime? updatedAt = null,
         DateTime? deletedAt = null,
@@ -48,8 +48,8 @@ public class PersonDomain : BaseDomain
 
     public static PersonDomain Create(
         Cpf cpf,
-        string name,
-        string surname
+        Name name,
+        Name surname
     )
     {
         return new PersonDomain(
