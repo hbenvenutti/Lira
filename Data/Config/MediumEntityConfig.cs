@@ -21,8 +21,8 @@ public class MediumEntityConfig : IEntityTypeConfiguration<MediumEntity>
             .HasName("PK_medium_id");
 
         builder.HasOne(medium => medium.Person)
-            .WithMany(person => person.Mediums)
-            .HasForeignKey(medium => medium.PersonId)
+            .WithOne(person => person.Medium)
+            .HasForeignKey<MediumEntity>(medium => medium.PersonId)
             .OnDelete(DeleteBehavior.Cascade)
             .HasConstraintName("FK_mediums_person_id");
 

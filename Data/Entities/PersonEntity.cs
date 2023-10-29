@@ -18,11 +18,11 @@ public class PersonEntity : BaseEntity
     # region ---- relations ----------------------------------------------------
 
     public ManagerEntity? Manager { get; set; }
+    public MediumEntity? Medium { get; set; }
 
     public IEnumerable<EmailEntity>? Emails { get; set; }
     public IEnumerable<PhoneEntity>? Phones { get; set; }
     public IEnumerable<AddressEntity>? Addresses { get; set; }
-    public IEnumerable<MediumEntity>? Mediums { get; set; }
     public IEnumerable<PersonOrixaEntity>? PersonOrixas { get; set; }
 
     # endregion
@@ -44,7 +44,7 @@ public class PersonEntity : BaseEntity
             Emails = null,
             Phones = null,
             Addresses = null,
-            Mediums = null,
+            Medium = null,
             PersonOrixas = null
         };
 
