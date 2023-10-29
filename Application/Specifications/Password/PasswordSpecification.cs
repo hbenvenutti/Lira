@@ -1,4 +1,5 @@
 using Lira.Application.Enums;
+using Lira.Application.Errors;
 using PasswordType = Lira.Common.Types.Password;
 
 namespace Lira.Application.Specifications.Password;
@@ -37,7 +38,7 @@ public struct PasswordSpecification
         if (_password != _confirmation)
         {
             StatusCode = StatusCode.PasswordsDoNotMatch;
-            ErrorMessages.Add(item: "Passwords do not match");
+            ErrorMessages.Add(item: PasswordErrorMessages.PasswordsDoNotMatch);
 
             return false;
         }
@@ -45,7 +46,7 @@ public struct PasswordSpecification
         if (!PasswordType.TryParse(_password, out _))
         {
             StatusCode = StatusCode.PasswordIsInvalid;
-            ErrorMessages.Add(item: PasswordType.ErrorMessage);
+            ErrorMessages.Add(item: PasswordErrorMessages.PasswordIsInvalid);
 
             return false;
         }
