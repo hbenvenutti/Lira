@@ -30,6 +30,7 @@ public enum StatusCode
 
     # region ---- error --------------------------------------------------------
 
+    AdminAlreadyExists = 540001,
     UnexpectedError = 950001
 
     # endregion
