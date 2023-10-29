@@ -12,6 +12,7 @@ public readonly struct CreateAdminBodyDto
     public string Name { get; init; }
     public string Surname { get; init; }
     public string Cpf { get; init; }
+    public string Username { get; init; }
 
     # endregion
 
@@ -24,7 +25,8 @@ public readonly struct CreateAdminBodyDto
             passwordConfirmation: body.PasswordConfirmation,
             name: body.Name,
             surname: body.Surname,
-            cpf: body.Cpf
+            cpf: body.Cpf,
+            username: body.Username
         );
 
     # endregion

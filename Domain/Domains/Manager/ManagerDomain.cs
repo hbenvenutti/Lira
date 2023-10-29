@@ -42,4 +42,23 @@ public class ManagerDomain : BaseDomain
     }
 
     # endregion
+
+    # region ---- factory ------------------------------------------------------
+
+    public static ManagerDomain Create(
+        string username,
+        string password,
+        Guid personId
+    )
+    {
+        return new ManagerDomain(
+            id: Guid.Empty,
+            createdAt: DateTime.UtcNow,
+            username: username,
+            password: password,
+            personId: personId
+        );
+    }
+
+    # endregion
 }
