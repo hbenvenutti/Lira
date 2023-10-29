@@ -7,7 +7,7 @@ public readonly partial struct Username
     # region ---- properties ---------------------------------------------------
 
     private const string Pattern = @"^[a-zA-Z]\w{2,14}$";
-    private const string ErrorMessage = "Username is invalid.";
+    public const string ErrorMessage = "Username is invalid.";
     private readonly string _value;
 
     # endregion
