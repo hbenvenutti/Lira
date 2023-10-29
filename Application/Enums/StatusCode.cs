@@ -23,6 +23,7 @@ public enum StatusCode
     # region ---- data ---------------------------------------------------------
 
     PasswordsDoNotMatch = 440001,
+    PasswordIsInvalid = 440002,
     SeveralInvalidFields = 440090,
     AdminCodeIsInvalid = 440099,
 

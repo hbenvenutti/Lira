@@ -1,8 +1,10 @@
+using Lira.Common.Types;
+
 namespace Lira.Common.Providers.Hash;
 
 public interface IHashService
 {
-    string Hash(string input);
+    string Hash(Password input);
 
-    bool Verify(string input, string hash);
+    bool Verify(Password input, string hash);
 }
