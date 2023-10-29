@@ -43,4 +43,23 @@ public class PersonDomain : BaseDomain
     }
 
     # endregion
+
+    # region ---- factory ------------------------------------------------------
+
+    public static PersonDomain Create(
+        Cpf cpf,
+        string name,
+        string surname
+    )
+    {
+        return new PersonDomain(
+            id: Guid.Empty,
+            createdAt: DateTime.UtcNow,
+            cpf: cpf,
+            name: name,
+            surname: surname
+        );
+    }
+
+    # endregion
 }
