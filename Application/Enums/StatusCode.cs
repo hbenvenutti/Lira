@@ -24,6 +24,9 @@ public enum StatusCode
 
     PasswordsDoNotMatch = 440001,
     PasswordIsInvalid = 440002,
+    NameIsInvalid = 440003,
+    SurnameIsInvalid = 440004,
+    CpfIsInvalid = 440005,
     SeveralInvalidFields = 440090,
     AdminCodeIsInvalid = 440099,
 

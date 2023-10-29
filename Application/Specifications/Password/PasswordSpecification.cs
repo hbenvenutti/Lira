@@ -4,7 +4,7 @@ using PasswordType = Lira.Common.Types.Password;
 
 namespace Lira.Application.Specifications.Password;
 
-public struct PasswordSpecification
+public class PasswordSpecification
     : ISpecification
 {
     # region ---- properties ---------------------------------------------------
