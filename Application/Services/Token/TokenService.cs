@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using Lira.Domain.Authentication.Manager;
 using Microsoft.IdentityModel.Tokens;
 
@@ -8,31 +7,33 @@ namespace Lira.Application.Services.Token;
 
 public class TokenService : ITokenService
 {
-    private const string Issuer = "Lira";
+    # region ---- properties ---------------------------------------------------
 
     private readonly TokenConfig _tokenConfig;
+
+    # endregion
+
+    # region ---- constructor --------------------------------------------------
 
     public TokenService(TokenConfig tokenConfig)
     {
         _tokenConfig = tokenConfig;
     }
 
+    # endregion
+
+    # region ---- sign ---------------------------------------------------------
+
     public string Sign(ManagerAuthDomain user)
     {
         var handler = new JwtSecurityTokenHandler();
 
-        var key = Encoding.UTF8.GetBytes(_tokenConfig.PrivateKey);
-
-        var credentials = new SigningCredentials(
-            key: new SymmetricSecurityKey(key),
-            algorithm: SecurityAlgorithms.HmacSha256Signature
-        );
-
         var descriptor = new SecurityTokenDescriptor
         {
             Subject = GenerateClaimsIdentity(user),
-            SigningCredentials = credentials,
-            Issuer = TokenConfig.Issuer,
+            SigningCredentials = _tokenConfig.Credentials,
+            Issuer = _tokenConfig.Issuer,
+            Audience = _tokenConfig.Audience,
             Expires = TokenConfig.Expires
         };
 
@@ -41,15 +42,21 @@ public class TokenService : ITokenService
         return handler.WriteToken(token);
     }
 
+    # endregion
+
+    # region ---- verify -------------------------------------------------------
+
     public bool Verify(string token)
     {
         throw new NotImplementedException();
     }
 
+    # endregion
+
+    # region ---- claims -------------------------------------------------------
+
     private static ClaimsIdentity GenerateClaimsIdentity(ManagerAuthDomain user)
     {
-
-
         var claimsIdentity = new ClaimsIdentity();
 
         claimsIdentity.AddClaim(new Claim(
@@ -64,4 +71,6 @@ public class TokenService : ITokenService
 
         return claimsIdentity;
     }
+
+    # endregion
 }

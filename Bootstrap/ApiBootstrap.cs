@@ -1,18 +1,17 @@
-using Lira.Application.Services.Token;
 using Lira.Bootstrap.Bootstrapping;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Lira.Bootstrap;
 
 public static class ApiBootstrap
 {
+    # region ---- services -----------------------------------------------------
+
     public static void ConfigureApi(
         this IServiceCollection services,
         IConfiguration configuration
@@ -27,27 +26,12 @@ public static class ApiBootstrap
         services.AddControllers();
         services.AddEndpointsApiExplorer();
 
-        services
-            .AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.IncludeErrorDetails = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = TokenConfig.Issuer,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new TokenConfig(configuration).Key
-                };
-            });
+        services.ConfigureAuthentication();
     }
+
+    # endregion
+
+    # region ---- app ----------------------------------------------------------
 
     public static void ConfigureApi(
         this IApplicationBuilder app,
@@ -66,13 +50,16 @@ public static class ApiBootstrap
         app.MigrateDatabaseOnStartUp();
     }
 
-
     public static void ConfigureControllers(
         this IEndpointRouteBuilder app
     )
     {
         app.MapControllers();
     }
+
+    # endregion
+
+    # region ---- environment --------------------------------------------------
 
     public static void ConfigureApi(
         this IConfigurationBuilder configuration
@@ -92,4 +79,7 @@ public static class ApiBootstrap
             optional: true,
             reloadOnChange: true
         );
-    }}
+    }
+
+    # endregion
+}
