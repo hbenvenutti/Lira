@@ -45,7 +45,7 @@ public static class ContextBootstrap
 
     # region ---- seed ---------------------------------------------------------
 
-    public static async void SeedDatabaseOnStartUp(
+    public static async void SeedDatabaseOnStartUpAsync(
         this IApplicationBuilder builder
     )
     {
@@ -55,7 +55,7 @@ public static class ContextBootstrap
             .ServiceProvider
             .GetRequiredService<LiraDbContext>();
 
-        await contentContext.SeedDatabase();
+        await contentContext.SeedDatabaseAsync();
     }
 
     # endregion
