@@ -1,3 +1,5 @@
+using Lira.Common.Types;
+
 namespace Lira.Domain.Domains.Manager;
 
 public interface IManagerRepository
@@ -12,8 +14,16 @@ public interface IManagerRepository
 
     # region ---- read ---------------------------------------------------------
 
-    public Task<ManagerDomain?> FindByUsernameAsync(string username);
-    public Task<IEnumerable<ManagerDomain>> FindAllAsync();
+    public Task<ManagerDomain?> FindByUsernameAsync(
+        Username username,
+        bool includePerson = false,
+        bool includeDeleted = false
+    );
+
+    public Task<IEnumerable<ManagerDomain>> FindAllAsync(
+        bool includePerson = false,
+        bool includeDeleted = false
+    );
 
     # endregion
 }

@@ -20,7 +20,7 @@ public static class ApiBootstrap
         services.ConfigureDbContext(configuration);
         services.ConfigureProviders();
         services.ConfigureMediatorServices();
-        // services.ConfigureRepositories();
+        services.ConfigureRepositories();
         services.ConfigureSwagger();
         services.AddControllers();
         services.AddEndpointsApiExplorer();
