@@ -1,21 +1,32 @@
+using Lira.Common.Providers.Hash;
+
 namespace Lira.Common.Types;
 
 public readonly struct Password
 {
-    # region ---- properties --------------------------------------------------
+    # region ---- properties ---------------------------------------------------
 
     public const string ErrorMessage = "Password is invalid.";
 
     private readonly string _value;
+    public string Hash { get; init; }
 
     # endregion
 
-    # region ---- constructor -------------------------------------------------
+    # region ---- constructor --------------------------------------------------
 
     private Password(string value)
     {
         _value = value;
+        Hash = new HashService().Hash(value);
     }
+
+    # endregion
+
+    # region ---- compare ------------------------------------------------------
+
+    public bool Compare(string hash) => new HashService()
+        .Verify(_value, hash);
 
     # endregion
 

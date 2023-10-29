@@ -1,3 +1,4 @@
+using Lira.Common.Types;
 using Lira.Domain.Domains.Base;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
@@ -8,7 +9,7 @@ public class ManagerDomain : BaseDomain
 {
     # region ---- properties ---------------------------------------------------
 
-    public string Username { get; init; }
+    public Username Username { get; init; }
     public string Password { get; init; }
 
     # endregion
@@ -25,7 +26,7 @@ public class ManagerDomain : BaseDomain
     public ManagerDomain(
         Guid id,
         DateTime createdAt,
-        string username,
+        Username username,
         string password,
         Guid personId,
         PersonDomain? person = null,
@@ -46,8 +47,8 @@ public class ManagerDomain : BaseDomain
     # region ---- factory ------------------------------------------------------
 
     public static ManagerDomain Create(
-        string username,
-        string password,
+        Username username,
+        Password password,
         Guid personId
     )
     {
@@ -55,7 +56,7 @@ public class ManagerDomain : BaseDomain
             id: Guid.Empty,
             createdAt: DateTime.UtcNow,
             username: username,
-            password: password,
+            password: password.Hash,
             personId: personId
         );
     }
