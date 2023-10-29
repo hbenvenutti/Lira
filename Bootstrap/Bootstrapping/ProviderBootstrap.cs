@@ -17,7 +17,7 @@ public static class ProviderBootstrap
         services.AddScoped<ITokenService, TokenService>();
 
         services.AddScoped<TokenConfig>();
-        
+
         services.AddScoped<ITransaction, Transaction>();
     }
 }
