@@ -1,6 +1,6 @@
 namespace Lira.Application.CQRS.Accounts.Commands.Login.Dto;
 
-public readonly struct SignInResponseDto
+public class SignInResponseDto
 {
     # region ---- properties ---------------------------------------------------
 
