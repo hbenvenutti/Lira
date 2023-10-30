@@ -14,7 +14,16 @@ public interface IPersonRepository
 
     # region ---- read ---------------------------------------------------------
 
-    public Task<PersonDomain?> FindByCpfAsync(Cpf cpf);
+    public Task<PersonDomain?> FindByCpfAsync(
+        Cpf cpf,
+        bool includeDeleted = false,
+        bool includeOrixas = false,
+        bool includeEmails = false,
+        bool includePhones = false,
+        bool includeAddresses = false,
+        bool includeMedium = false,
+        bool includeManager = false
+    );
 
     # endregion
 }
