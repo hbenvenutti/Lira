@@ -22,7 +22,7 @@ public readonly struct Cpf
     private readonly string _value;
 
     public string Mask => RegexPatterns
-        .CpfMaskRegex()
+        .CpfMask()
         .Replace(input: _value, replacement: RegexReplacement);
 
     public string Digits => _value[10..];
@@ -55,10 +55,8 @@ public readonly struct Cpf
 
     public static bool TryParse(string value, out Cpf cpf)
     {
-        value = value.Trim();
-
         value = RegexPatterns
-            .RemoveMaskRegex()
+            .OnlyNumbers()
             .Replace(input: value, replacement: "");
 
         if (!IsValid(value))
