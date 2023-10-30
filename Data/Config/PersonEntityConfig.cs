@@ -11,9 +11,9 @@ public class PersonEntityConfig : IEntityTypeConfiguration<PersonEntity>
     public void Configure(EntityTypeBuilder<PersonEntity> builder)
     {
         builder.ToTable(
-            name: "persons",
+            name: "people",
             buildAction: table => table
-                .CreateStatusConstraint(name: "CK_persons_status")
+                .CreateStatusConstraint(name: "CK_people_status")
         );
 
         builder.ConfigureBaseEntityProperties();
@@ -21,14 +21,14 @@ public class PersonEntityConfig : IEntityTypeConfiguration<PersonEntity>
         # region ---- keys -----------------------------------------------------
 
         builder.HasKey(person => person.Id)
-            .HasName("PK_persons_id");
+            .HasName("PK_people_id");
 
         # endregion
 
         # region ---- indexes --------------------------------------------------
 
         builder.HasIndex(person => person.Cpf)
-            .HasDatabaseName("IX_persons_cpf")
+            .HasDatabaseName("IX_people_cpf")
             .IsUnique();
 
         # endregion

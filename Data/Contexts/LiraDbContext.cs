@@ -9,7 +9,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
 {
     # region ---- tables -------------------------------------------------------
 
-    public DbSet<PersonEntity> Persons { get; set; }
+    public DbSet<PersonEntity> People { get; set; }
     public DbSet<EmailEntity> Emails { get; set; }
     public DbSet<PhoneEntity> Phones { get; set; }
     public DbSet<OrixaEntity> Orixas { get; set; }
@@ -25,7 +25,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
     public LiraDbContext(DbContextOptions<LiraDbContext> options)
         : base(options)
     {
-        Persons = Set<PersonEntity>();
+        People = Set<PersonEntity>();
         Emails = Set<EmailEntity>();
         Phones = Set<PhoneEntity>();
         Orixas = Set<OrixaEntity>();
