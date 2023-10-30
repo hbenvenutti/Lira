@@ -1,3 +1,4 @@
+using Lira.Application.CQRS.Accounts.Commands.Login;
 using Lira.Application.CQRS.Managers.Commands.CreateAdmin;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,10 @@ public static class MediatorBootstrap
     {
         services.AddMediatR(mediatorServiceConfig => mediatorServiceConfig
             .RegisterServicesFromAssemblies(typeof(CreateAdminHandler).Assembly)
+        );
+
+        services.AddMediatR(mediatorServiceConfig => mediatorServiceConfig
+            .RegisterServicesFromAssemblies(typeof(SignInHandler).Assembly)
         );
     }
 }
