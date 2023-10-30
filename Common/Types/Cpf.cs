@@ -1,15 +1,14 @@
 using System.Globalization;
-using System.Text.RegularExpressions;
 using Lira.Common.Extensions;
+using Lira.Common.Structs;
 
 namespace Lira.Common.Types;
 
-public readonly partial struct Cpf
+public readonly struct Cpf
 {
     # region ---- constants ----------------------------------------------------
 
-    private const string Pattern = @"^\d{3}\.\d{3}\.\d{3}-\d{2}$";
-    private const string Replacement = @"$1.$2.$3-$4";
+    private const string RegexReplacement = @"$1.$2.$3-$4";
 
     public const string ErrorMessage = "CPF is invalid.";
 
@@ -146,20 +145,13 @@ public readonly partial struct Cpf
 
     # region ---- mask ---------------------------------------------------------
 
-    private static string RemoveMask(string value) => value
-        .Replace(oldValue: ".", newValue: "")
-        .Replace(oldValue: "-", newValue: "");
+    private static string RemoveMask(string value) => RegexPatterns
+        .RemoveMaskRegex()
+        .Replace(input: value, replacement: "");
 
-    private static string ApplyMask(string value)
-    {
-        return MyRegex().Replace(
-            input: value,
-            replacement: Replacement
-        );
-    }
-
-    [GeneratedRegex(Pattern)]
-    private static partial Regex MyRegex();
+    private static string ApplyMask(string value) => RegexPatterns
+        .CpfMaskRegex()
+        .Replace(input: value, replacement: RegexReplacement);
 
     # endregion ----------------------------------------------------------------
 
@@ -169,5 +161,5 @@ public readonly partial struct Cpf
 
     public static implicit operator string(Cpf cpf) => cpf._value;
 
-    # endregion
+    #endregion
 }
