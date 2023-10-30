@@ -21,7 +21,10 @@ public readonly struct Cpf
 
     private readonly string _value;
 
-    public string Mask => ApplyMask(_value);
+    public string Mask => RegexPatterns
+        .CpfMaskRegex()
+        .Replace(input: _value, replacement: RegexReplacement);
+
     public string Digits => _value[10..];
 
     # endregion
@@ -30,7 +33,7 @@ public readonly struct Cpf
 
     private Cpf(string value)
     {
-        _value = RemoveMask(value);
+        _value = value;
     }
 
     # endregion
@@ -53,7 +56,10 @@ public readonly struct Cpf
     public static bool TryParse(string value, out Cpf cpf)
     {
         value = value.Trim();
-        value = RemoveMask(value);
+
+        value = RegexPatterns
+            .RemoveMaskRegex()
+            .Replace(input: value, replacement: "");
 
         if (!IsValid(value))
         {
@@ -71,14 +77,9 @@ public readonly struct Cpf
 
     # region ---- validation ---------------------------------------------------
 
-    private static bool IsValid(string value )
+    private static bool IsValid(string cpf )
     {
         var culture = CultureInfo.InvariantCulture;
-
-        var cpf = value
-            .Trim()
-            .Replace(oldValue: ".", newValue: "")
-            .Replace(oldValue: "-", newValue: "");
 
         if (!cpf.IsNumeric()) { return false; }
 
@@ -142,18 +143,6 @@ public readonly struct Cpf
     }
 
     # endregion
-
-    # region ---- mask ---------------------------------------------------------
-
-    private static string RemoveMask(string value) => RegexPatterns
-        .RemoveMaskRegex()
-        .Replace(input: value, replacement: "");
-
-    private static string ApplyMask(string value) => RegexPatterns
-        .CpfMaskRegex()
-        .Replace(input: value, replacement: RegexReplacement);
-
-    # endregion ----------------------------------------------------------------
 
     # region ---- implicit operators -------------------------------------------
 
