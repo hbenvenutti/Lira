@@ -65,6 +65,10 @@ public class ManagerController : ControllerBase
     ]
     [ProducesResponseType(
         typeof(Response<SignInResponseDto>),
+        statusCode: (int) HttpStatusCode.NotFound)
+    ]
+    [ProducesResponseType(
+        typeof(Response<SignInResponseDto>),
         statusCode: (int) HttpStatusCode.InternalServerError)
     ]
     public async Task<IActionResult> SignInAsync(

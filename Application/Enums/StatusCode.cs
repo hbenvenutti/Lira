@@ -20,6 +20,12 @@ public enum StatusCode
 
     # endregion
 
+    # region ---- resources ----------------------------------------------------
+
+    ManagerNotFound = 340001,
+
+    # endregion
+
     # region ---- data ---------------------------------------------------------
 
     PasswordsDoNotMatch = 440001,

@@ -9,7 +9,7 @@ public readonly struct Password
     public const string ErrorMessage = "Password is invalid.";
 
     private readonly string _value;
-    public string Hash { get; init; }
+    public string Hash => new HashService().Hash(_value);
 
     # endregion
 
@@ -18,15 +18,14 @@ public readonly struct Password
     private Password(string value)
     {
         _value = value;
-        Hash = new HashService().Hash(value);
     }
 
     # endregion
 
     # region ---- compare ------------------------------------------------------
 
-    public bool Compare(string hash) => new HashService()
-        .Verify(_value, hash);
+    public static bool Compare(string hash, Password password) =>
+        new HashService().Verify(password, hash);
 
     # endregion
 
