@@ -14,9 +14,15 @@ namespace Lira.Test.Commands.Managers;
 [ExcludeFromCodeCoverage]
 public class CreateAdminTest
 {
+    # region ---- mocks --------------------------------------------------------
+
     private readonly Mock<IPersonRepository> _personRepositoryMock;
     private readonly Mock<IManagerRepository> _managerRepositoryMock;
     private readonly CreateAdminHandler _handler;
+
+    # endregion
+
+    # region ---- data ---------------------------------------------------------
 
     private readonly Guid _personId = Guid.NewGuid();
     private readonly Guid _managerId = Guid.NewGuid();
@@ -37,6 +43,10 @@ public class CreateAdminTest
     private const string NameComposite = "john foo";
     private const string SurnameComposite = "doe bar";
 
+    # endregion
+
+    # region ---- constructor --------------------------------------------------
+
     public CreateAdminTest()
     {
          var configurationMock = new Mock<IConfiguration>();
@@ -53,6 +63,10 @@ public class CreateAdminTest
             _managerRepositoryMock.Object
         );
     }
+
+    # endregion
+
+    # region ---- should create ------------------------------------------------
 
     [Theory]
     [InlineData(
@@ -182,6 +196,10 @@ public class CreateAdminTest
         # endregion
     }
 
+    # endregion
+
+    # region ---- should not create more than one ------------------------------
+
     [Theory]
     [InlineData(
         Name,
@@ -280,6 +298,10 @@ public class CreateAdminTest
         # endregion
     }
 
+    # endregion
+
+    # region ---- should not create if code is not valid -----------------------
+
     [Theory]
     [InlineData(
         Name,
@@ -363,4 +385,6 @@ public class CreateAdminTest
 
         # endregion
     }
+
+    # endregion
 }
