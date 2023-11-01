@@ -1,4 +1,5 @@
 using Lira.Common.Extensions;
+using Lira.Common.Structs;
 
 namespace Lira.Common.Types;
 
@@ -37,15 +38,13 @@ public readonly struct Name
 
     public static bool TryParse(string value, out Name name)
     {
-        value = value.Trim();
-
         if (!IsValid(value))
         {
             name = default;
             return false;
         }
 
-        name = new Name(value);
+        name = new Name(value.Trim());
 
         return true;
     }
@@ -56,6 +55,8 @@ public readonly struct Name
 
     private static bool IsValid(string value)
     {
+        value = RegexPatterns.RemoveWhiteSpace(value);
+
         if (value.Length is < 2 or > 50) { return false; }
 
         if (!value.IsAlphabetic()) { return false; }
