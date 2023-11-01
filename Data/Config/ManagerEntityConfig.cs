@@ -51,7 +51,7 @@ public class ManagerEntityConfig : IEntityTypeConfiguration<ManagerEntity>
 
         builder.Property(manager => manager.Password)
             .HasColumnName("password")
-            .HasColumnType("varchar(50)")
+            .HasColumnType("varchar(100)")
             .IsRequired();
 
         # endregion
