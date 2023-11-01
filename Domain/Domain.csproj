@@ -16,4 +16,8 @@
       <Folder Include="Fees\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="BrazilianTypes" Version="0.0.2" />
+    </ItemGroup>
+
 </Project>

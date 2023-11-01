@@ -1,3 +1,4 @@
+using BrazilianTypes.Types;
 using Lira.Application.Enums;
 using Lira.Application.Errors;
 using Lira.Common.Types;

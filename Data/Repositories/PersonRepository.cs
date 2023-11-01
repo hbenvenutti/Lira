@@ -1,4 +1,4 @@
-using Lira.Common.Types;
+using BrazilianTypes.Types;
 using Lira.Data.Contexts;
 using Lira.Data.Entities;
 using Lira.Data.Enums;

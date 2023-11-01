@@ -1,4 +1,4 @@
-using Lira.Common.Types;
+using BrazilianTypes.Types;
 
 namespace Lira.Domain.Domains.Person;
 
