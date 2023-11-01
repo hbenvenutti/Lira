@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lira.Data.Migrations;
 
 [DbContext(typeof(LiraDbContext))]
-[Migration("20231029235825_ChangePersonsToPeople")]
-partial class ChangePersonsToPeople
+[Migration("20231101022520_AlterPersonsToPeople")]
+partial class AlterPersonsToPeople
 {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -352,7 +352,7 @@ partial class ChangePersonsToPeople
                 .HasColumnName("updated_at");
 
             b.HasKey("Id")
-                .HasName("PK_people_id");
+                .HasName("PK_persons_id");
 
             b.HasIndex("Cpf")
                 .IsUnique()

@@ -349,7 +349,7 @@ partial class LiraDbContextModelSnapshot : ModelSnapshot
                 .HasColumnName("updated_at");
 
             b.HasKey("Id")
-                .HasName("PK_people_id");
+                .HasName("PK_persons_id");
 
             b.HasIndex("Cpf")
                 .IsUnique()

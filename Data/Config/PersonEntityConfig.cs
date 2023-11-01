@@ -21,7 +21,7 @@ public class PersonEntityConfig : IEntityTypeConfiguration<PersonEntity>
         # region ---- keys -----------------------------------------------------
 
         builder.HasKey(person => person.Id)
-            .HasName("PK_people_id");
+            .HasName("PK_persons_id");
 
         # endregion
 

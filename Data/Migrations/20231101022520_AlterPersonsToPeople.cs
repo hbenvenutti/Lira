@@ -7,15 +7,11 @@ namespace Lira.Data.Migrations;
 
 /// <inheritdoc />
 [ExcludeFromCodeCoverage]
-public partial class ChangePersonsToPeople : Migration
+public partial class AlterPersonsToPeople : Migration
 {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.DropPrimaryKey(
-            name: "PK_persons_id",
-            table: "persons");
-
         migrationBuilder.DropCheckConstraint(
             name: "CK_persons_status",
             table: "persons");
@@ -29,11 +25,6 @@ public partial class ChangePersonsToPeople : Migration
             table: "people",
             newName: "IX_people_cpf");
 
-        migrationBuilder.AddPrimaryKey(
-            name: "PK_people_id",
-            table: "people",
-            column: "id");
-
         migrationBuilder.AddCheckConstraint(
             name: "CK_people_status",
             table: "people",
@@ -43,10 +34,6 @@ public partial class ChangePersonsToPeople : Migration
     /// <inheritdoc />
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.DropPrimaryKey(
-            name: "PK_people_id",
-            table: "people");
-
         migrationBuilder.DropCheckConstraint(
             name: "CK_people_status",
             table: "people");
@@ -59,11 +46,6 @@ public partial class ChangePersonsToPeople : Migration
             name: "IX_people_cpf",
             table: "persons",
             newName: "IX_persons_cpf");
-
-        migrationBuilder.AddPrimaryKey(
-            name: "PK_persons_id",
-            table: "persons",
-            column: "id");
 
         migrationBuilder.AddCheckConstraint(
             name: "CK_persons_status",
