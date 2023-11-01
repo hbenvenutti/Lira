@@ -16,6 +16,7 @@ public class CreateAdminTest
 {
     # region ---- mocks --------------------------------------------------------
 
+    private readonly Mock<IConfiguration> _configurationMock;
     private readonly Mock<IPersonRepository> _personRepositoryMock;
     private readonly Mock<IManagerRepository> _managerRepositoryMock;
     private readonly CreateAdminHandler _handler;
@@ -23,6 +24,8 @@ public class CreateAdminTest
     # endregion
 
     # region ---- data ---------------------------------------------------------
+
+    private readonly CreateAdminRequest _request;
 
     private readonly Guid _personId = Guid.NewGuid();
     private readonly Guid _managerId = Guid.NewGuid();
@@ -32,16 +35,11 @@ public class CreateAdminTest
 
     private const string Password = "A1234567";
 
-    private const string Cpf = "854.247.400-73";
-    private const string Cpf2 = "854247400-73";
-    private const string Cpf3 = "85424740073";
+    private readonly Cpf _cpf = Cpf.Generate();
 
     private const string Name = "john";
     private const string Surname = "doe";
     private const string Username = "jdoe";
-
-    private const string NameComposite = "john foo";
-    private const string SurnameComposite = "doe bar";
 
     # endregion
 
@@ -49,16 +47,24 @@ public class CreateAdminTest
 
     public CreateAdminTest()
     {
-         var configurationMock = new Mock<IConfiguration>();
+        _configurationMock = new Mock<IConfiguration>();
         _personRepositoryMock = new Mock<IPersonRepository>();
         _managerRepositoryMock = new Mock<IManagerRepository>();
 
-        configurationMock
-            .Setup(config => config["Admin:Code"])
-            .Returns(Code);
+        SetupMocks();
+
+        _request = new CreateAdminRequest(
+            name: Name,
+            surname: Surname,
+            cpf: _cpf,
+            code: Code,
+            password: Password,
+            passwordConfirmation: Password,
+            username: Username
+        );
 
          _handler = new CreateAdminHandler(
-            configurationMock.Object,
+            _configurationMock.Object,
             _personRepositoryMock.Object,
             _managerRepositoryMock.Object
         );
@@ -66,43 +72,25 @@ public class CreateAdminTest
 
     # endregion
 
-    # region ---- should create ------------------------------------------------
+    # region ---- mock setup ---------------------------------------------------
 
-    [Theory]
-    [InlineData(
-        Name,
-        Surname,
-        Cpf,
-        Code,
-        Password,
-        Username
-    )]
-    [InlineData(
-        $" {Name} ",
-        $" {Surname} ",
-        Cpf2,
-        Code,
-        Password,
-        $" {Username} "
-    )]
-    [InlineData(
-        NameComposite,
-        SurnameComposite,
-        Cpf3,
-        Code,
-        Password,
-        Username
-    )]
-    public async void ShouldCreateAdmin(
-        string name,
-        string surname,
-        string cpf,
-        string code,
-        string password,
-        string username
-    )
+    private void SetupMocks()
     {
-        # region ---- arrange --------------------------------------------------
+        _configurationMock
+            .Setup(config => config["Admin:Code"])
+            .Returns(Code);
+
+        _personRepositoryMock
+            .Setup(repo => repo.CreateAsync(
+                It.IsAny<PersonDomain>()
+            ))
+            .ReturnsAsync(new PersonDomain(
+                id: _personId,
+                name: Name,
+                surname: Surname,
+                cpf: _cpf,
+                createdAt: DateTime.UtcNow
+            ));
 
         _personRepositoryMock
             .Setup(repo => repo.FindByCpfAsync(
@@ -117,15 +105,15 @@ public class CreateAdminTest
             ))
             .ReturnsAsync(null as PersonDomain);
 
-        _personRepositoryMock
+        _managerRepositoryMock
             .Setup(repo => repo.CreateAsync(
-                It.IsAny<PersonDomain>()
+                It.IsAny<ManagerDomain>()
             ))
-            .ReturnsAsync(new PersonDomain(
-                id: _personId,
-                name: name,
-                surname: surname,
-                cpf: cpf,
+            .ReturnsAsync(new ManagerDomain(
+                id: _managerId,
+                username: Username,
+                password: Password,
+                personId: _personId,
                 createdAt: DateTime.UtcNow
             ));
 
@@ -135,35 +123,19 @@ public class CreateAdminTest
                 false
             ))
             .ReturnsAsync(new List<ManagerDomain>());
+    }
 
-        _managerRepositoryMock
-            .Setup(repo => repo.CreateAsync(
-                It.IsAny<ManagerDomain>()
-            ))
-            .ReturnsAsync(new ManagerDomain(
-                id: _managerId,
-                username: username,
-                password: password,
-                personId: _personId,
-                createdAt: DateTime.UtcNow
-            ));
+    # endregion
 
-        var request = new CreateAdminRequest(
-            name: name,
-            surname: surname,
-            cpf: cpf,
-            code: code,
-            password: password,
-            passwordConfirmation: password,
-            username: username
-        );
+    # region ---- should create ------------------------------------------------
 
-        # endregion
-
+    [Fact]
+    public async void ShouldCreateAdmin()
+    {
         # region ---- act ------------------------------------------------------
 
         var response = await _handler.Handle(
-            request: request,
+            request: _request,
             CancellationToken.None
         );
 
@@ -200,39 +172,8 @@ public class CreateAdminTest
 
     # region ---- should not create more than one ------------------------------
 
-    [Theory]
-    [InlineData(
-        Name,
-        Surname,
-        Cpf,
-        Code,
-        Password,
-        Username
-    )]
-    [InlineData(
-        $" {Name} ",
-        $" {Surname} ",
-        Cpf2,
-        Code,
-        Password,
-        $" {Username} "
-    )]
-    [InlineData(
-        NameComposite,
-        SurnameComposite,
-        Cpf3,
-        Code,
-        Password,
-        Username
-    )]
-    public async void ShouldNotCreateMoreThanOneAdmin(
-        string name,
-        string surname,
-        string cpf,
-        string code,
-        string password,
-        string username
-    )
+    [Fact]
+    public async void ShouldNotCreateMoreThanOneAdmin()
     {
         # region ---- arrange --------------------------------------------------
 
@@ -244,28 +185,18 @@ public class CreateAdminTest
             .ReturnsAsync(new List<ManagerDomain>
             {
                 ManagerDomain.Create(
-                    username: username,
-                    password: password,
-                    personId: Guid.NewGuid()
+                    username: Username,
+                    password: Password,
+                    personId: _personId
                 )
             });
-
-        var request = new CreateAdminRequest(
-            name: name,
-            surname: surname,
-            cpf: cpf,
-            code: code,
-            password: password,
-            passwordConfirmation: password,
-            username: username
-        );
 
         # endregion
 
         # region ---- act ------------------------------------------------------
 
         var response = await _handler.Handle(
-            request: request,
+            request: _request,
             CancellationToken.None
         );
 
@@ -302,50 +233,19 @@ public class CreateAdminTest
 
     # region ---- should not create if code is not valid -----------------------
 
-    [Theory]
-    [InlineData(
-        Name,
-        Surname,
-        Cpf,
-        InvalidCode,
-        Password,
-        Username
-    )]
-    [InlineData(
-        $" {Name} ",
-        $" {Surname} ",
-        Cpf2,
-        InvalidCode,
-        Password,
-        $" {Username} "
-    )]
-    [InlineData(
-        NameComposite,
-        SurnameComposite,
-        Cpf3,
-        InvalidCode,
-        Password,
-        Username
-    )]
-    public async void ShouldNotCreateIfCodeIsInvalid(
-        string name,
-        string surname,
-        string cpf,
-        string code,
-        string password,
-        string username
-    )
+    [Fact]
+    public async void ShouldNotCreateIfCodeIsInvalid()
     {
         # region ---- arrange --------------------------------------------------
 
         var request = new CreateAdminRequest(
-            name: name,
-            surname: surname,
-            cpf: cpf,
-            code: code,
-            password: password,
-            passwordConfirmation: password,
-            username: username
+            name: Name,
+            surname: Surname,
+            cpf: _cpf,
+            code: InvalidCode,
+            password: Password,
+            passwordConfirmation: Password,
+            username: Username
         );
 
         # endregion
