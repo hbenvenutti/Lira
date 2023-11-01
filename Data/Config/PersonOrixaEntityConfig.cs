@@ -16,7 +16,7 @@ public class PersonOrixaEntityConfig : IEntityTypeConfiguration<PersonOrixaEntit
 
             table.HasCheckConstraint(
                 name: "CK_person_orixas_type",
-                sql: $"type IN ('{OrixaType.Front}', '{OrixaType.Ancestor}', '{OrixaType.Close}')"
+                sql: $"type IN ('{OrixaType.Front}', '{OrixaType.Ancestral}', '{OrixaType.Adjunct}')"
             );
         });
 
