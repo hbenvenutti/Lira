@@ -1,5 +1,6 @@
 using Lira.Data.Repositories;
 using Lira.Domain.Domains.Manager;
+using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.Person;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,5 +14,6 @@ public static class RepositoryBootstrap
     {
         services.AddScoped<IManagerRepository, ManagerRepository>();
         services.AddScoped<IPersonRepository, PersonRepository>();
+        services.AddScoped<IMediumRepository, MediumRepository>();
     }
 }

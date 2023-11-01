@@ -126,8 +126,8 @@ public class PersonRepository : IPersonRepository
         var person = await query
             .SingleOrDefaultAsync(person => person.Cpf == cpf);
 
-        if (person is null) { return null; }
-
-        return (PersonDomain) person;
+        return person is null
+            ? null
+            : (PersonDomain) person;
     }
 }
