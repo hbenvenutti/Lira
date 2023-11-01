@@ -411,7 +411,7 @@ partial class LiraDbContextModelSnapshot : ModelSnapshot
             {
                 t.HasCheckConstraint("CK_person_orixas_status", "status IN ('Active', 'Inactive', 'Deleted')");
 
-                t.HasCheckConstraint("CK_person_orixas_type", "type IN ('Front', 'Ancestor', 'Close')");
+                t.HasCheckConstraint("CK_person_orixas_type", "type IN ('Front', 'Ancestral', 'Adjunct')");
             });
         });
 
