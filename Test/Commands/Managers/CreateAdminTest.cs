@@ -3,6 +3,7 @@ using System.Net;
 using BrazilianTypes.Types;
 using Lira.Application.CQRS.Managers.Commands.CreateAdmin;
 using Lira.Application.Enums;
+using Lira.Application.Messages;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Person;
 using Microsoft.Extensions.Configuration;
@@ -13,30 +14,70 @@ namespace Lira.Test.Commands.Managers;
 [ExcludeFromCodeCoverage]
 public class CreateAdminTest
 {
+    private readonly Mock<IPersonRepository> _personRepositoryMock;
+    private readonly Mock<IManagerRepository> _managerRepositoryMock;
+    private readonly CreateAdminHandler _handler;
+
+    private readonly Guid _personId = Guid.NewGuid();
+    private readonly Guid _managerId = Guid.NewGuid();
+
+    private const string Code = "validCode";
+    private const string InvalidCode = "invalidCode";
+
+    private const string Password = "A1234567";
+
+    private const string Cpf = "854.247.400-73";
+    private const string Cpf2 = "854247400-73";
+    private const string Cpf3 = "85424740073";
+
+    private const string Name = "john";
+    private const string Surname = "doe";
+    private const string Username = "jdoe";
+
+    private const string NameComposite = "john foo";
+    private const string SurnameComposite = "doe bar";
+
+    public CreateAdminTest()
+    {
+         var configurationMock = new Mock<IConfiguration>();
+        _personRepositoryMock = new Mock<IPersonRepository>();
+        _managerRepositoryMock = new Mock<IManagerRepository>();
+
+        configurationMock
+            .Setup(config => config["Admin:Code"])
+            .Returns(Code);
+
+         _handler = new CreateAdminHandler(
+            configurationMock.Object,
+            _personRepositoryMock.Object,
+            _managerRepositoryMock.Object
+        );
+    }
+
     [Theory]
     [InlineData(
-        "john",
-        "doe",
-        "854.247.400-73",
-        "validCode",
-        "A1234567",
-        "jdoe"
+        Name,
+        Surname,
+        Cpf,
+        Code,
+        Password,
+        Username
     )]
     [InlineData(
-        " john ",
-        " doe ",
-        "854.247.40073",
-        "validCode",
-        "A1234567",
-        " jdoe "
+        $" {Name} ",
+        $" {Surname} ",
+        Cpf2,
+        Code,
+        Password,
+        $" {Username} "
     )]
     [InlineData(
-        "john foo",
-        "doe bar",
-        "85424740073",
-        "validCode",
-        "A1234567",
-        " jdoe "
+        NameComposite,
+        SurnameComposite,
+        Cpf3,
+        Code,
+        Password,
+        Username
     )]
     public async void ShouldCreateAdmin(
         string name,
@@ -49,18 +90,7 @@ public class CreateAdminTest
     {
         # region ---- arrange --------------------------------------------------
 
-        var configurationMock = new Mock<IConfiguration>();
-
-        var personId = Guid.NewGuid();
-        var managerId = Guid.NewGuid();
-
-        configurationMock
-            .Setup(config => config["Admin:Code"])
-            .Returns("validCode");
-
-        var personRepositoryMock = new Mock<IPersonRepository>();
-
-        personRepositoryMock
+        _personRepositoryMock
             .Setup(repo => repo.FindByCpfAsync(
                 It.IsAny<Cpf>(),
                 false,
@@ -73,44 +103,36 @@ public class CreateAdminTest
             ))
             .ReturnsAsync(null as PersonDomain);
 
-        personRepositoryMock
+        _personRepositoryMock
             .Setup(repo => repo.CreateAsync(
                 It.IsAny<PersonDomain>()
             ))
             .ReturnsAsync(new PersonDomain(
-                id: personId,
+                id: _personId,
                 name: name,
                 surname: surname,
                 cpf: cpf,
                 createdAt: DateTime.UtcNow
             ));
 
-        var managerRepositoryMock = new Mock<IManagerRepository>();
-
-        managerRepositoryMock
+        _managerRepositoryMock
             .Setup(repo => repo.FindAllAsync(
                 false,
                 false
             ))
             .ReturnsAsync(new List<ManagerDomain>());
 
-        managerRepositoryMock
+        _managerRepositoryMock
             .Setup(repo => repo.CreateAsync(
                 It.IsAny<ManagerDomain>()
             ))
             .ReturnsAsync(new ManagerDomain(
-                id: managerId,
+                id: _managerId,
                 username: username,
                 password: password,
-                personId: personId,
+                personId: _personId,
                 createdAt: DateTime.UtcNow
             ));
-
-        var handler = new CreateAdminHandler(
-            configurationMock.Object,
-            personRepositoryMock.Object,
-            managerRepositoryMock.Object
-        );
 
         var request = new CreateAdminRequest(
             name: name,
@@ -126,7 +148,7 @@ public class CreateAdminTest
 
         # region ---- act ------------------------------------------------------
 
-        var response = await handler.Handle(
+        var response = await _handler.Handle(
             request: request,
             CancellationToken.None
         );
@@ -153,9 +175,191 @@ public class CreateAdminTest
         Assert.NotNull(response.Data);
 
         Assert.Equal(
-            expected: managerId,
+            expected: _managerId,
             actual: response.Data.Id
         );
+
+        # endregion
+    }
+
+    [Theory]
+    [InlineData(
+        Name,
+        Surname,
+        Cpf,
+        Code,
+        Password,
+        Username
+    )]
+    [InlineData(
+        $" {Name} ",
+        $" {Surname} ",
+        Cpf2,
+        Code,
+        Password,
+        $" {Username} "
+    )]
+    [InlineData(
+        NameComposite,
+        SurnameComposite,
+        Cpf3,
+        Code,
+        Password,
+        Username
+    )]
+    public async void ShouldNotCreateMoreThanOneAdmin(
+        string name,
+        string surname,
+        string cpf,
+        string code,
+        string password,
+        string username
+    )
+    {
+        # region ---- arrange --------------------------------------------------
+
+        _managerRepositoryMock
+            .Setup(repo => repo.FindAllAsync(
+                false,
+                false
+            ))
+            .ReturnsAsync(new List<ManagerDomain>
+            {
+                ManagerDomain.Create(
+                    username: username,
+                    password: password,
+                    personId: Guid.NewGuid()
+                )
+            });
+
+        var request = new CreateAdminRequest(
+            name: name,
+            surname: surname,
+            cpf: cpf,
+            code: code,
+            password: password,
+            passwordConfirmation: password,
+            username: username
+        );
+
+        # endregion
+
+        # region ---- act ------------------------------------------------------
+
+        var response = await _handler.Handle(
+            request: request,
+            CancellationToken.None
+        );
+
+        # endregion
+
+        # region ---- assert ---------------------------------------------------
+
+        Assert.False(response.IsSuccess);
+
+        Assert.Equal(
+            expected: HttpStatusCode.UnprocessableEntity,
+            actual: response.HttpStatusCode
+        );
+
+        Assert.Equal(
+            expected: StatusCode.AdminAlreadyExists,
+            actual: response.StatusCode
+        );
+
+        Assert.NotNull(response.Error);
+
+        Assert.Equal(
+            expected: AccountsMessages.AdminAlreadyExists,
+            actual: response.Error?.Messages.First()
+        );
+
+        Assert.Null(response.Pagination);
+        Assert.Null(response.Data);
+
+        # endregion
+    }
+
+    [Theory]
+    [InlineData(
+        Name,
+        Surname,
+        Cpf,
+        InvalidCode,
+        Password,
+        Username
+    )]
+    [InlineData(
+        $" {Name} ",
+        $" {Surname} ",
+        Cpf2,
+        InvalidCode,
+        Password,
+        $" {Username} "
+    )]
+    [InlineData(
+        NameComposite,
+        SurnameComposite,
+        Cpf3,
+        InvalidCode,
+        Password,
+        Username
+    )]
+    public async void ShouldNotCreateIfCodeIsInvalid(
+        string name,
+        string surname,
+        string cpf,
+        string code,
+        string password,
+        string username
+    )
+    {
+        # region ---- arrange --------------------------------------------------
+
+        var request = new CreateAdminRequest(
+            name: name,
+            surname: surname,
+            cpf: cpf,
+            code: code,
+            password: password,
+            passwordConfirmation: password,
+            username: username
+        );
+
+        # endregion
+
+        # region ---- act ------------------------------------------------------
+
+        var response = await _handler.Handle(
+            request: request,
+            CancellationToken.None
+        );
+
+        # endregion
+
+        # region ---- assert ---------------------------------------------------
+
+        Assert.False(response.IsSuccess);
+
+        Assert.Equal(
+            expected: HttpStatusCode.BadRequest,
+            actual: response.HttpStatusCode
+        );
+
+        Assert.Equal(
+            expected: StatusCode.AdminCodeIsInvalid,
+            actual: response.StatusCode
+        );
+
+        Assert.NotNull(response.Error);
+
+        Assert.Equal(
+            expected: AccountsMessages.AdminCodeIsInvalid,
+            actual: response.Error?.Messages.First()
+        );
+
+        Assert.Null(response.Pagination);
+        Assert.Null(response.Data);
 
         # endregion
     }
