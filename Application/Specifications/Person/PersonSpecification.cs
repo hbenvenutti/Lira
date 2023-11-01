@@ -1,6 +1,6 @@
 using BrazilianTypes.Types;
 using Lira.Application.Enums;
-using Lira.Application.Errors;
+using Lira.Application.Messages;
 using Lira.Common.Types;
 
 namespace Lira.Application.Specifications.Person;

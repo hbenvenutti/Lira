@@ -2,7 +2,7 @@ using System.Net;
 using Lira.Application.CQRS.Accounts.Commands.Login.Dto;
 using Lira.Application.Dto;
 using Lira.Application.Enums;
-using Lira.Application.Errors;
+using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Application.Services.Token;
 using Lira.Common.Types;

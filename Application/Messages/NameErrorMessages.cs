@@ -1,4 +1,4 @@
-namespace Lira.Application.Errors;
+namespace Lira.Application.Messages;
 
 public readonly struct NameErrorMessages
 {

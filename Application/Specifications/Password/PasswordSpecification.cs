@@ -1,5 +1,5 @@
 using Lira.Application.Enums;
-using Lira.Application.Errors;
+using Lira.Application.Messages;
 using PasswordType = Lira.Common.Types.Password;
 
 namespace Lira.Application.Specifications.Password;
@@ -38,7 +38,7 @@ public class PasswordSpecification
         if (_password != _confirmation)
         {
             StatusCode = StatusCode.PasswordsDoNotMatch;
-            ErrorMessages.Add(item: PasswordErrorMessages.PasswordsDoNotMatch);
+            ErrorMessages.Add(item: AccountsMessages.PasswordsDoNotMatch);
 
             return false;
         }
@@ -46,7 +46,7 @@ public class PasswordSpecification
         if (!PasswordType.TryParse(_password, out _))
         {
             StatusCode = StatusCode.PasswordIsInvalid;
-            ErrorMessages.Add(item: PasswordErrorMessages.PasswordIsInvalid);
+            ErrorMessages.Add(item: AccountsMessages.PasswordIsInvalid);
 
             return false;
         }

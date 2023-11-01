@@ -1,11 +1,12 @@
 using System.Net;
+using System.Transactions;
 using Lira.Application.Dto;
 using Lira.Application.Enums;
+using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Application.Specifications.Manager;
 using Lira.Application.Specifications.Password;
 using Lira.Application.Specifications.Person;
-using Lira.Application.Transactions;
 using Lira.Common.Exceptions;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Person;
@@ -20,7 +21,6 @@ public class CreateAdminHandler
     # region ---- properties ---------------------------------------------------
 
     private readonly IConfiguration _configuration;
-    private readonly ITransaction _transaction;
 
     private readonly IPersonRepository _personRepository;
     private readonly IManagerRepository _managerRepository;
@@ -32,14 +32,12 @@ public class CreateAdminHandler
     public CreateAdminHandler(
         IConfiguration configuration,
         IPersonRepository personRepository,
-        IManagerRepository managerRepository,
-        ITransaction transaction
+        IManagerRepository managerRepository
     )
     {
         _configuration = configuration;
         _personRepository = personRepository;
         _managerRepository = managerRepository;
-        _transaction = transaction;
     }
 
     # endregion
@@ -49,18 +47,23 @@ public class CreateAdminHandler
         CancellationToken cancellationToken
     )
     {
+        using var transaction =
+            new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
         # region ---- code validation ------------------------------------------
 
         var code = _configuration["Admin:Code"]
             ?? throw new MissingEnvironmentVariableException("Admin:Code");
 
-        var codeIsValid = request.Code == code;
 
-        if (!codeIsValid)
+        if (!request.Code.Equals(code))
         {
             return new Response<CreateAdminResponseDto>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: StatusCode.AdminCodeIsInvalid
+                statusCode: StatusCode.AdminCodeIsInvalid,
+                error: new ErrorDto(
+                    message: AccountsMessages.AdminCodeIsInvalid
+                )
             );
         }
 
@@ -120,7 +123,10 @@ public class CreateAdminHandler
         {
             return new Response<CreateAdminResponseDto>(
                 httpStatusCode: HttpStatusCode.UnprocessableEntity,
-                statusCode: StatusCode.AdminAlreadyExists
+                statusCode: StatusCode.AdminAlreadyExists,
+                error: new ErrorDto(
+                    message: AccountsMessages.AdminAlreadyExists
+                )
             );
         }
 
@@ -129,27 +135,31 @@ public class CreateAdminHandler
         # region ---- person ---------------------------------------------------
 
         var person = await _personRepository.FindByCpfAsync(request.Cpf)
-            ?? PersonDomain.Create(
-                cpf: request.Cpf,
-                name: request.Name,
-                surname: request.Surname
+            ?? await _personRepository.CreateAsync(
+                PersonDomain.Create(
+                    cpf: request.Cpf,
+                    name: request.Name,
+                    surname: request.Surname
+                )
             );
 
         # endregion
 
         # region ---- manager --------------------------------------------------
 
-        var manager = ManagerDomain.Create(
-            username: request.Username,
-            password: request.Password,
-            personId: person.Id
+        var manager = await _managerRepository.CreateAsync(
+            ManagerDomain.Create(
+                username: request.Username,
+                password: request.Password,
+                personId: person.Id
+            )
         );
 
         # endregion
 
         # region ---- response -------------------------------------------------
 
-        _transaction.Commit();
+        transaction.Complete();
 
         return new Response<CreateAdminResponseDto>(
             httpStatusCode: HttpStatusCode.Created,
