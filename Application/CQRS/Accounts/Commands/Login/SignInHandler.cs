@@ -31,18 +31,13 @@ public class SignInHandler
         CancellationToken cancellationToken
     )
     {
-        if (!Username.TryParse(request.Username, out var username))
-        {
-            return new Response<SignInResponseDto>(
-                httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: StatusCode.SignInFailed,
-                error: new ErrorDto(message: AccountsMessages
-                    .InvalidUsernameOrPassword
-                )
-            );
-        }
+        var isPasswordValid = Password
+            .TryParse(request.Password, out var password);
 
-        if (!Password.TryParse(request.Password, out var password))
+        var isUsernameValid = Username
+            .TryParse(request.Username, out var username);
+
+        if (!isPasswordValid || !isUsernameValid)
         {
             return new Response<SignInResponseDto>(
                 httpStatusCode: HttpStatusCode.BadRequest,
