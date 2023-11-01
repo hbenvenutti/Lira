@@ -8,7 +8,7 @@ using Lira.Domain.Domains.Person;
 using Microsoft.Extensions.Configuration;
 using Moq;
 
-namespace Lira.Test;
+namespace Lira.Test.Commands.Managers;
 
 [ExcludeFromCodeCoverage]
 public class CreateAdminTest
