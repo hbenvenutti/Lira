@@ -105,6 +105,25 @@ public class CreateAdminTest
             ))
             .ReturnsAsync(null as PersonDomain);
 
+        _personRepositoryMock
+            .Setup(repo => repo.FindByCpfAsync(
+                _cpf,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+            ))
+            .ReturnsAsync(new PersonDomain(
+                id: Guid.NewGuid(),
+                name: Name,
+                surname: Surname,
+                cpf: _cpf,
+                createdAt: DateTime.UtcNow
+            ));
+
         _managerRepositoryMock
             .Setup(repo => repo.CreateAsync(
                 It.IsAny<ManagerDomain>()
@@ -132,16 +151,10 @@ public class CreateAdminTest
     [Fact]
     public async void ShouldCreateAdmin()
     {
-        # region ---- act ------------------------------------------------------
-
         var response = await _handler.Handle(
             request: _request,
             CancellationToken.None
         );
-
-        # endregion
-
-        # region ---- assert ---------------------------------------------------
 
         Assert.True(response.IsSuccess);
 
@@ -164,8 +177,6 @@ public class CreateAdminTest
             expected: _managerId,
             actual: response.Data.Id
         );
-
-        # endregion
     }
 
     # endregion
@@ -175,8 +186,6 @@ public class CreateAdminTest
     [Fact]
     public async void ShouldNotCreateMoreThanOneAdmin()
     {
-        # region ---- arrange --------------------------------------------------
-
         _managerRepositoryMock
             .Setup(repo => repo.FindAllAsync(
                 false,
@@ -191,18 +200,10 @@ public class CreateAdminTest
                 )
             });
 
-        # endregion
-
-        # region ---- act ------------------------------------------------------
-
         var response = await _handler.Handle(
             request: _request,
             CancellationToken.None
         );
-
-        # endregion
-
-        # region ---- assert ---------------------------------------------------
 
         Assert.False(response.IsSuccess);
 
@@ -225,8 +226,6 @@ public class CreateAdminTest
 
         Assert.Null(response.Pagination);
         Assert.Null(response.Data);
-
-        # endregion
     }
 
     # endregion
@@ -236,8 +235,6 @@ public class CreateAdminTest
     [Fact]
     public async void ShouldNotCreateIfCodeIsInvalid()
     {
-        # region ---- arrange --------------------------------------------------
-
         var request = new CreateAdminRequest(
             name: Name,
             surname: Surname,
@@ -248,18 +245,10 @@ public class CreateAdminTest
             username: Username
         );
 
-        # endregion
-
-        # region ---- act ------------------------------------------------------
-
         var response = await _handler.Handle(
             request: request,
             CancellationToken.None
         );
-
-        # endregion
-
-        # region ---- assert ---------------------------------------------------
 
         Assert.False(response.IsSuccess);
 
@@ -282,8 +271,6 @@ public class CreateAdminTest
 
         Assert.Null(response.Pagination);
         Assert.Null(response.Data);
-
-        # endregion
     }
 
     # endregion

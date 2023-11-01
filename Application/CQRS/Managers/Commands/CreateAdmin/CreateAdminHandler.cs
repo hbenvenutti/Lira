@@ -55,7 +55,6 @@ public class CreateAdminHandler
         var code = _configuration["Admin:Code"]
             ?? throw new MissingEnvironmentVariableException("Admin:Code");
 
-
         if (!request.Code.Equals(code))
         {
             return new Response<CreateAdminResponseDto>(
