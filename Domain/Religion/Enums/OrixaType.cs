@@ -4,5 +4,5 @@ public enum OrixaType
 {
     Front,
     Ancestral,
-    Close
+    Adjunct
 }
