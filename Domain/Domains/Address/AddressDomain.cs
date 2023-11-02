@@ -13,7 +13,7 @@ public class AddressDomain : BaseDomain
     public string Number { get; set; }
     public string Neighborhood { get; set; }
     public string City { get; set; }
-    public string State { get; set; }
+    public Uf State { get; set; }
     public ZipCode ZipCode { get; set; }
     public string? Complement { get; set; }
 
@@ -34,7 +34,7 @@ public class AddressDomain : BaseDomain
         string number,
         string neighborhood,
         string city,
-        string state,
+        Uf state,
         ZipCode zipCode,
         Guid personId,
         DateTime createdAt,
@@ -71,7 +71,7 @@ public class AddressDomain : BaseDomain
         string number,
         string neighborhood,
         string city,
-        string state,
+        Uf state,
         ZipCode zipCode,
         Guid personId,
         string? complement = null
