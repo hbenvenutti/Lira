@@ -1,5 +1,7 @@
 using Lira.Data.Enums;
+using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Manager;
+using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
 
@@ -55,6 +57,11 @@ public class PersonEntity : BaseEntity
             entity.Manager.Person = null;
         }
 
+        if (entity.Medium is not null)
+        {
+            entity.Medium.Person = null;
+        }
+
         return new PersonDomain(
             id: entity.Id,
             createdAt: entity.CreatedAt,
@@ -67,7 +74,14 @@ public class PersonEntity : BaseEntity
 
             manager : entity.Manager is null
                 ? null
-                : (ManagerDomain) entity.Manager
+                : (ManagerDomain) entity.Manager,
+
+            medium : entity.Medium is null
+                ? null
+                : (MediumDomain) entity.Medium,
+
+            addresses: entity.Addresses?
+                .Select(address => (AddressDomain) address)
         );
     }
 

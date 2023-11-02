@@ -1,7 +1,9 @@
 using BrazilianTypes.Types;
 using Lira.Common.Types;
+using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Base;
 using Lira.Domain.Domains.Manager;
+using Lira.Domain.Domains.Medium;
 using Lira.Domain.Enums;
 
 namespace Lira.Domain.Domains.Person;
@@ -19,6 +21,8 @@ public class PersonDomain : BaseDomain
     # region ---- relations ----------------------------------------------------
 
     public ManagerDomain? Manager { get; set; }
+    public MediumDomain? Medium { get; set; }
+    public IEnumerable<AddressDomain>? Addresses { get; set; }
 
     # endregion
 
@@ -31,6 +35,8 @@ public class PersonDomain : BaseDomain
         Name name,
         Name surname,
         ManagerDomain? manager = null,
+        MediumDomain? medium = null,
+        IEnumerable<AddressDomain>? addresses = null,
         DateTime? updatedAt = null,
         DateTime? deletedAt = null,
         DomainStatus status = DomainStatus.Active
@@ -41,6 +47,8 @@ public class PersonDomain : BaseDomain
         Name = name;
         Surname = surname;
         Manager = manager;
+        Medium = medium;
+        Addresses = addresses;
     }
 
     # endregion
