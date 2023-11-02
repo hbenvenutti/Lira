@@ -1,12 +1,13 @@
+using BrazilianTypes.Interfaces;
 using Lira.Common.Providers.Hash;
 
 namespace Lira.Common.Types;
 
-public readonly struct Password
+public readonly struct Password : IType<Password>
 {
     # region ---- properties ---------------------------------------------------
 
-    public const string ErrorMessage = "Password is invalid.";
+    public static string ErrorMessage => "Password is invalid.";
 
     private readonly string _value;
     public string Hash => new HashService().Hash(_value);

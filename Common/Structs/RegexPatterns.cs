@@ -23,4 +23,11 @@ public readonly partial struct RegexPatterns
         .Replace(input: value, replacement: "");
 
     # endregion
+
+    # region ---- username -----------------------------------------------------
+
+    [GeneratedRegex(@"^[a-zA-Z]\w{2,14}$")]
+    public static partial Regex Username();
+
+    # endregion
 }

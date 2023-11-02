@@ -1,13 +1,14 @@
+using BrazilianTypes.Interfaces;
 using Lira.Common.Extensions;
 using Lira.Common.Structs;
 
 namespace Lira.Common.Types;
 
-public readonly struct Name
+public readonly struct Name : IType<Name>
 {
     # region ---- properties ---------------------------------------------------
 
-    private const string ErrorMessage = "Name is invalid.";
+    public static string ErrorMessage => "Name is invalid.";
     private readonly string _value;
 
     # endregion
