@@ -1,9 +1,10 @@
+using Lira.Application.CQRS.Accounts.Commands.RegisterMedium;
 using Lira.Application.Responses;
 using MediatR;
 
-namespace Lira.Application.CQRS.Accounts.Commands.RegisterMedium;
+namespace Lira.Application.CQRS.People.Commands.RegisterPerson;
 
-public class RegisterMediumRequest : IRequest<Response<RegisterMediumResponse>>
+public class RegisterPersonRequest : IRequest<Response<RegisterPersonResponse>>
 {
     # region ---- properties ---------------------------------------------------
 
@@ -21,18 +22,19 @@ public class RegisterMediumRequest : IRequest<Response<RegisterMediumResponse>>
     public string ZipCode { get; init; }
     public string? Complement { get; init; }
 
+    public bool IsMedium { get; init; }
     public DateTime? FirstAmaci { get; init; }
     public DateTime? LastAmaci { get; init; }
 
     public Guid? FrontOrixaId { get; init; }
-    public Guid? CloseOrixaId { get; init; }
+    public Guid? AdjunctOrixaId { get; init; }
     public Guid? AncestralOrixaId { get; init; }
 
     # endregion
 
     # region ---- constructor --------------------------------------------------
 
-    public RegisterMediumRequest(
+    public RegisterPersonRequest(
         string firstName,
         string surname,
         string email,
@@ -48,8 +50,9 @@ public class RegisterMediumRequest : IRequest<Response<RegisterMediumResponse>>
         DateTime? firstAmaci,
         DateTime? lastAmaci,
         Guid? frontOrixaId,
-        Guid? closeOrixaId,
-        Guid? ancestralOrixaId
+        Guid? adjunctOrixaId,
+        Guid? ancestralOrixaId,
+        bool isMedium = false
     )
     {
         FirstName = firstName;
@@ -67,8 +70,9 @@ public class RegisterMediumRequest : IRequest<Response<RegisterMediumResponse>>
         FirstAmaci = firstAmaci;
         LastAmaci = lastAmaci;
         FrontOrixaId = frontOrixaId;
-        CloseOrixaId = closeOrixaId;
+        AdjunctOrixaId = adjunctOrixaId;
         AncestralOrixaId = ancestralOrixaId;
+        IsMedium = isMedium;
     }
 
     # endregion

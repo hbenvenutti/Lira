@@ -20,13 +20,13 @@ public enum StatusCode
 
     # endregion
 
-    # region ---- resources ----------------------------------------------------
+    # region ---- missing resources --------------------------------------------
 
     ManagerNotFound = 340001,
 
     # endregion
 
-    # region ---- data ---------------------------------------------------------
+    # region ---- invalid data -------------------------------------------------
 
     PasswordsDoNotMatch = 440001,
     PasswordIsInvalid = 440002,
@@ -39,9 +39,15 @@ public enum StatusCode
 
     # endregion
 
-    # region ---- error --------------------------------------------------------
+    # region ---- conflict -----------------------------------------------------
 
     AdminAlreadyExists = 540001,
+    PersonAlreadyExists = 540002,
+
+    # endregion
+
+    # region ---- error --------------------------------------------------------
+
     UnexpectedError = 950001
 
     # endregion
