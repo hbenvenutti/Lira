@@ -35,8 +35,13 @@ public enum StatusCode
     CpfIsInvalid = 440005,
     UsernameIsInvalid = 440006,
     UfIsInvalid = 440007,
+    ZipCodeIsInvalid = 440008,
+    StreetIsInvalid = 440010,
+
+    IdIsInvalid = 440089,
     SeveralInvalidFields = 440090,
     AdminCodeIsInvalid = 440099,
+    OneOrMoreSpecificationsFailed = 440100,
 
     # endregion
 
