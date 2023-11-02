@@ -1,4 +1,5 @@
 using BrazilianTypes.Types;
+using Lira.Common.Types;
 using Lira.Domain.Domains.Base;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
@@ -9,10 +10,10 @@ public class AddressDomain : BaseDomain
 {
     # region ---- properties ---------------------------------------------------
 
-    public string Street { get; set; }
-    public string Number { get; set; }
-    public string Neighborhood { get; set; }
-    public string City { get; set; }
+    public Text Street { get; set; }
+    public Text Number { get; set; }
+    public Text Neighborhood { get; set; }
+    public Text City { get; set; }
     public Uf State { get; set; }
     public ZipCode ZipCode { get; set; }
     public string? Complement { get; set; }
@@ -30,10 +31,10 @@ public class AddressDomain : BaseDomain
 
     public AddressDomain(
         Guid id,
-        string street,
-        string number,
-        string neighborhood,
-        string city,
+        Text street,
+        Text number,
+        Text neighborhood,
+        Text city,
         Uf state,
         ZipCode zipCode,
         Guid personId,
@@ -67,10 +68,10 @@ public class AddressDomain : BaseDomain
     # region ---- factories ----------------------------------------------------
 
     public static AddressDomain Create(
-        string street,
-        string number,
-        string neighborhood,
-        string city,
+        Text street,
+        Text number,
+        Text neighborhood,
+        Text city,
         Uf state,
         ZipCode zipCode,
         Guid personId,
