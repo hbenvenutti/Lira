@@ -3,7 +3,7 @@ using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Common.Types;
 
-namespace Lira.Application.Specifications.Address;
+namespace Lira.Application.Specifications;
 
 public class AddressSpecification : ISpecification
 {

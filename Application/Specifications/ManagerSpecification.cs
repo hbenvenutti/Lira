@@ -1,7 +1,7 @@
 using Lira.Application.Enums;
 using Lira.Common.Types;
 
-namespace Lira.Application.Specifications.Manager;
+namespace Lira.Application.Specifications;
 
 public class ManagerSpecification : ISpecification
 {
