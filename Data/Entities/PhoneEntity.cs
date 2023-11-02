@@ -24,7 +24,7 @@ public class PhoneEntity : BaseEntity
 
     # region ---- operators ----------------------------------------------------
 
-    public static implicit operator PhoneEntity(PhoneDomain phone)
+    public static explicit operator PhoneEntity(PhoneDomain phone)
         => new()
         {
             Id = phone.Id,
@@ -38,7 +38,7 @@ public class PhoneEntity : BaseEntity
             Person = null
         };
 
-    public static implicit operator PhoneDomain(PhoneEntity phone)
+    public static explicit operator PhoneDomain(PhoneEntity phone)
     {
         if (phone.Person is not null)
         {
