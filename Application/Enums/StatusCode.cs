@@ -34,6 +34,7 @@ public enum StatusCode
     SurnameIsInvalid = 440004,
     CpfIsInvalid = 440005,
     UsernameIsInvalid = 440006,
+    UfIsInvalid = 440007,
     SeveralInvalidFields = 440090,
     AdminCodeIsInvalid = 440099,
 
