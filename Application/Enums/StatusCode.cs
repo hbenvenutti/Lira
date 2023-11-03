@@ -23,6 +23,7 @@ public enum StatusCode
     # region ---- missing resources --------------------------------------------
 
     ManagerNotFound = 340001,
+    PersonNotFound = 340002,
     OrixaNotFound = 340008,
     PersonOrixaNotFound = 340009,
 

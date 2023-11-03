@@ -25,5 +25,16 @@ public interface IPersonRepository
         bool includeManager = false
     );
 
+    public Task<PersonDomain?> FindByIdAsync(
+        Guid id,
+        bool includeDeleted = false,
+        bool includeOrixas = false,
+        bool includeEmails = false,
+        bool includePhones = false,
+        bool includeAddresses = false,
+        bool includeMedium = false,
+        bool includeManager = false
+    );
+
     # endregion
 }
