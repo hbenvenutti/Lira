@@ -25,6 +25,11 @@ public class PasswordTest
             expected: password.Trim(),
             actual: parsedPassword.ToString()
         );
+
+        Assert.NotEqual(
+            expected: password,
+            actual: parsedPassword.Hash
+        );
     }
 
     [Theory]
