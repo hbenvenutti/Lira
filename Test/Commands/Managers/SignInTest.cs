@@ -15,6 +15,8 @@ namespace Lira.Test.Commands.Managers;
 [ExcludeFromCodeCoverage]
 public class SignInTest
 {
+    # region ---- properties ---------------------------------------------------
+
     private readonly Mock<IManagerRepository> _managerRepositoryMock;
     private readonly Mock<ITokenService> _tokenServiceMock;
     private readonly IHashService _hashService = new HashService();
@@ -29,6 +31,7 @@ public class SignInTest
     private const string InvalidUsername = "2jdoe";
     private const string Token = "token";
 
+    # endregion
 
     # region ---- constructor --------------------------------------------------
 
