@@ -3,6 +3,8 @@ using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.Person;
+using Lira.Domain.Domains.PersonOrixa;
+using Lira.Domain.Domains.Phone;
 using Lira.Domain.Enums;
 
 namespace Lira.Data.Entities;
@@ -81,7 +83,13 @@ public class PersonEntity : BaseEntity
                 : (MediumDomain) entity.Medium,
 
             addresses: entity.Addresses?
-                .Select(address => (AddressDomain) address)
+                .Select(address => (AddressDomain) address),
+
+            phones: entity.Phones?
+                .Select(phone => (PhoneDomain) phone),
+
+            personOrixas: entity.PersonOrixas?
+                .Select(personOrixa => (PersonOrixaDomain) personOrixa)
         );
     }
 
