@@ -81,4 +81,10 @@ public readonly struct Password : IType<Password>
     public static implicit operator string(Password password) => password._value;
 
     # endregion
+
+    # region ---- overrides ----------------------------------------------------
+
+    public override string ToString() => _value;
+
+    # endregion
 }
