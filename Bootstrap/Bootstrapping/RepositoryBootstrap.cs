@@ -2,7 +2,9 @@ using Lira.Data.Repositories;
 using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Medium;
+using Lira.Domain.Domains.Orixa;
 using Lira.Domain.Domains.Person;
+using Lira.Domain.Domains.PersonOrixa;
 using Lira.Domain.Domains.Phone;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,5 +21,7 @@ public static class RepositoryBootstrap
         services.AddScoped<IMediumRepository, MediumRepository>();
         services.AddScoped<IAddressRepository, AddressRepository>();
         services.AddScoped<IPhoneRepository, PhoneRepository>();
+        services.AddScoped<IPersonOrixaRepository, PersonOrixaRepository>();
+        services.AddScoped<IOrixaRepository, OrixaRepository>();
     }
 }
