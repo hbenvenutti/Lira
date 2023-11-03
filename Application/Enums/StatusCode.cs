@@ -37,8 +37,8 @@ public enum StatusCode
     UfIsInvalid = 440007,
     ZipCodeIsInvalid = 440008,
     StreetIsInvalid = 440010,
+    PhoneIsInvalid = 440011,
 
-    IdIsInvalid = 440089,
     SeveralInvalidFields = 440090,
     AdminCodeIsInvalid = 440099,
     OneOrMoreSpecificationsFailed = 440100,
