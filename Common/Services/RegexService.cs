@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace Lira.Common.Structs;
+namespace Lira.Common.Services;
 
 public readonly partial struct RegexService
 {
