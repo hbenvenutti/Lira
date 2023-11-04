@@ -1,5 +1,6 @@
 using Lira.Data.Enums;
 using Lira.Domain.Domains.Address;
+using Lira.Domain.Domains.Email;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.Person;
@@ -89,7 +90,10 @@ public class PersonEntity : BaseEntity
                 .Select(phone => (PhoneDomain) phone),
 
             personOrixas: entity.PersonOrixas?
-                .Select(personOrixa => (PersonOrixaDomain) personOrixa)
+                .Select(personOrixa => (PersonOrixaDomain) personOrixa),
+
+            emails: entity.Emails?
+                .Select(email => (EmailDomain) email)
         );
     }
 
