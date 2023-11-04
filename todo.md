@@ -1,5 +1,8 @@
 # Todo
 - Move Text, Name and Email to Brazilian Types Library.
+- Move Password to Brazilian Types Library as Password Base abstract class.
+Hash behavior should be inherited from Password Base. And validation should be 
+implemented in the concrete class.
 
 ## First Delivery
 
