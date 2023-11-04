@@ -42,7 +42,7 @@ public class EmailRepository : IEmailRepository
 
     public async Task<EmailDomain?> FindByIdAsync(
         Guid id,
-        bool includePerson
+        bool includePerson = false
     )
     {
         var query = _dbContext.Emails
@@ -70,7 +70,7 @@ public class EmailRepository : IEmailRepository
 
     public async Task<EmailDomain?> FindByAddressAsync(
         Email address,
-        bool includePerson
+        bool includePerson = false
     )
     {
         var query = _dbContext.Emails
