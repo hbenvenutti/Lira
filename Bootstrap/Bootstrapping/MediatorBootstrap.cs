@@ -1,5 +1,6 @@
 using Lira.Application.CQRS.Accounts.Commands.Login;
 using Lira.Application.CQRS.Managers.Commands.CreateAdmin;
+using Lira.Application.CQRS.Managers.Commands.CreateManager;
 using Lira.Application.CQRS.People.Commands.CreatePerson;
 using Lira.Application.CQRS.People.Commands.RegisterPerson;
 using Lira.Application.CQRS.Phone.Commands.CreatePhone;
@@ -31,6 +32,10 @@ public static class MediatorBootstrap
 
         services.AddMediatR(mediatorServiceConfig => mediatorServiceConfig
             .RegisterServicesFromAssemblies(typeof(CreatePersonHandler).Assembly)
+        );
+
+        services.AddMediatR(mediatorServiceConfig => mediatorServiceConfig
+            .RegisterServicesFromAssemblies(typeof(CreateManagerHandler).Assembly)
         );
     }
 }
