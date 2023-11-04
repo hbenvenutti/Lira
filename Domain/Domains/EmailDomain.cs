@@ -1,9 +1,9 @@
+using BrazilianTypes.Types;
 using Lira.Domain.Domains.Base;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
-using BrazilianTypes.Types;
 
-namespace Lira.Domain.Domains.Emails;
+namespace Lira.Domain.Domains;
 
 public class EmailDomain : BaseDomain
 {

@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Domains\Emails\" />
       <Folder Include="Fees\" />
     </ItemGroup>
 

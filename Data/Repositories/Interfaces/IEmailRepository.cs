@@ -1,5 +1,5 @@
 using BrazilianTypes.Types;
-using Lira.Domain.Domains.Emails;
+using Lira.Domain.Domains;
 
 namespace Lira.Data.Repositories.Interfaces;
 
