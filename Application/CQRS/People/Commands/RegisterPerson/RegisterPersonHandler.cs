@@ -1,12 +1,12 @@
 using System.Net;
 using System.Transactions;
 using Lira.Application.CQRS.Address.Commands.CreateAddress;
+using Lira.Application.CQRS.Medium.Commands.CreateMedium;
 using Lira.Application.CQRS.People.Commands.CreatePerson;
 using Lira.Application.CQRS.PersonOrixa.Commands.CreatePersonOrixa;
 using Lira.Application.CQRS.Phone.Commands.CreatePhone;
 using Lira.Application.Enums;
 using Lira.Application.Responses;
-using Lira.Domain.Domains.Medium;
 using Lira.Domain.Religion.Enums;
 using MediatR;
 
@@ -18,18 +18,15 @@ public class RegisterPersonHandler
     # region ---- properties ---------------------------------------------------
 
     private readonly IMediator _mediator;
-    private readonly IMediumRepository _mediumRepository;
 
     # endregion
 
     # region ---- constructor --------------------------------------------------
 
     public RegisterPersonHandler(
-        IMediumRepository mediumRepository,
         IMediator mediator
     )
     {
-        _mediumRepository = mediumRepository;
         _mediator = mediator;
     }
 
@@ -121,11 +118,24 @@ public class RegisterPersonHandler
 
         if (request.IsMedium)
         {
-            await _mediumRepository.CreateAsync(MediumDomain.Create(
-                personId: personId,
-                request.FirstAmaci,
-                request.LastAmaci
-            ));
+            var mediumResult = await _mediator.Send(
+                request: new CreateMediumRequest(
+                    personId: personId,
+                    firstAmaci: request.FirstAmaci,
+                    lastAmaci: request.LastAmaci,
+                    validatePerson: false
+                ),
+                cancellationToken: cancellationToken
+            );
+
+            if (!mediumResult.IsSuccess)
+            {
+                return new Response<RegisterPersonResponse>(
+                    httpStatusCode: mediumResult.HttpStatusCode,
+                    statusCode: mediumResult.StatusCode,
+                    error: mediumResult.Error
+                );
+            }
         }
 
         # endregion
@@ -200,11 +210,9 @@ public class RegisterPersonHandler
 
         # endregion
 
-        // todo data validation
         // todo check email already exists
         // todo create email
         // todo create a handler for email
-        // todo create a handler for medium
 
         # region ---- success --------------------------------------------------
 

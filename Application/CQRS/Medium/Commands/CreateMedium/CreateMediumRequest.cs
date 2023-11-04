@@ -1,0 +1,25 @@
+using Lira.Application.Responses;
+using MediatR;
+
+namespace Lira.Application.CQRS.Medium.Commands.CreateMedium;
+
+public class CreateMediumRequest : IRequest<Response<CreateMediumResponse>>
+{
+    public Guid PersonId { get; init; }
+    public DateTime? FirstAmaci { get; init; }
+    public DateTime? LastAmaci { get; init; }
+    public bool ValidatePerson { get; init; }
+
+    public CreateMediumRequest(
+        Guid personId,
+        DateTime? firstAmaci,
+        DateTime? lastAmaci,
+        bool validatePerson = true
+    )
+    {
+        PersonId = personId;
+        FirstAmaci = firstAmaci;
+        LastAmaci = lastAmaci;
+        ValidatePerson = validatePerson;
+    }
+}
