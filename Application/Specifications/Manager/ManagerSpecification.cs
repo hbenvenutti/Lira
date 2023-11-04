@@ -7,18 +7,8 @@ public class ManagerSpecification : ISpecification<ManagerSpecificationDto>
 {
     # region ---- properties ---------------------------------------------------
 
-    public StatusCode StatusCode { get; set; }
-    public ICollection<string> ErrorMessages { get; init; }
-
-    # endregion
-
-    # region ---- constructor --------------------------------------------------
-
-    public ManagerSpecification(string username)
-    {
-        StatusCode = StatusCode.Empty;
-        ErrorMessages = new List<string>();
-    }
+    public StatusCode StatusCode { get; set; } = StatusCode.Empty;
+    public ICollection<string> ErrorMessages { get; init; } = new List<string>();
 
     # endregion
 
