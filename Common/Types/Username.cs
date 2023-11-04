@@ -58,7 +58,7 @@ public readonly struct Username : IType<Username>
 
     private static bool IsValid(string value)
     {
-        return RegexPatterns.Username().IsMatch(value);
+        return RegexService.UsernameRegex().IsMatch(value);
     }
 
     # endregion

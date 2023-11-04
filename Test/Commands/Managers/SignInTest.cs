@@ -4,7 +4,7 @@ using Lira.Application.CQRS.Accounts.Commands.Login;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Services.Token;
-using Lira.Common.Providers.Hash;
+using Lira.Common.Services.Hash;
 using Lira.Common.Types;
 using Lira.Domain.Authentication.Manager;
 using Lira.Domain.Domains.Manager;
@@ -19,7 +19,6 @@ public class SignInTest
 
     private readonly Mock<IManagerRepository> _managerRepositoryMock;
     private readonly Mock<ITokenService> _tokenServiceMock;
-    private readonly IHashService _hashService = new HashService();
 
     private readonly SignInHandler _handler;
 
@@ -82,7 +81,7 @@ public class SignInTest
             .ReturnsAsync(new ManagerDomain(
                 id: Guid.NewGuid(),
                 username: Username,
-                password: _hashService.Hash(Password),
+                password: HashService.Hash(input: Password),
                 personId: Guid.NewGuid(),
                 createdAt: DateTime.UtcNow
             ));

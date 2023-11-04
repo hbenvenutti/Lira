@@ -2,14 +2,14 @@ using System.Text.RegularExpressions;
 
 namespace Lira.Common.Structs;
 
-public readonly partial struct RegexPatterns
+public readonly partial struct RegexService
 {
     # region ---- numbers ------------------------------------------------------
 
     [GeneratedRegex(pattern: @"[^\d]")]
-    private static partial Regex OnlyNumbers();
+    private static partial Regex OnlyNumbersRegex();
 
-    public static string GetOnlyNumbers(string value) => OnlyNumbers()
+    public static string GetOnlyNumbers(string value) => OnlyNumbersRegex()
         .Replace(input: value, replacement: "");
 
     # endregion
@@ -17,9 +17,9 @@ public readonly partial struct RegexPatterns
     # region ---- remove white space -------------------------------------------
 
     [GeneratedRegex(pattern: @"\s+")]
-    private static partial Regex WhiteSpace();
+    private static partial Regex WhiteSpaceRegex();
 
-    public static string RemoveWhiteSpace(string value) => WhiteSpace()
+    public static string RemoveWhiteSpace(string value) => WhiteSpaceRegex()
         .Replace(input: value, replacement: "");
 
     # endregion
@@ -27,7 +27,7 @@ public readonly partial struct RegexPatterns
     # region ---- username -----------------------------------------------------
 
     [GeneratedRegex(@"^[a-zA-Z]\w{2,14}$")]
-    public static partial Regex Username();
+    public static partial Regex UsernameRegex();
 
     # endregion
 }

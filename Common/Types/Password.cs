@@ -1,5 +1,5 @@
 using BrazilianTypes.Interfaces;
-using Lira.Common.Providers.Hash;
+using Lira.Common.Services.Hash;
 
 namespace Lira.Common.Types;
 
@@ -10,7 +10,7 @@ public readonly struct Password : IType<Password>
     public static string ErrorMessage => "Password is invalid.";
 
     private readonly string _value;
-    public string Hash => new HashService().Hash(_value);
+    public string Hash => HashService.Hash(_value);
 
     # endregion
 
@@ -25,8 +25,8 @@ public readonly struct Password : IType<Password>
 
     # region ---- compare ------------------------------------------------------
 
-    public static bool Compare(string hash, Password password) =>
-        new HashService().Verify(password, hash);
+    public static bool Compare(string hash, Password password) => HashService
+        .Verify(text: password, hash);
 
     # endregion
 
