@@ -1,4 +1,5 @@
 # Todo
+- Move Text, Name and Email to Brazilian Types Library.
 
 ## First Delivery
 
@@ -31,3 +32,40 @@
 - [ ] Allowances
 - [ ] Entities Registration by Medium
 - [ ] Institution Laws
+
+# Tests to implement
+
+- [ ] Handlers
+  - [x] Login
+  - [x] Admin
+  - [ ] Manager
+  - [ ] Person
+  - [ ] Address
+  - [ ] Phone
+  - [ ] Email
+  - [ ] Registration
+
+- [ ] Repositories
+    - [ ] Manager
+    - [ ] Person
+    - [ ] Address
+    - [ ] Phone
+    - [ ] Email
+    - [ ] Orixa
+    - [ ] Person Orixa
+
+- [ ] Types
+    - [x] Password
+    - [ ] Email
+    - [ ] Username
+    - [ ] Name
+    - [ ] Text
+
+- [ ] Specifications
+    - [ ] Person
+    - [ ] Address
+    - [ ] Phone
+    - [ ] Password
+    - [ ] Manager
+    - [ ] Email
+    - [ ] Orixa

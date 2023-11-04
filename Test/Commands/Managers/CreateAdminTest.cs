@@ -2,10 +2,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using BrazilianTypes.Types;
 using Lira.Application.CQRS.Managers.Commands.CreateAdmin;
+using Lira.Application.CQRS.Managers.Commands.CreateManager;
+using Lira.Application.CQRS.People.Commands.CreatePerson;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
+using Lira.Application.Responses;
 using Lira.Domain.Domains.Manager;
-using Lira.Domain.Domains.Person;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Moq;
 
@@ -17,8 +20,8 @@ public class CreateAdminTest
     # region ---- mocks --------------------------------------------------------
 
     private readonly Mock<IConfiguration> _configurationMock;
-    private readonly Mock<IPersonRepository> _personRepositoryMock;
     private readonly Mock<IManagerRepository> _managerRepositoryMock;
+    private readonly Mock<IMediator> _mediatorMock;
     private readonly CreateAdminHandler _handler;
 
     # endregion
@@ -27,19 +30,17 @@ public class CreateAdminTest
 
     private readonly CreateAdminRequest _request;
 
-    private readonly Guid _personId = Guid.NewGuid();
-    private readonly Guid _managerId = Guid.NewGuid();
+    private static readonly Guid PersonId = Guid.NewGuid();
+    private static readonly Guid ManagerId = Guid.NewGuid();
+    private static readonly Cpf Cpf = Cpf.Generate();
 
     private const string Code = "validCode";
     private const string InvalidCode = "invalidCode";
 
-    private const string Password = "A1234567";
-
-    private readonly Cpf _cpf = Cpf.Generate();
-
     private const string Name = "john";
     private const string Surname = "doe";
     private const string Username = "jdoe";
+    private const string Password = "A1234567";
 
     # endregion
 
@@ -47,8 +48,8 @@ public class CreateAdminTest
 
     public CreateAdminTest()
     {
+        _mediatorMock = new Mock<IMediator>();
         _configurationMock = new Mock<IConfiguration>();
-        _personRepositoryMock = new Mock<IPersonRepository>();
         _managerRepositoryMock = new Mock<IManagerRepository>();
 
         SetupMocks();
@@ -56,7 +57,7 @@ public class CreateAdminTest
         _request = new CreateAdminRequest(
             name: Name,
             surname: Surname,
-            cpf: _cpf,
+            cpf: Cpf,
             code: Code,
             password: Password,
             passwordConfirmation: Password,
@@ -65,8 +66,8 @@ public class CreateAdminTest
 
          _handler = new CreateAdminHandler(
             _configurationMock.Object,
-            _personRepositoryMock.Object,
-            _managerRepositoryMock.Object
+            _managerRepositoryMock.Object,
+            _mediatorMock.Object
         );
     }
 
@@ -80,68 +81,36 @@ public class CreateAdminTest
             .Setup(config => config["Admin:Code"])
             .Returns(Code);
 
-        _personRepositoryMock
-            .Setup(repo => repo.CreateAsync(
-                It.IsAny<PersonDomain>()
-            ))
-            .ReturnsAsync(new PersonDomain(
-                id: _personId,
-                name: Name,
-                surname: Surname,
-                cpf: _cpf,
-                createdAt: DateTime.UtcNow
-            ));
-
-        _personRepositoryMock
-            .Setup(repo => repo.FindByCpfAsync(
-                It.IsAny<Cpf>(),
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ))
-            .ReturnsAsync(null as PersonDomain);
-
-        _personRepositoryMock
-            .Setup(repo => repo.FindByCpfAsync(
-                _cpf,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-            ))
-            .ReturnsAsync(new PersonDomain(
-                id: Guid.NewGuid(),
-                name: Name,
-                surname: Surname,
-                cpf: _cpf,
-                createdAt: DateTime.UtcNow
-            ));
-
-        _managerRepositoryMock
-            .Setup(repo => repo.CreateAsync(
-                It.IsAny<ManagerDomain>()
-            ))
-            .ReturnsAsync(new ManagerDomain(
-                id: _managerId,
-                username: Username,
-                password: Password,
-                personId: _personId,
-                createdAt: DateTime.UtcNow
-            ));
-
         _managerRepositoryMock
             .Setup(repo => repo.FindAllAsync(
                 false,
                 false
             ))
             .ReturnsAsync(new List<ManagerDomain>());
+
+        _mediatorMock
+            .Setup(mediator => mediator.Send(
+                It.IsAny<CreatePersonRequest>(),
+                CancellationToken.None
+            ))
+            .ReturnsAsync(new Response<CreatePersonResponse>(
+                isSuccess: true,
+                httpStatusCode: HttpStatusCode.Created,
+                statusCode: StatusCode.CreatedOne,
+                data: new CreatePersonResponse(id: PersonId)
+            ));
+
+        _mediatorMock
+            .Setup(mediator => mediator.Send(
+                It.IsAny<CreateManagerRequest>(),
+                CancellationToken.None
+            ))
+            .ReturnsAsync(new Response<CreateManagerResponse>(
+                isSuccess: true,
+                httpStatusCode: HttpStatusCode.Created,
+                statusCode: StatusCode.CreatedOne,
+                data: new CreateManagerResponse(id: ManagerId)
+            ));
     }
 
     # endregion
@@ -174,7 +143,7 @@ public class CreateAdminTest
         Assert.NotNull(response.Data);
 
         Assert.Equal(
-            expected: _managerId,
+            expected: ManagerId,
             actual: response.Data.Id
         );
     }
@@ -196,7 +165,7 @@ public class CreateAdminTest
                 ManagerDomain.Create(
                     username: Username,
                     password: Password,
-                    personId: _personId
+                    personId: PersonId
                 )
             });
 
@@ -238,7 +207,7 @@ public class CreateAdminTest
         var request = new CreateAdminRequest(
             name: Name,
             surname: Surname,
-            cpf: _cpf,
+            cpf: Cpf,
             code: InvalidCode,
             password: Password,
             passwordConfirmation: Password,
@@ -271,6 +240,58 @@ public class CreateAdminTest
 
         Assert.Null(response.Pagination);
         Assert.Null(response.Data);
+    }
+
+    # endregion
+
+    # region ---- should not create if person service fails --------------------
+
+    [Fact]
+    public async void ShouldNotCreateIfPersonFailsAsync()
+    {
+        _mediatorMock
+            .Setup(mediator => mediator.Send(
+                It.IsAny<CreatePersonRequest>(),
+                CancellationToken.None
+            ))
+            .ReturnsAsync(new Response<CreatePersonResponse>(
+                isSuccess: false,
+                httpStatusCode: HttpStatusCode.BadGateway,
+                statusCode: StatusCode.Empty
+            ));
+
+        var result = await _handler.Handle(
+            request: _request,
+            CancellationToken.None
+        );
+
+        Assert.False(result.IsSuccess);
+    }
+
+    # endregion
+
+    # region ---- should not create if manager service fails -------------------
+
+    [Fact]
+    public async void ShouldNotCreateIfManagerFailsAsync()
+    {
+        _mediatorMock
+            .Setup(mediator => mediator.Send(
+                It.IsAny<CreateManagerRequest>(),
+                CancellationToken.None
+            ))
+            .ReturnsAsync(new Response<CreateManagerResponse>(
+                isSuccess: false,
+                httpStatusCode: HttpStatusCode.BadGateway,
+                statusCode: StatusCode.Empty
+            ));
+
+        var result = await _handler.Handle(
+            request: _request,
+            CancellationToken.None
+        );
+
+        Assert.False(result.IsSuccess);
     }
 
     # endregion
