@@ -1,5 +1,5 @@
 using BrazilianTypes.Interfaces;
-using Lira.Common.Structs;
+using Lira.Common.Services;
 
 namespace Lira.Common.Types;
 
