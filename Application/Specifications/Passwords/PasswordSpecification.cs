@@ -1,7 +1,8 @@
 using Lira.Application.Enums;
 using Lira.Application.Messages;
+using Lira.Common.Types;
 
-namespace Lira.Application.Specifications.Password;
+namespace Lira.Application.Specifications.Passwords;
 
 public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
 {
@@ -23,7 +24,7 @@ public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
             return false;
         }
 
-        if (!Common.Types.Password.TryParse(data.Password, out _))
+        if (!Password.TryParse(data.Password, out _))
         {
             StatusCode = StatusCode.PasswordIsInvalid;
             ErrorMessages.Add(item: ManagerMessages.PasswordIsInvalid);

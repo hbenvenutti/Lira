@@ -4,7 +4,7 @@ using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Application.Specifications.Manager;
-using Lira.Application.Specifications.Password;
+using Lira.Application.Specifications.Passwords;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Person;
 using MediatR;

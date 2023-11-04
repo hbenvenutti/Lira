@@ -1,4 +1,4 @@
-namespace Lira.Application.Specifications.Password;
+namespace Lira.Application.Specifications.Passwords;
 
 public readonly struct PasswordSpecificationDto
 {
