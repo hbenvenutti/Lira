@@ -1,4 +1,4 @@
-using Lira.Data.Enums;
+using Lira.Domain.Enums;
 
 namespace Lira.Data.Entities;
 
@@ -7,7 +7,7 @@ public class EmailEntity : BaseEntity
     # region ---- properties --------------------------------------------------
 
     public required string Address { get; set; }
-    public required EmailEntityType Type { get; set; }
+    public required EmailType Type { get; set; }
 
     # endregion
 

@@ -1,6 +1,6 @@
 using Lira.Common.Extensions;
 using Lira.Data.Entities;
-using Lira.Data.Enums;
+using Lira.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,8 +8,8 @@ namespace Lira.Data.Config;
 
 public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 {
-    private static readonly string Personal = EmailEntityType.Personal.ToString();
-    private static readonly string Corporate = EmailEntityType.Corporate.ToString();
+    private static readonly string Personal = EmailType.Personal.ToString();
+    private static readonly string Corporate = EmailType.Corporate.ToString();
 
     public void Configure(EntityTypeBuilder<EmailEntity> builder)
     {
@@ -63,9 +63,9 @@ public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
             .HasColumnName("type")
             .HasConversion(
                 type => type.ToString(),
-                @string => @string.ParseToEnum<EmailEntityType>()
+                @string => @string.ParseToEnum<EmailType>()
             )
-            .HasDefaultValue(EmailEntityType.Personal)
+            .HasDefaultValue(EmailType.Personal)
             .HasColumnType("varchar(10)")
             .IsRequired();
 
