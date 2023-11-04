@@ -1,4 +1,3 @@
-using Lira.Application.CQRS.Accounts.Commands.RegisterMedium;
 using Lira.Application.Responses;
 using MediatR;
 
