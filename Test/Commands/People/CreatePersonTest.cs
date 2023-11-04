@@ -111,18 +111,23 @@ public class CreatePersonTest
 
         Assert.Equal(
             expected: HttpStatusCode.Created,
-            actual: response.HttpStatusCode)
-        ;
+            actual: response.HttpStatusCode
+        );
 
         Assert.Equal(
             expected: StatusCode.CreatedOne,
             actual: response.StatusCode
         );
 
+        Assert.NotNull(response.Data);
+
         Assert.Equal(
             expected: PersonId,
-            actual: response.Data?.Id
+            actual: response.Data.Id
         );
+
+        Assert.Null(response.Error);
+        Assert.Null(response.Pagination);
     }
 
     # endregion
@@ -168,6 +173,11 @@ public class CreatePersonTest
             actual: response.StatusCode
         );
 
+        Assert.Null(response.Data);
+        Assert.Null(response.Pagination);
+
+        Assert.NotNull(response.Error);
+
         Assert.Equal(
             expected: PersonMessages.PersonAlreadyExists,
             actual: response.Error?.Messages.FirstOrDefault()
@@ -176,7 +186,7 @@ public class CreatePersonTest
 
     # endregion
 
-    # region ---- test specification -------------------------------------------
+    # region ---- specification ------------------------------------------------
 
     [Fact]
     public async Task ShouldFailIfSpecificationIsNotSatisfiedAsync()
@@ -198,6 +208,10 @@ public class CreatePersonTest
             expected: HttpStatusCode.BadRequest,
             actual: response.HttpStatusCode
         );
+
+        Assert.Null(response.Data);
+        Assert.Null(response.Pagination);
+        Assert.NotNull(response.Error);
     }
 
     # endregion
