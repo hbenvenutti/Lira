@@ -39,34 +39,33 @@
 - [ ] Handlers
   - [x] Login
   - [x] Admin
-  - [ ] Manager
+  - [x] Manager
   - [x] Person
   - [ ] Address
   - [ ] Phone
   - [ ] Email
+  - [ ] Medium
+  - [ ] Person Orixa
   - [ ] Registration
 
 - [ ] Repositories
-    - [ ] Manager
-    - [ ] Person
-    - [ ] Address
-    - [ ] Phone
-    - [ ] Email
-    - [ ] Orixa
-    - [ ] Person Orixa
+  - [ ] Manager
+  - [ ] Person
+  - [ ] Address
+  - [ ] Phone
+  - [ ] Email
+  - [ ] Orixa
+  - [ ] Person Orixa
 
 - [ ] Types
-    - [x] Password
-    - [x] Email
-    - [ ] Username
-    - [x] Name
-    - [x] Text
+  - [x] Password
+  - [ ] Username
 
 - [ ] Specifications
-    - [ ] Person
-    - [ ] Address
-    - [ ] Phone
-    - [ ] Password
-    - [ ] Manager
-    - [ ] Email
-    - [ ] Orixa
+  - [ ] Person
+  - [ ] Address
+  - [ ] Phone
+  - [ ] Password
+  - [ ] Manager
+  - [ ] Email
+  - [ ] Orixa
