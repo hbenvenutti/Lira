@@ -1,6 +1,6 @@
 using Lira.Data.Repositories;
-using Lira.Data.Repositories.Interfaces;
 using Lira.Domain.Domains.Address;
+using Lira.Domain.Domains.Emails;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.Orixa;

@@ -1,8 +1,7 @@
 using BrazilianTypes.Types;
 using Lira.Data.Contexts;
 using Lira.Data.Entities;
-using Lira.Data.Repositories.Interfaces;
-using Lira.Domain.Domains;
+using Lira.Domain.Domains.Emails;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lira.Data.Repositories;

@@ -1,5 +1,5 @@
 using Lira.Data.Enums;
-using Lira.Domain.Domains;
+using Lira.Domain.Domains.Emails;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
 

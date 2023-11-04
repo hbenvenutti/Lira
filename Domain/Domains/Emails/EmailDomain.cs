@@ -3,7 +3,7 @@ using Lira.Domain.Domains.Base;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
 
-namespace Lira.Domain.Domains;
+namespace Lira.Domain.Domains.Emails;
 
 public class EmailDomain : BaseDomain
 {

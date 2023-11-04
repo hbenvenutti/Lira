@@ -1,6 +1,7 @@
 using BrazilianTypes.Types;
 using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Base;
+using Lira.Domain.Domains.Emails;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.PersonOrixa;

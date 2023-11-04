@@ -1,7 +1,6 @@
 using BrazilianTypes.Types;
-using Lira.Domain.Domains;
 
-namespace Lira.Data.Repositories.Interfaces;
+namespace Lira.Domain.Domains.Emails;
 
 public interface IEmailRepository
 {
