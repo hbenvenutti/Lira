@@ -3,59 +3,38 @@ using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Common.Types;
 
-namespace Lira.Application.Specifications;
+namespace Lira.Application.Specifications.Person;
 
-public class PersonSpecification : ISpecification
+public class PersonSpecification : ISpecification<PersonSpecificationDto>
 {
     # region ---- properties ---------------------------------------------------
 
-    private readonly string _name;
-    private readonly string _surname;
-    private readonly string _cpf;
-
-    public StatusCode StatusCode { get; set; }
-    public ICollection<string> ErrorMessages { get; init; }
-
-    # endregion
-
-    # region ---- constructor --------------------------------------------------
-
-    public PersonSpecification(
-        string name,
-        string surname,
-        string cpf
-    )
-    {
-        _name = name;
-        _surname = surname;
-        _cpf = cpf;
-        StatusCode = StatusCode.Empty;
-        ErrorMessages = new List<string>();
-    }
+    public StatusCode StatusCode { get; set; } = StatusCode.Empty;
+    public ICollection<string> ErrorMessages { get; init; } = new List<string>();
 
     # endregion
 
     # region ---- specification ------------------------------------------------
 
-    public bool IsSatisfiedBy()
+    public bool IsSatisfiedBy(PersonSpecificationDto data)
     {
         var errors = 0;
 
-        if (!Name.TryParse(_name, out _))
+        if (!Name.TryParse(data.Name, out _))
         {
             StatusCode = StatusCode.NameIsInvalid;
             ErrorMessages.Add(item: NameErrorMessages.NameIsInvalid);
             errors++;
         }
 
-        if (!Name.TryParse(_surname, out _))
+        if (!Name.TryParse(data.Surname, out _))
         {
             StatusCode = StatusCode.SurnameIsInvalid;
             ErrorMessages.Add(item: NameErrorMessages.SurnameIsInvalid);
             errors++;
         }
 
-        if (!Cpf.TryParse(_cpf, out _))
+        if (!Cpf.TryParse(data.Cpf, out _))
         {
             StatusCode = StatusCode.CpfIsInvalid;
             ErrorMessages.Add(item: Cpf.ErrorMessage);
