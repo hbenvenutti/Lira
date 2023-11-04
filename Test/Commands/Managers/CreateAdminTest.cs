@@ -235,7 +235,7 @@ public class CreateAdminTest
 
         Assert.Equal(
             expected: ManagerMessages.AdminCodeIsInvalid,
-            actual: response.Error?.Messages.First()
+            actual: response.Error?.Messages.FirstOrDefault()
         );
 
         Assert.Null(response.Pagination);
@@ -266,6 +266,8 @@ public class CreateAdminTest
         );
 
         Assert.False(result.IsSuccess);
+        Assert.Null(result.Data);
+        Assert.Null(result.Pagination);
     }
 
     # endregion
@@ -292,6 +294,8 @@ public class CreateAdminTest
         );
 
         Assert.False(result.IsSuccess);
+        Assert.Null(result.Data);
+        Assert.Null(result.Pagination);
     }
 
     # endregion
