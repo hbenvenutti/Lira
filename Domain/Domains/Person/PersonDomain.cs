@@ -1,6 +1,7 @@
 using BrazilianTypes.Types;
 using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Base;
+using Lira.Domain.Domains.Email;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.PersonOrixa;
@@ -27,6 +28,7 @@ public class PersonDomain : BaseDomain
     public IEnumerable<AddressDomain>? Addresses { get; set; }
     public IEnumerable<PhoneDomain>? Phones { get; set; }
     public IEnumerable<PersonOrixaDomain>? PersonOrixas { get; set; }
+    public IEnumerable<EmailDomain>? Emails { get; set; }
 
     # endregion
 
@@ -38,6 +40,7 @@ public class PersonDomain : BaseDomain
         Cpf cpf,
         Name name,
         Name surname,
+        IEnumerable<EmailDomain>? emails = null,
         IEnumerable<PhoneDomain>? phones = null,
         IEnumerable<PersonOrixaDomain>? personOrixas = null,
         ManagerDomain? manager = null,
@@ -52,6 +55,7 @@ public class PersonDomain : BaseDomain
         Cpf = cpf;
         Name = name;
         Surname = surname;
+        Emails = emails;
         Phones = phones;
         PersonOrixas = personOrixas;
         Manager = manager;
