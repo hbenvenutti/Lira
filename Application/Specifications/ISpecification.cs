@@ -2,9 +2,9 @@ using Lira.Application.Enums;
 
 namespace Lira.Application.Specifications;
 
-public interface ISpecification
+public interface ISpecification<in T> where T : struct
 {
     StatusCode StatusCode { get; protected set; }
     ICollection<string> ErrorMessages { get; init; }
-    bool IsSatisfiedBy();
+    bool IsSatisfiedBy(T data);
 }
