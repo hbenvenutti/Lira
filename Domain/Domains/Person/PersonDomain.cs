@@ -1,5 +1,4 @@
 using BrazilianTypes.Types;
-using Lira.Common.Types;
 using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Base;
 using Lira.Domain.Domains.Manager;
