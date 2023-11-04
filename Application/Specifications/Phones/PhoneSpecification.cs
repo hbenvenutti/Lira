@@ -1,6 +1,6 @@
+using BrazilianTypes.Types;
 using Lira.Application.Enums;
-using PhoneType = BrazilianTypes.Types.Phone;
-namespace Lira.Application.Specifications.Phone;
+namespace Lira.Application.Specifications.Phones;
 
 public class PhoneSpecification : ISpecification<PhoneSpecificationDto>
 {
@@ -15,10 +15,10 @@ public class PhoneSpecification : ISpecification<PhoneSpecificationDto>
 
     public bool IsSatisfiedBy(PhoneSpecificationDto data)
     {
-        if (!PhoneType.TryParse(data.Phone, out _))
+        if (!Phone.TryParse(data.Phone, out _))
         {
             StatusCode = StatusCode.PhoneIsInvalid;
-            ErrorMessages.Add(PhoneType.ErrorMessage);
+            ErrorMessages.Add(Phone.ErrorMessage);
 
             return false;
         }

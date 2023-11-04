@@ -1,4 +1,4 @@
-namespace Lira.Application.Specifications.Phone;
+namespace Lira.Application.Specifications.Phones;
 
 public readonly struct PhoneSpecificationDto
 {

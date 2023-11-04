@@ -3,7 +3,7 @@ using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
-using Lira.Application.Specifications.Phone;
+using Lira.Application.Specifications.Phones;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Domains.Phone;
 using MediatR;
