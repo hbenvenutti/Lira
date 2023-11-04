@@ -22,7 +22,7 @@ public class TokenConfig
 
     public TokenConfig(IConfiguration configuration)
     {
-        PrivateKey = configuration["Token:PrivateKey"] 
+        PrivateKey = configuration["Token:PrivateKey"]
             ?? throw new MissingEnvironmentVariableException(nameof(PrivateKey));
 
         Issuer = configuration["Token:Issuer"]
