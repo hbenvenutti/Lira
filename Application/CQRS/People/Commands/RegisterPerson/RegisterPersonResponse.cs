@@ -1,4 +1,4 @@
-namespace Lira.Application.CQRS.Accounts.Commands.RegisterMedium;
+namespace Lira.Application.CQRS.People.Commands.RegisterPerson;
 
 public class RegisterPersonResponse
 {
