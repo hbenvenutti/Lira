@@ -6,8 +6,6 @@ using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
-using Lira.Application.Specifications.Manager;
-using Lira.Application.Specifications.Password;
 using Lira.Common.Exceptions;
 using Lira.Domain.Domains.Manager;
 using MediatR;
@@ -118,6 +116,15 @@ public class CreateAdminHandler
             ),
             cancellationToken
         );
+
+        if (!managerResult.IsSuccess)
+        {
+            return new Response<CreateAdminResponseDto>(
+                httpStatusCode: managerResult.HttpStatusCode,
+                statusCode: managerResult.StatusCode,
+                error: managerResult.Error
+            );
+        }
 
         var managerId = managerResult.Data?.Id
                         ?? throw new NullReferenceException();
