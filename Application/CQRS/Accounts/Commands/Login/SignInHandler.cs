@@ -1,5 +1,4 @@
 using System.Net;
-using Lira.Application.CQRS.Accounts.Commands.Login.Dto;
 using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;

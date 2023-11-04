@@ -1,4 +1,4 @@
-namespace Lira.Application.CQRS.Accounts.Commands.Login.Dto;
+namespace Lira.Application.CQRS.Accounts.Commands.Login;
 
 public class SignInResponseDto
 {
