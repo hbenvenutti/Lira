@@ -9,7 +9,6 @@ public class CreatePersonRequest : IRequest<Response<CreatePersonResponse>>
 
     public string FirstName { get; init; }
     public string Surname { get; init; }
-    public string PhoneNumber { get; init; }
     public string Document { get; init; }
 
     # endregion
@@ -19,13 +18,11 @@ public class CreatePersonRequest : IRequest<Response<CreatePersonResponse>>
     public CreatePersonRequest(
         string firstName,
         string surname,
-        string phoneNumber,
         string document
     )
     {
         FirstName = firstName;
         Surname = surname;
-        PhoneNumber = phoneNumber;
         Document = document;
     }
 
