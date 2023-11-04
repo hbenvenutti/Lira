@@ -1,9 +1,8 @@
 using BrazilianTypes.Types;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
-using Lira.Common.Types;
 
-namespace Lira.Application.Specifications.Adress;
+namespace Lira.Application.Specifications.Address;
 
 public class AddressSpecification : ISpecification<AddressSpecificationDto>
 {
