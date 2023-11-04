@@ -122,7 +122,7 @@ public class CreateManagerHandler :
             password: request.Password
         );
 
-        await _managerRepository.CreateAsync(manager);
+        manager = await _managerRepository.CreateAsync(manager);
 
         # endregion
 
