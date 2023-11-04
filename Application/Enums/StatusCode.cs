@@ -52,6 +52,7 @@ public enum StatusCode
 
     AdminAlreadyExists = 540001,
     PersonAlreadyExists = 540002,
+    UsernameAlreadyExists = 540003,
 
     # endregion
 
