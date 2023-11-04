@@ -1,15 +1,15 @@
 using Lira.Domain.Domains.Base;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
-using EmailValue = BrazilianTypes.Types.Email;
+using BrazilianTypes.Types;
 
-namespace Lira.Domain.Domains.Email;
+namespace Lira.Domain.Domains.Emails;
 
 public class EmailDomain : BaseDomain
 {
     # region ---- properties --------------------------------------------------
 
-    public EmailValue Address { get; set; }
+    public Email Address { get; set; }
     public EmailType Type { get; set; }
 
     # endregion
@@ -25,7 +25,7 @@ public class EmailDomain : BaseDomain
 
     public EmailDomain(
         Guid id,
-        EmailValue address,
+        Email address,
         EmailType type,
         Guid personId,
         DateTime createdAt,
@@ -52,7 +52,7 @@ public class EmailDomain : BaseDomain
     # region ---- factory ------------------------------------------------------
 
     public static EmailDomain Create(
-        EmailValue address,
+        Email address,
         EmailType type,
         Guid personId
     ) => new(
