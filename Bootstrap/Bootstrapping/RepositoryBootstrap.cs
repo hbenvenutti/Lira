@@ -1,4 +1,5 @@
 using Lira.Data.Repositories;
+using Lira.Data.Repositories.Interfaces;
 using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Medium;
@@ -23,5 +24,6 @@ public static class RepositoryBootstrap
         services.AddScoped<IPhoneRepository, PhoneRepository>();
         services.AddScoped<IPersonOrixaRepository, PersonOrixaRepository>();
         services.AddScoped<IOrixaRepository, OrixaRepository>();
+        services.AddScoped<IEmailRepository, EmailRepository>();
     }
 }
