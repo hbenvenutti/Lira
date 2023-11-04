@@ -179,7 +179,7 @@ public class CreatePersonTest
     # region ---- test specification -------------------------------------------
 
     [Fact]
-    public async Task ShouldReturnBadRequestWhenSpecificationFailsAsync()
+    public async Task ShouldFailIfSpecificationIsNotSatisfiedAsync()
     {
         _request = new CreatePersonRequest(
             firstName: string.Empty,
