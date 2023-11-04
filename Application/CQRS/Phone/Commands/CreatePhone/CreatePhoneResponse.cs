@@ -1,4 +1,4 @@
-namespace Lira.Application.CQRS.Phone.Commands;
+namespace Lira.Application.CQRS.Phone.Commands.CreatePhone;
 
 public class CreatePhoneResponse
 {

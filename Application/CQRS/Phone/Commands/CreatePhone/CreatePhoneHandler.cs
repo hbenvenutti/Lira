@@ -8,7 +8,7 @@ using Lira.Domain.Domains.Person;
 using Lira.Domain.Domains.Phone;
 using MediatR;
 
-namespace Lira.Application.CQRS.Phone.Commands;
+namespace Lira.Application.CQRS.Phone.Commands.CreatePhone;
 
 public class CreatePhoneHandler
     : IRequestHandler<CreatePhoneRequest, Response<CreatePhoneResponse>>

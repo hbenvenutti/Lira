@@ -1,7 +1,7 @@
 using Lira.Application.Responses;
 using MediatR;
 
-namespace Lira.Application.CQRS.Phone.Commands;
+namespace Lira.Application.CQRS.Phone.Commands.CreatePhone;
 
 public class CreatePhoneRequest : IRequest<Response<CreatePhoneResponse>>
 {
