@@ -3,7 +3,7 @@ using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
-using Lira.Application.Specifications;
+using Lira.Application.Specifications.Phone;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Domains.Phone;
 using MediatR;
@@ -39,9 +39,11 @@ public class CreatePhoneHandler
     {
         # region ---- specification --------------------------------------------
 
-        var specification = new PhoneSpecification(request.PhoneNumber);
+        var specification = new PhoneSpecification();
 
-        if (!specification.IsSatisfiedBy())
+        var specificationData = new PhoneSpecificationDto(request.PhoneNumber);
+
+        if (!specification.IsSatisfiedBy(specificationData))
         {
             return new Response<CreatePhoneResponse>(
                 httpStatusCode: HttpStatusCode.BadRequest,
