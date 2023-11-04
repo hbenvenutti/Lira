@@ -189,7 +189,7 @@ public class CreateAdminTest
         Assert.NotNull(response.Error);
 
         Assert.Equal(
-            expected: AccountsMessages.AdminAlreadyExists,
+            expected: ManagerMessages.AdminAlreadyExists,
             actual: response.Error?.Messages.First()
         );
 
@@ -234,7 +234,7 @@ public class CreateAdminTest
         Assert.NotNull(response.Error);
 
         Assert.Equal(
-            expected: AccountsMessages.AdminCodeIsInvalid,
+            expected: ManagerMessages.AdminCodeIsInvalid,
             actual: response.Error?.Messages.First()
         );
 

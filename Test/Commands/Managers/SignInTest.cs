@@ -164,7 +164,7 @@ public class SignInTest
         Assert.False(response.IsSuccess);
         Assert.NotNull(response.Error);
         Assert.Equal(
-            expected: AccountsMessages.InvalidUsernameOrPassword,
+            expected: ManagerMessages.InvalidUsernameOrPassword,
             actual: response.Error?.Messages.First()
         );
 
@@ -209,7 +209,7 @@ public class SignInTest
         Assert.False(response.IsSuccess);
         Assert.NotNull(response.Error);
         Assert.Equal(
-            expected: AccountsMessages.InvalidUsernameOrPassword,
+            expected: ManagerMessages.InvalidUsernameOrPassword,
             actual: response.Error?.Messages.First()
         );
 

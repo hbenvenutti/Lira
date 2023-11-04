@@ -18,7 +18,7 @@ public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
         if (data.Password != data.Confirmation)
         {
             StatusCode = StatusCode.PasswordsDoNotMatch;
-            ErrorMessages.Add(item: AccountsMessages.PasswordsDoNotMatch);
+            ErrorMessages.Add(item: ManagerMessages.PasswordsDoNotMatch);
 
             return false;
         }
@@ -26,7 +26,7 @@ public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
         if (!Common.Types.Password.TryParse(data.Password, out _))
         {
             StatusCode = StatusCode.PasswordIsInvalid;
-            ErrorMessages.Add(item: AccountsMessages.PasswordIsInvalid);
+            ErrorMessages.Add(item: ManagerMessages.PasswordIsInvalid);
 
             return false;
         }

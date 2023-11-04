@@ -63,7 +63,7 @@ public class CreatePhoneHandler
             return new Response<CreatePhoneResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
                 statusCode: StatusCode.PersonNotFound,
-                error: new ErrorDto(message: ResourceMessages.PersonNotFound)
+                error: new ErrorDto(message: NotFoundMessages.PersonNotFound)
             );
         }
 

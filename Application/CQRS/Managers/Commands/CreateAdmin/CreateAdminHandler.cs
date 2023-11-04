@@ -58,7 +58,7 @@ public class CreateAdminHandler
                 httpStatusCode: HttpStatusCode.BadRequest,
                 statusCode: StatusCode.AdminCodeIsInvalid,
                 error: new ErrorDto(
-                    message: AccountsMessages.AdminCodeIsInvalid
+                    message: ManagerMessages.AdminCodeIsInvalid
                 )
             );
         }
@@ -75,7 +75,7 @@ public class CreateAdminHandler
                 httpStatusCode: HttpStatusCode.UnprocessableEntity,
                 statusCode: StatusCode.AdminAlreadyExists,
                 error: new ErrorDto(
-                    message: AccountsMessages.AdminAlreadyExists
+                    message: ManagerMessages.AdminAlreadyExists
                 )
             );
         }
