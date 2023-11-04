@@ -1,7 +1,7 @@
 using BrazilianTypes.Types;
 using Lira.Data.Enums;
 using Lira.Domain.Domains.Person;
-using Lira.Domain.Domains.Phone;
+using Lira.Domain.Domains.Phones;
 using Lira.Domain.Enums;
 
 namespace Lira.Data.Entities;

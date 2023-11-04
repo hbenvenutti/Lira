@@ -6,7 +6,7 @@ using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.Orixa;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Domains.PersonOrixa;
-using Lira.Domain.Domains.Phone;
+using Lira.Domain.Domains.Phones;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lira.Bootstrap.Bootstrapping;

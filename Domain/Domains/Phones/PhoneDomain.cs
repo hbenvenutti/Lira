@@ -1,9 +1,9 @@
+using BrazilianTypes.Types;
 using Lira.Domain.Domains.Base;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
-using PhoneType = BrazilianTypes.Types.Phone;
 
-namespace Lira.Domain.Domains.Phone;
+namespace Lira.Domain.Domains.Phones;
 
 public class PhoneDomain : BaseDomain
 {
@@ -24,7 +24,7 @@ public class PhoneDomain : BaseDomain
     # region ---- constructor --------------------------------------------------
 
     public PhoneDomain(
-        PhoneType phone,
+        Phone phone,
         Guid id,
         DateTime createdAt,
         Guid personId,
@@ -50,7 +50,7 @@ public class PhoneDomain : BaseDomain
     # region ---- factory ------------------------------------------------------
 
     public static PhoneDomain Create(
-        PhoneType phone,
+        Phone phone,
         Guid personId
     )
     {

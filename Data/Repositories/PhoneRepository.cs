@@ -1,6 +1,6 @@
 using Lira.Data.Contexts;
 using Lira.Data.Entities;
-using Lira.Domain.Domains.Phone;
+using Lira.Domain.Domains.Phones;
 
 namespace Lira.Data.Repositories;
 

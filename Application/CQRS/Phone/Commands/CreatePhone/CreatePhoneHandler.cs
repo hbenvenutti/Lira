@@ -5,7 +5,7 @@ using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Application.Specifications.Phones;
 using Lira.Domain.Domains.Person;
-using Lira.Domain.Domains.Phone;
+using Lira.Domain.Domains.Phones;
 using MediatR;
 
 namespace Lira.Application.CQRS.Phone.Commands.CreatePhone;

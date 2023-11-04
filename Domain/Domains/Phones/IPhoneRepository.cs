@@ -1,4 +1,4 @@
-namespace Lira.Domain.Domains.Phone;
+namespace Lira.Domain.Domains.Phones;
 
 public interface IPhoneRepository
 {

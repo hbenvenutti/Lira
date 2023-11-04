@@ -5,7 +5,7 @@ using Lira.Domain.Domains.Emails;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.PersonOrixa;
-using Lira.Domain.Domains.Phone;
+using Lira.Domain.Domains.Phones;
 using Lira.Domain.Enums;
 
 namespace Lira.Domain.Domains.Person;
