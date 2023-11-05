@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Lira.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Lira.Data.Config;
 
+[ExcludeFromCodeCoverage]
 public class PhoneEntityConfig : IEntityTypeConfiguration<PhoneEntity>
 {
     public void Configure(EntityTypeBuilder<PhoneEntity> builder)

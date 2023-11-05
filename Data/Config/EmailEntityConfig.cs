@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Lira.Common.Extensions;
 using Lira.Data.Entities;
 using Lira.Domain.Enums;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Lira.Data.Config;
 
+[ExcludeFromCodeCoverage]
 public class EmailEntityConfig : IEntityTypeConfiguration<EmailEntity>
 {
     private static readonly string Personal = EmailType.Personal.ToString();
