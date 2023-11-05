@@ -12,8 +12,8 @@ public class CreateMediumRequest : IRequest<Response<CreateMediumResponse>>
 
     public CreateMediumRequest(
         Guid personId,
-        DateTime? firstAmaci,
-        DateTime? lastAmaci,
+        DateTime? firstAmaci = null,
+        DateTime? lastAmaci = null,
         bool validatePerson = true
     )
     {

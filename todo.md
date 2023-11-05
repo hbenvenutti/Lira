@@ -27,7 +27,7 @@
   - [x] Address
   - [ ] Phone
   - [ ] Email
-  - [ ] Medium
+  - [x] Medium
   - [x] Person Orixa
   - [x] Registration
 
