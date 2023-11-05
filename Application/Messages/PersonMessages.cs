@@ -7,4 +7,6 @@ public readonly struct PersonMessages
         "Name must be only letters and have more than 2 characters";
     public const string InvalidSurname =
         "Surname must be only letters and have more than 2 characters";
+    public const string InvalidEmail = "Invalid email";
+    public const string InvalidPhone = "Invalid phone";
 }

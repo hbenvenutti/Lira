@@ -1,5 +1,7 @@
 using BrazilianTypes.Types;
 using Lira.Application.Enums;
+using Lira.Application.Messages;
+
 namespace Lira.Application.Specifications.Phones;
 
 public class PhoneSpecification : ISpecification<PhoneSpecificationDto>
@@ -7,7 +9,7 @@ public class PhoneSpecification : ISpecification<PhoneSpecificationDto>
     # region ---- properties ---------------------------------------------------
 
     public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; init; } = new List<string>();
+    public ICollection<string> ErrorMessages { get; } = new List<string>();
 
     # endregion
 
@@ -18,7 +20,7 @@ public class PhoneSpecification : ISpecification<PhoneSpecificationDto>
         if (!Phone.TryParse(data.Phone, out _))
         {
             StatusCode = StatusCode.PhoneIsInvalid;
-            ErrorMessages.Add(Phone.ErrorMessage);
+            ErrorMessages.Add(PersonMessages.InvalidPhone);
 
             return false;
         }

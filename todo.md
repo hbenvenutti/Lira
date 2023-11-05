@@ -47,11 +47,11 @@
 - [ ] Specifications
   - [x] Person
   - [x] Address
-  - [ ] Phone
+  - [x] Phone
   - [x] Password
   - [x] Manager
   - [ ] Email
-  - [ ] Orixa
+  - Orixa: Does not exist.
 
 ---
 
