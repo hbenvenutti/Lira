@@ -8,7 +8,7 @@ public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
 {
     # region ---- properties ---------------------------------------------------
     public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; init; } = new List<string>();
+    public ICollection<string> ErrorMessages { get; } = new List<string>();
 
     # endregion
 
