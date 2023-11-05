@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using BrazilianTypes.Types;
 using Lira.Application.CQRS.Address.Commands.CreateAddress;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
@@ -29,9 +28,6 @@ public class CreateAddressTest
     private const string ZipCode = "00000-000";
 
     private static readonly Guid PersonId = Guid.NewGuid();
-    private static readonly Name PersonName = "John";
-    private static readonly Name PersonSurname = "Doe";
-    private static readonly Cpf PersonCpf = Cpf.Generate();
 
     # endregion
 
@@ -80,13 +76,7 @@ public class CreateAddressTest
                     false
                 )
             )
-            .ReturnsAsync(new PersonDomain(
-                id: PersonId,
-                name: PersonName,
-                surname: PersonSurname,
-                cpf: PersonCpf,
-                createdAt: DateTime.Now
-            ));
+            .ReturnsAsync(null as PersonDomain);
 
         _addressRepository
             .Setup(repository => repository
@@ -139,21 +129,6 @@ public class CreateAddressTest
     [Fact]
     public async void ShouldReturnPersonNotFoundAsync()
     {
-        _personRepository
-            .Setup(repository => repository
-                .FindByIdAsync(
-                    It.IsAny<Guid>(),
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                )
-            )
-            .ReturnsAsync(null as PersonDomain);
-
         var request = new CreateAddressRequest(
             street: Street,
             number: Number,
@@ -161,7 +136,8 @@ public class CreateAddressTest
             city: City,
             state: State,
             zipCode: ZipCode,
-            personId: PersonId
+            personId: PersonId,
+            validatePerson: true
         );
 
         var response = await _handler.Handle(request, CancellationToken.None);
