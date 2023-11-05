@@ -63,7 +63,7 @@ public class CreatePersonHandler :
             return new Response<CreatePersonResponse>(
                 httpStatusCode: HttpStatusCode.Conflict,
                 statusCode: StatusCode.PersonAlreadyExists,
-                error: new ErrorDto(PersonMessages.PersonAlreadyExists)
+                error: new ErrorDto(message: ConflictMessages.PersonAlreadyExists)
             );
         }
 

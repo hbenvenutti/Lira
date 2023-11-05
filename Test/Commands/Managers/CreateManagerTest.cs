@@ -213,7 +213,7 @@ public class CreateManagerTest
         Assert.NotNull(response.Error);
 
         Assert.Equal(
-            expected: ManagerMessages.UsernameIsInUse,
+            expected: ConflictMessages.UsernameIsInUse,
             actual: response.Error?.Messages.FirstOrDefault()
         );
 

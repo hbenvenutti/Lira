@@ -110,7 +110,7 @@ public class CreateManagerHandler :
                 error: new ErrorDto(
                     messages: new List<string>
                     {
-                        ManagerMessages.UsernameIsInUse
+                        ConflictMessages.UsernameIsInUse
                     }
                 )
             );

@@ -179,7 +179,7 @@ public class CreatePersonTest
         Assert.NotNull(response.Error);
 
         Assert.Equal(
-            expected: PersonMessages.PersonAlreadyExists,
+            expected: ConflictMessages.PersonAlreadyExists,
             actual: response.Error?.Messages.FirstOrDefault()
         );
     }
