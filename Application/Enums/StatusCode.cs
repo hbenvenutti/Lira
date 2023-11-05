@@ -41,6 +41,9 @@ public enum StatusCode
     ZipCodeIsInvalid = 440008,
     StreetIsInvalid = 440010,
     PhoneIsInvalid = 440011,
+    AddressNumberIsInvalid = 440012,
+    NeighborhoodIsInvalid = 440013,
+    CityIsInvalid = 440014,
 
     SeveralInvalidFields = 440090,
     AdminCodeIsInvalid = 440099,

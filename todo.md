@@ -26,7 +26,7 @@
   - [x] Admin
   - [x] Manager
   - [x] Person
-  - [ ] Address
+  - [x] Address
   - [ ] Phone
   - [ ] Email
   - [ ] Medium
@@ -48,7 +48,7 @@
 
 - [ ] Specifications
   - [ ] Person
-  - [ ] Address
+  - [x] Address
   - [ ] Phone
   - [ ] Password
   - [ ] Manager
