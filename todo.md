@@ -44,7 +44,7 @@
 
 - [ ] Types
   - [x] Password
-  - [ ] Username
+  - [x] Username
 
 - [ ] Specifications
   - [x] Person
