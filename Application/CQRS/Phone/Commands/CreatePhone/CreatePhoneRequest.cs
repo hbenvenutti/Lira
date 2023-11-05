@@ -7,13 +7,16 @@ public class CreatePhoneRequest : IRequest<Response<CreatePhoneResponse>>
 {
     public Guid PersonId { get; init; }
     public string PhoneNumber { get; init; }
+    public bool ValidatePerson { get; init; }
 
     public CreatePhoneRequest(
         string phoneNumber,
-        Guid personId
+        Guid personId,
+        bool validatePerson = true
     )
     {
         PhoneNumber = phoneNumber;
         PersonId = personId;
+        ValidatePerson = validatePerson;
     }
 }

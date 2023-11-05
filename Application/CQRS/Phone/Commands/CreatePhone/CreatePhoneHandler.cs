@@ -56,6 +56,8 @@ public class CreatePhoneHandler
 
         # region ---- person validation ----------------------------------------
 
+        if (!request.ValidatePerson) { goto phone; }
+
         var person = await _personRepository.FindByIdAsync(request.PersonId);
 
         if (person is null)
@@ -71,10 +73,12 @@ public class CreatePhoneHandler
 
         # region ---- phone ----------------------------------------------------
 
+        phone:
+
         var phone = await _phoneRepository.CreateAsync(
             PhoneDomain.Create(
-                request.PhoneNumber,
-                person.Id
+                phone: request.PhoneNumber,
+                personId: request.PersonId
             )
         );
 

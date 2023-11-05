@@ -1,4 +1,5 @@
 using Lira.Application.Responses;
+using Lira.Domain.Enums;
 using MediatR;
 
 namespace Lira.Application.CQRS.People.Commands.RegisterPerson;
@@ -10,6 +11,7 @@ public class RegisterPersonRequest : IRequest<Response<RegisterPersonResponse>>
     public string FirstName { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
+    public EmailType? EmailType { get; init; }
     public string PhoneNumber { get; init; }
     public string Document { get; init; }
 
@@ -51,6 +53,7 @@ public class RegisterPersonRequest : IRequest<Response<RegisterPersonResponse>>
         Guid? frontOrixaId,
         Guid? adjunctOrixaId,
         Guid? ancestralOrixaId,
+        EmailType? emailType,
         bool isMedium = false
     )
     {
@@ -71,6 +74,7 @@ public class RegisterPersonRequest : IRequest<Response<RegisterPersonResponse>>
         FrontOrixaId = frontOrixaId;
         AdjunctOrixaId = adjunctOrixaId;
         AncestralOrixaId = ancestralOrixaId;
+        EmailType = emailType;
         IsMedium = isMedium;
     }
 

@@ -9,18 +9,18 @@ public class CreateEmailRequest : IRequest<Response<CreateEmailResponse>>
     public string Address { get; init; }
     public EmailType Type { get; init; }
     public Guid PersonId { get; init; }
-    public bool ValidatePersonId { get; init; }
+    public bool ValidatePerson { get; init; }
 
     public CreateEmailRequest(
         string address,
         EmailType type,
         Guid personId,
-        bool validatePersonId = true
+        bool validatePerson = true
     )
     {
         Address = address;
         Type = type;
         PersonId = personId;
-        ValidatePersonId = validatePersonId;
+        ValidatePerson = validatePerson;
     }
 }

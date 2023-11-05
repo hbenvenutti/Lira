@@ -1,4 +1,5 @@
 using Lira.Application.CQRS.People.Commands.RegisterPerson;
+using Lira.Domain.Enums;
 
 namespace Lira.Api.Controllers.People.Dto;
 
@@ -9,6 +10,7 @@ public class RegisterPersonBodyDto
     public string FirstName { get; init; }
     public string Surname { get; init; }
     public string Email { get; init; }
+    public EmailType? EmailType { get; init; }
     public string PhoneNumber { get; init; }
     public string Document { get; init; }
 
@@ -50,7 +52,8 @@ public class RegisterPersonBodyDto
         DateTime? lastAmaci,
         Guid? frontOrixaId,
         Guid? adjunctOrixaId,
-        Guid? ancestralOrixaId
+        Guid? ancestralOrixaId,
+        EmailType? emailType
     )
     {
         FirstName = firstName;
@@ -71,6 +74,7 @@ public class RegisterPersonBodyDto
         FrontOrixaId = frontOrixaId;
         AdjunctOrixaId = adjunctOrixaId;
         AncestralOrixaId = ancestralOrixaId;
+        EmailType = emailType;
     }
 
     # endregion
@@ -97,7 +101,8 @@ public class RegisterPersonBodyDto
         lastAmaci: dto.LastAmaci,
         frontOrixaId: dto.FrontOrixaId,
         adjunctOrixaId: dto.AdjunctOrixaId,
-        ancestralOrixaId: dto.AncestralOrixaId
+        ancestralOrixaId: dto.AncestralOrixaId,
+        emailType: dto.EmailType
     );
 
     # endregion

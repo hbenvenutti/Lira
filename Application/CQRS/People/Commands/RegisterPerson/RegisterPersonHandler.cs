@@ -1,12 +1,14 @@
 using System.Net;
 using System.Transactions;
 using Lira.Application.CQRS.Address.Commands.CreateAddress;
+using Lira.Application.CQRS.Emails.Commands.CreateEmail;
 using Lira.Application.CQRS.Medium.Commands.CreateMedium;
 using Lira.Application.CQRS.People.Commands.CreatePerson;
 using Lira.Application.CQRS.PersonOrixa.Commands.CreatePersonOrixa;
 using Lira.Application.CQRS.Phone.Commands.CreatePhone;
 using Lira.Application.Enums;
 using Lira.Application.Responses;
+using Lira.Domain.Enums;
 using Lira.Domain.Religion.Enums;
 using MediatR;
 
@@ -93,12 +95,36 @@ public class RegisterPersonHandler
 
         # endregion
 
+        # region ---- email ----------------------------------------------------
+
+        var emailResult = await _mediator.Send(
+            new CreateEmailRequest(
+                personId: personId,
+                address: request.Email,
+                type: request.EmailType ?? EmailType.Personal,
+                validatePerson: false
+            ),
+            cancellationToken
+        );
+
+        if (!emailResult.IsSuccess)
+        {
+            return new Response<RegisterPersonResponse>(
+                httpStatusCode: emailResult.HttpStatusCode,
+                statusCode: emailResult.StatusCode,
+                error: emailResult.Error
+            );
+        }
+
+        # endregion
+
         # region ---- phone ----------------------------------------------------
 
         var phoneResult = await _mediator.Send(
             new CreatePhoneRequest(
                 personId: personId,
-                phoneNumber: request.PhoneNumber
+                phoneNumber: request.PhoneNumber,
+                validatePerson: false
             ),
             cancellationToken
         );
@@ -209,10 +235,6 @@ public class RegisterPersonHandler
         }
 
         # endregion
-
-        // todo check email already exists
-        // todo create email
-        // todo create a handler for email
 
         # region ---- success --------------------------------------------------
 

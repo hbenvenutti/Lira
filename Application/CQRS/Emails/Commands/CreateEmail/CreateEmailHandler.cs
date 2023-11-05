@@ -57,7 +57,7 @@ public class CreateEmailHandler :
 
         # region ---- person ---------------------------------------------------
 
-        if (!request.ValidatePersonId) { goto email; }
+        if (!request.ValidatePerson) { goto email; }
 
         var person = await _personRepository.FindByIdAsync(request.PersonId);
 
