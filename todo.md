@@ -50,7 +50,7 @@
   - [x] Phone
   - [x] Password
   - [x] Manager
-  - [ ] Email
+  - [x] Email
   - Orixa: Does not exist.
 
 ---
