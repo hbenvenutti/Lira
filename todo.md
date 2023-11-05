@@ -46,7 +46,7 @@
   - [ ] Email
   - [ ] Medium
   - [ ] Person Orixa
-  - [ ] Registration
+  - [x] Registration
 
 - [ ] Repositories
   - [ ] Manager

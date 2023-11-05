@@ -7,6 +7,7 @@ using Lira.Application.CQRS.People.Commands.CreatePerson;
 using Lira.Application.CQRS.People.Commands.RegisterPerson;
 using Lira.Application.CQRS.PersonOrixa.Commands.CreatePersonOrixa;
 using Lira.Application.CQRS.Phone.Commands.CreatePhone;
+using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Responses;
 using Lira.Domain.Enums;
@@ -20,8 +21,8 @@ public class RegistrationTest
 {
     private readonly Mock<IMediator> _mediatorMock;
 
-    private readonly RegisterPersonHandler _registerPersonHandler;
-    private readonly RegisterPersonRequest _registerPersonRequest;
+    private readonly RegisterPersonHandler _handler;
+    private readonly RegisterPersonRequest _request;
 
     # region ---- constants ----------------------------------------------------
 
@@ -42,9 +43,9 @@ public class RegistrationTest
     private const bool IsMedium = true;
     private static readonly DateTime? FirstAmaci = DateTime.UtcNow;
     private static readonly DateTime? LastAmaci = DateTime.UtcNow;
-    private static readonly Guid? FrontOrixaId = Guid.NewGuid();
-    private static readonly Guid? AdjunctOrixaId = Guid.NewGuid();
-    private static readonly Guid? AncestralOrixaId = Guid.NewGuid();
+    private static readonly Guid FrontOrixaId = Guid.NewGuid();
+    private static readonly Guid AdjunctOrixaId = Guid.NewGuid();
+    private static readonly Guid AncestralOrixaId = Guid.Empty;
     private static readonly EmailType? EmailType = 0;
 
     # endregion
@@ -55,13 +56,13 @@ public class RegistrationTest
     {
         _mediatorMock = new Mock<IMediator>();
 
-        _registerPersonHandler = new RegisterPersonHandler(
+        _handler = new RegisterPersonHandler(
             _mediatorMock.Object
         );
 
         SetupMediatorMock();
 
-        _registerPersonRequest = new RegisterPersonRequest(
+        _request = new RegisterPersonRequest(
             firstName: FirstName,
             surname: Surname,
             document: Document,
@@ -182,8 +183,8 @@ public class RegistrationTest
     [Fact]
     public async void ShouldRegisterAPerson()
     {
-        var result = await _registerPersonHandler.Handle(
-            _registerPersonRequest,
+        var result = await _handler.Handle(
+            _request,
             CancellationToken.None
         );
 
@@ -207,6 +208,215 @@ public class RegistrationTest
 
         Assert.Null(result.Error);
         Assert.Null(result.Pagination);
+    }
+
+    # endregion
+
+    # region ---- person service fails -----------------------------------------
+
+    [Fact]
+    public async void ShouldNotRegisterIfPersonFailsAsync()
+    {
+        _mediatorMock
+            .Setup(mediator => mediator.Send(
+                It.IsAny<CreatePersonRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new Response<CreatePersonResponse>(
+                isSuccess: false,
+                httpStatusCode: HttpStatusCode.BadGateway,
+                statusCode: StatusCode.Empty,
+                error: new ErrorDto(message: string.Empty)
+            ));
+
+        var result = await _handler.Handle(
+            _request,
+            CancellationToken.None
+        );
+
+        Assert.False(result.IsSuccess);
+        Assert.Null(result.Data);
+        Assert.Null(result.Pagination);
+        Assert.NotNull(result.Error);
+    }
+
+    # endregion
+
+    # region ---- address service fails ----------------------------------------
+
+    [Fact]
+    public async void ShouldNotRegisterIfAddressFailsAsync()
+    {
+        _mediatorMock
+            .Setup(mediator => mediator.Send(
+                It.IsAny<CreateAddressRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new Response<CreateAddressResponse>(
+                isSuccess: false,
+                httpStatusCode: HttpStatusCode.BadGateway,
+                statusCode: StatusCode.Empty,
+                error: new ErrorDto(message: string.Empty)
+            ));
+
+        var result = await _handler.Handle(
+            _request,
+            CancellationToken.None
+        );
+
+        Assert.False(result.IsSuccess);
+        Assert.Null(result.Data);
+        Assert.Null(result.Pagination);
+        Assert.NotNull(result.Error);
+    }
+
+    # endregion
+
+    # region ---- email service fails ------------------------------------------
+
+    [Fact]
+    public async void ShouldNotRegisterIfEmailFailsAsync()
+    {
+        _mediatorMock
+            .Setup(mediator => mediator.Send(
+                It.IsAny<CreateEmailRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new Response<CreateEmailResponse>(
+                isSuccess: false,
+                httpStatusCode: HttpStatusCode.BadGateway,
+                statusCode: StatusCode.Empty,
+                error: new ErrorDto(message: string.Empty)
+            ));
+
+        var result = await _handler.Handle(
+            _request,
+            CancellationToken.None
+        );
+
+        Assert.False(result.IsSuccess);
+        Assert.Null(result.Data);
+        Assert.Null(result.Pagination);
+        Assert.NotNull(result.Error);
+    }
+
+    # endregion
+
+    # region ---- phone service fails ------------------------------------------
+
+    [Fact]
+    public async void ShouldNotRegisterIfPhoneFailsAsync()
+    {
+        _mediatorMock
+            .Setup(mediator => mediator.Send(
+                It.IsAny<CreatePhoneRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new Response<CreatePhoneResponse>(
+                isSuccess: false,
+                httpStatusCode: HttpStatusCode.BadGateway,
+                statusCode: StatusCode.Empty,
+                error: new ErrorDto(message: string.Empty)
+            ));
+
+        var result = await _handler.Handle(
+            _request,
+            CancellationToken.None
+        );
+
+        Assert.False(result.IsSuccess);
+        Assert.Null(result.Data);
+        Assert.Null(result.Pagination);
+        Assert.NotNull(result.Error);
+    }
+
+    # endregion
+
+    # region ---- medium service fails ------------------------------------------
+
+    [Fact]
+    public async void ShouldNotRegisterIfMediumFailsAsync()
+    {
+        _mediatorMock
+            .Setup(mediator => mediator.Send(
+                It.IsAny<CreateMediumRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new Response<CreateMediumResponse>(
+                isSuccess: false,
+                httpStatusCode: HttpStatusCode.BadGateway,
+                statusCode: StatusCode.Empty,
+                error: new ErrorDto(message: string.Empty)
+            ));
+
+        var result = await _handler.Handle(
+            _request,
+            CancellationToken.None
+        );
+
+        Assert.False(result.IsSuccess);
+        Assert.Null(result.Data);
+        Assert.Null(result.Pagination);
+        Assert.NotNull(result.Error);
+    }
+
+    # endregion
+
+    # region ---- adjunct orixa service fails ----------------------------------
+
+    [Theory]
+    [InlineData(true, false, false)]
+    [InlineData(false, true, false)]
+    [InlineData(false, false, true)]
+    public async void ShouldNotRegisterIfAdjunctFailsAsync(
+        bool adjunctOrixaId,
+        bool ancestralOrixaId,
+        bool frontOrixaId
+    )
+    {
+        var request = new RegisterPersonRequest(
+            firstName: FirstName,
+            surname: Surname,
+            document: Document,
+            email: Email,
+            phoneNumber: PhoneNumber,
+            street: Street,
+            number: Number,
+            neighborhood: Neighborhood,
+            city: City,
+            state: State,
+            zipCode: ZipCode,
+            complement: Complement,
+            isMedium: IsMedium,
+            firstAmaci: FirstAmaci,
+            lastAmaci: LastAmaci,
+            frontOrixaId: frontOrixaId ? FrontOrixaId : null,
+            adjunctOrixaId: adjunctOrixaId ? AdjunctOrixaId : null,
+            ancestralOrixaId: ancestralOrixaId ? AncestralOrixaId : null,
+            emailType: EmailType
+        );
+
+        _mediatorMock
+            .Setup(mediator => mediator.Send(
+                It.IsAny<CreatePersonOrixaRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new Response<CreatePersonOrixaResponse>(
+                isSuccess: false,
+                httpStatusCode: HttpStatusCode.BadGateway,
+                statusCode: StatusCode.Empty,
+                error: new ErrorDto(message: string.Empty)
+            ));
+
+        var result = await _handler.Handle(
+            request,
+            CancellationToken.None
+        );
+
+        Assert.False(result.IsSuccess);
+        Assert.Null(result.Data);
+        Assert.Null(result.Pagination);
+        Assert.NotNull(result.Error);
     }
 
     # endregion
