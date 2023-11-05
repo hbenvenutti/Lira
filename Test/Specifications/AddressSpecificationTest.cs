@@ -17,6 +17,9 @@ public class AddressSpecificationTest
     private const string ZipCode = "99999-999";
     private const string State = "SP";
 
+    private const byte Invalid = 0;
+    private const byte Valid = 1;
+
     # region ---- IsSatisfiedBy -------------------------------------------------
 
     [Fact]
@@ -70,10 +73,14 @@ public class AddressSpecificationTest
         );
 
         Assert.False(isSatisfiedBy);
+
         Assert.Equal(
             expected: StatusCode.StreetIsInvalid,
             actual: _addressSpecification.StatusCode
         );
+
+        Assert.Single(_addressSpecification.ErrorMessages);
+
         Assert.Contains(
             expected: AddressMessages.StreetIsInvalid,
             collection: _addressSpecification.ErrorMessages
@@ -106,10 +113,14 @@ public class AddressSpecificationTest
         );
 
         Assert.False(isSatisfiedBy);
+
         Assert.Equal(
             expected: StatusCode.AddressNumberIsInvalid,
             actual: _addressSpecification.StatusCode
         );
+
+        Assert.Single(_addressSpecification.ErrorMessages);
+
         Assert.Contains(
             expected: AddressMessages.AddressNumberIsInvalid,
             collection: _addressSpecification.ErrorMessages
@@ -142,10 +153,14 @@ public class AddressSpecificationTest
         );
 
         Assert.False(isSatisfiedBy);
+
         Assert.Equal(
             expected: StatusCode.NeighborhoodIsInvalid,
             actual: _addressSpecification.StatusCode
         );
+
+        Assert.Single(_addressSpecification.ErrorMessages);
+
         Assert.Contains(
             expected: AddressMessages.NeighborhoodIsInvalid,
             collection: _addressSpecification.ErrorMessages
@@ -178,10 +193,14 @@ public class AddressSpecificationTest
         );
 
         Assert.False(isSatisfiedBy);
+
         Assert.Equal(
             expected: StatusCode.CityIsInvalid,
             actual: _addressSpecification.StatusCode
         );
+
+        Assert.Single(_addressSpecification.ErrorMessages);
+
         Assert.Contains(
             expected: AddressMessages.CityIsInvalid,
             collection: _addressSpecification.ErrorMessages
@@ -221,6 +240,8 @@ public class AddressSpecificationTest
             expected: StatusCode.ZipCodeIsInvalid,
             actual: _addressSpecification.StatusCode
         );
+
+        Assert.Single(_addressSpecification.ErrorMessages);
 
         Assert.Contains(
             expected: AddressMessages.ZipCodeIsInvalid,
@@ -262,6 +283,8 @@ public class AddressSpecificationTest
             actual: _addressSpecification.StatusCode
         );
 
+        Assert.Single(_addressSpecification.ErrorMessages);
+
         Assert.Contains(
             expected: AddressMessages.StateIsInvalid,
             collection: _addressSpecification.ErrorMessages
@@ -273,79 +296,79 @@ public class AddressSpecificationTest
     # region ---- SeveralInvalidFields -----------------------------------------
 
     [Theory]
-    [InlineData("", "", "", "", "", "")]
-    [InlineData("", "", "", "", "", ZipCode)]
-    [InlineData("", "", "", "", State, "")]
-    [InlineData("", "", "", "", State, ZipCode)]
-    [InlineData("", "", "", City, "", "")]
-    [InlineData("", "", "", City, "", ZipCode)]
-    [InlineData("", "", "", City, State, "")]
-    [InlineData("", "", "", City, State, ZipCode)]
-    [InlineData("", "", Neighborhood, "", "", "")]
-    [InlineData("", "", Neighborhood, "", "", ZipCode)]
-    [InlineData("", "", Neighborhood, "", State, "")]
-    [InlineData("", "", Neighborhood, "", State, ZipCode)]
-    [InlineData("", "", Neighborhood, City, "", "")]
-    [InlineData("", "", Neighborhood, City, "", ZipCode)]
-    [InlineData("", "", Neighborhood, City, State, "")]
-    [InlineData("", "", Neighborhood, City, State, ZipCode)]
-    [InlineData("", Number, "", "", "", "")]
-    [InlineData("", Number, "", "", "", ZipCode)]
-    [InlineData("", Number, "", "", State, "")]
-    [InlineData("", Number, "", "", State, ZipCode)]
-    [InlineData("", Number, "", City, "", "")]
-    [InlineData("", Number, "", City, "", ZipCode)]
-    [InlineData("", Number, "", City, State, "")]
-    [InlineData("", Number, "", City, State, ZipCode)]
-    [InlineData("", Number, Neighborhood, "", "", "")]
-    [InlineData("", Number, Neighborhood, "", "", ZipCode)]
-    [InlineData("", Number, Neighborhood, "", State, "")]
-    [InlineData("", Number, Neighborhood, "", State, ZipCode)]
-    [InlineData("", Number, Neighborhood, City, "", "")]
-    [InlineData("", Number, Neighborhood, City, "", ZipCode)]
-    [InlineData("", Number, Neighborhood, City, State, "")]
-    [InlineData(Street, " ", " ", " ", " ", " ")]
-    [InlineData(Street, " ", " ", " ", " ", ZipCode)]
-    [InlineData(Street, " ", " ", " ", State, " ")]
-    [InlineData(Street, " ", " ", " ", State, ZipCode)]
-    [InlineData(Street, " ", " ", City, " ", " ")]
-    [InlineData(Street, " ", " ", City, " ", ZipCode)]
-    [InlineData(Street, " ", " ", City, State, " ")]
-    [InlineData(Street, " ", " ", City, State, ZipCode)]
-    [InlineData(Street, " ", Neighborhood, " ", " ", " ")]
-    [InlineData(Street, " ", Neighborhood, " ", " ", ZipCode)]
-    [InlineData(Street, " ", Neighborhood, " ", State, " ")]
-    [InlineData(Street, " ", Neighborhood, " ", State, ZipCode)]
-    [InlineData(Street, " ", Neighborhood, City, " ", " ")]
-    [InlineData(Street, " ", Neighborhood, City, " ", ZipCode)]
-    [InlineData(Street, " ", Neighborhood, City, State, " ")]
-    [InlineData(Street, Number, " ", " ", " ", " ")]
-    [InlineData(Street, Number, " ", " ", " ", ZipCode)]
-    [InlineData(Street, Number, " ", " ", State, " ")]
-    [InlineData(Street, Number, " ", " ", State, ZipCode)]
-    [InlineData(Street, Number, " ", City, " ", " ")]
-    [InlineData(Street, Number, " ", City, " ", ZipCode)]
-    [InlineData(Street, Number, " ", City, State, " ")]
-    [InlineData(Street, Number, Neighborhood, " ", " ", " ")]
-    [InlineData(Street, Number, Neighborhood, " ", " ", ZipCode)]
-    [InlineData(Street, Number, Neighborhood, " ", State, " ")]
-    [InlineData(Street, Number, Neighborhood, City, " ", " ")]
+    [InlineData(Invalid, Invalid, Invalid, Invalid, Invalid, Invalid)]
+    [InlineData(Invalid, Invalid, Invalid, Invalid, Invalid, Valid)]
+    [InlineData(Invalid, Invalid, Invalid, Invalid, Valid, Invalid)]
+    [InlineData(Invalid, Invalid, Invalid, Invalid, Valid, Valid)]
+    [InlineData(Invalid, Invalid, Invalid, Valid, Invalid, Invalid)]
+    [InlineData(Invalid, Invalid, Invalid, Valid, Invalid, Valid)]
+    [InlineData(Invalid, Invalid, Invalid, Valid, Valid, Invalid)]
+    [InlineData(Invalid, Invalid, Invalid, Valid, Valid, Valid)]
+    [InlineData(Invalid, Invalid, Valid, Invalid, Invalid, Invalid)]
+    [InlineData(Invalid, Invalid, Valid, Invalid, Invalid, Valid)]
+    [InlineData(Invalid, Invalid, Valid, Invalid, Valid, Invalid)]
+    [InlineData(Invalid, Invalid, Valid, Invalid, Valid, Valid)]
+    [InlineData(Invalid, Invalid, Valid, Valid, Invalid, Invalid)]
+    [InlineData(Invalid, Invalid, Valid, Valid, Invalid, Valid)]
+    [InlineData(Invalid, Invalid, Valid, Valid, Valid, Invalid)]
+    [InlineData(Invalid, Invalid, Valid, Valid, Valid, Valid)]
+    [InlineData(Invalid, Valid, Invalid, Invalid, Invalid, Invalid)]
+    [InlineData(Invalid, Valid, Invalid, Invalid, Invalid, Valid)]
+    [InlineData(Invalid, Valid, Invalid, Invalid, Valid, Invalid)]
+    [InlineData(Invalid, Valid, Invalid, Invalid, Valid, Valid)]
+    [InlineData(Invalid, Valid, Invalid, Valid, Invalid, Invalid)]
+    [InlineData(Invalid, Valid, Invalid, Valid, Invalid, Valid)]
+    [InlineData(Invalid, Valid, Invalid, Valid, Valid, Invalid)]
+    [InlineData(Invalid, Valid, Invalid, Valid, Valid, Valid)]
+    [InlineData(Invalid, Valid, Valid, Invalid, Invalid, Invalid)]
+    [InlineData(Invalid, Valid, Valid, Invalid, Invalid, Valid)]
+    [InlineData(Invalid, Valid, Valid, Invalid, Valid, Invalid)]
+    [InlineData(Invalid, Valid, Valid, Invalid, Valid, Valid)]
+    [InlineData(Invalid, Valid, Valid, Valid, Invalid, Invalid)]
+    [InlineData(Invalid, Valid, Valid, Valid, Invalid, Valid)]
+    [InlineData(Invalid, Valid, Valid, Valid, Valid, Invalid)]
+    [InlineData(Valid, Invalid, Invalid, Invalid, Invalid, Invalid)]
+    [InlineData(Valid, Invalid, Invalid, Invalid, Invalid, Valid)]
+    [InlineData(Valid, Invalid, Invalid, Invalid, Valid, Invalid)]
+    [InlineData(Valid, Invalid, Invalid, Invalid, Valid, Valid)]
+    [InlineData(Valid, Invalid, Invalid, Valid, Invalid, Invalid)]
+    [InlineData(Valid, Invalid, Invalid, Valid, Invalid, Valid)]
+    [InlineData(Valid, Invalid, Invalid, Valid, Valid, Invalid)]
+    [InlineData(Valid, Invalid, Invalid, Valid, Valid, Valid)]
+    [InlineData(Valid, Invalid, Valid, Invalid, Invalid, Invalid)]
+    [InlineData(Valid, Invalid, Valid, Invalid, Invalid, Valid)]
+    [InlineData(Valid, Invalid, Valid, Invalid, Valid, Invalid)]
+    [InlineData(Valid, Invalid, Valid, Invalid, Valid, Valid)]
+    [InlineData(Valid, Invalid, Valid, Valid, Invalid, Invalid)]
+    [InlineData(Valid, Invalid, Valid, Valid, Invalid, Valid)]
+    [InlineData(Valid, Invalid, Valid, Valid, Valid, Invalid)]
+    [InlineData(Valid, Valid, Invalid, Invalid, Invalid, Invalid)]
+    [InlineData(Valid, Valid, Invalid, Invalid, Invalid, Valid)]
+    [InlineData(Valid, Valid, Invalid, Invalid, Valid, Invalid)]
+    [InlineData(Valid, Valid, Invalid, Invalid, Valid, Valid)]
+    [InlineData(Valid, Valid, Invalid, Valid, Invalid, Invalid)]
+    [InlineData(Valid, Valid, Invalid, Valid, Invalid, Valid)]
+    [InlineData(Valid, Valid, Invalid, Valid, Valid, Invalid)]
+    [InlineData(Valid, Valid, Valid, Invalid, Invalid, Invalid)]
+    [InlineData(Valid, Valid, Valid, Invalid, Invalid, Valid)]
+    [InlineData(Valid, Valid, Valid, Invalid, Valid, Invalid)]
+    [InlineData(Valid, Valid, Valid, Valid, Invalid, Invalid)]
     public void ShouldNotBeSatisfiedBySeveralInvalidFields(
-        string street,
-        string number,
-        string neighborhood,
-        string city,
-        string state,
-        string zipCode
+        byte street,
+        byte number,
+        byte neighborhood,
+        byte city,
+        byte state,
+        byte zipCode
     )
     {
         var addressSpecificationDto = new AddressSpecificationDto(
-            street: street,
-            number: number,
-            neighborhood: neighborhood,
-            city: city,
-            state: state,
-            zipCode: zipCode
+            street: street == Valid ? Street : string.Empty,
+            number: number == Valid ? Number : string.Empty,
+            neighborhood: neighborhood == Valid ? Neighborhood : string.Empty,
+            city: city == Valid ? City : string.Empty,
+            state: state == Valid ? State : string.Empty,
+            zipCode: zipCode == Valid ? ZipCode : string.Empty
         );
 
         var isSatisfiedBy = _addressSpecification.IsSatisfiedBy(
@@ -354,13 +377,14 @@ public class AddressSpecificationTest
 
         Assert.False(isSatisfiedBy);
 
-
         Assert.Equal(
             expected: StatusCode.SeveralInvalidFields,
             actual: _addressSpecification.StatusCode
         );
 
-        if (street != Street)
+        Assert.NotEmpty(_addressSpecification.ErrorMessages);
+
+        if (street == Invalid)
         {
             Assert.Contains(
                 expected: AddressMessages.StreetIsInvalid,
@@ -368,7 +392,7 @@ public class AddressSpecificationTest
             );
         }
 
-        if (number != Number)
+        if (number == Invalid)
         {
             Assert.Contains(
                 expected: AddressMessages.AddressNumberIsInvalid,
@@ -376,7 +400,7 @@ public class AddressSpecificationTest
             );
         }
 
-        if (neighborhood != Neighborhood)
+        if (neighborhood == Invalid)
         {
             Assert.Contains(
                 expected: AddressMessages.NeighborhoodIsInvalid,
@@ -384,7 +408,7 @@ public class AddressSpecificationTest
             );
         }
 
-        if (city != City)
+        if (city == Invalid)
         {
             Assert.Contains(
                 expected: AddressMessages.CityIsInvalid,
@@ -392,7 +416,7 @@ public class AddressSpecificationTest
             );
         }
 
-        if (zipCode != ZipCode)
+        if (zipCode == Invalid)
         {
             Assert.Contains(
                 expected: AddressMessages.ZipCodeIsInvalid,
@@ -400,7 +424,7 @@ public class AddressSpecificationTest
             );
         }
 
-        if (state != State)
+        if (state == Invalid)
         {
             Assert.Contains(
                 expected: AddressMessages.StateIsInvalid,
