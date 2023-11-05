@@ -1,8 +1,10 @@
+using Lira.Application.Responses;
 using Lira.Domain.Enums;
+using MediatR;
 
-namespace Lira.Application.CQRS.Email.Commands.CreateEmail;
+namespace Lira.Application.CQRS.Emails.Commands.CreateEmail;
 
-public class CreateEmailRequest
+public class CreateEmailRequest : IRequest<Response<CreateEmailResponse>>
 {
     public string Address { get; init; }
     public EmailType Type { get; init; }

@@ -1,4 +1,4 @@
-namespace Lira.Application.CQRS.Email.Commands.CreateEmail;
+namespace Lira.Application.CQRS.Emails.Commands.CreateEmail;
 
 public class CreateEmailResponse
 {
