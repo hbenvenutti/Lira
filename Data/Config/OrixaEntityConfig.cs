@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Lira.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Lira.Data.Config;
 
+[ExcludeFromCodeCoverage]
 public class OrixaEntityConfig : IEntityTypeConfiguration<OrixaEntity>
 {
     public void Configure(EntityTypeBuilder<OrixaEntity> builder)

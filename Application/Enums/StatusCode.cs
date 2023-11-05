@@ -20,13 +20,16 @@ public enum StatusCode
 
     # endregion
 
-    # region ---- resources ----------------------------------------------------
+    # region ---- missing resources --------------------------------------------
 
     ManagerNotFound = 340001,
+    PersonNotFound = 340002,
+    OrixaNotFound = 340008,
+    PersonOrixaNotFound = 340009,
 
     # endregion
 
-    # region ---- data ---------------------------------------------------------
+    # region ---- invalid data -------------------------------------------------
 
     PasswordsDoNotMatch = 440001,
     PasswordIsInvalid = 440002,
@@ -34,14 +37,28 @@ public enum StatusCode
     SurnameIsInvalid = 440004,
     CpfIsInvalid = 440005,
     UsernameIsInvalid = 440006,
+    UfIsInvalid = 440007,
+    ZipCodeIsInvalid = 440008,
+    StreetIsInvalid = 440010,
+    PhoneIsInvalid = 440011,
+
     SeveralInvalidFields = 440090,
     AdminCodeIsInvalid = 440099,
+    OneOrMoreSpecificationsFailed = 440100,
+
+    # endregion
+
+    # region ---- conflict -----------------------------------------------------
+
+    AdminAlreadyExists = 540001,
+    PersonAlreadyExists = 540002,
+    UsernameAlreadyExists = 540003,
+    EmailAlreadyExists = 540004,
 
     # endregion
 
     # region ---- error --------------------------------------------------------
 
-    AdminAlreadyExists = 540001,
     UnexpectedError = 950001
 
     # endregion

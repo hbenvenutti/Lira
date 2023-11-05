@@ -12,4 +12,10 @@
       <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="BrazilianTypes">
+        <HintPath>..\..\..\.nuget\packages\braziliantypes\7.1.0.2\lib\net7.0\BrazilianTypes.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

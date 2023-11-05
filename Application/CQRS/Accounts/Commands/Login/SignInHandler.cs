@@ -1,5 +1,4 @@
 using System.Net;
-using Lira.Application.CQRS.Accounts.Commands.Login.Dto;
 using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
@@ -42,7 +41,7 @@ public class SignInHandler
             return new Response<SignInResponseDto>(
                 httpStatusCode: HttpStatusCode.BadRequest,
                 statusCode: StatusCode.SignInFailed,
-                error: new ErrorDto(message: AccountsMessages
+                error: new ErrorDto(message: ManagerMessages
                     .InvalidUsernameOrPassword
                 )
             );
@@ -56,7 +55,7 @@ public class SignInHandler
             return new Response<SignInResponseDto>(
                 httpStatusCode: HttpStatusCode.NotFound,
                 statusCode: StatusCode.SignInFailed,
-                error: new ErrorDto(message: AccountsMessages
+                error: new ErrorDto(message: ManagerMessages
                     .InvalidUsernameOrPassword
                 )
             );
@@ -67,7 +66,7 @@ public class SignInHandler
             return new Response<SignInResponseDto>(
                 httpStatusCode: HttpStatusCode.NotFound,
                 statusCode: StatusCode.SignInFailed,
-                error: new ErrorDto(message: AccountsMessages
+                error: new ErrorDto(message: ManagerMessages
                     .InvalidUsernameOrPassword
                 )
             );

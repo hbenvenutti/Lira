@@ -1,13 +1,13 @@
-using System.Text.RegularExpressions;
+using BrazilianTypes.Interfaces;
+using Lira.Common.Services;
 
 namespace Lira.Common.Types;
 
-public readonly partial struct Username
+public readonly struct Username : IType<Username>
 {
     # region ---- properties ---------------------------------------------------
 
-    private const string Pattern = @"^[a-zA-Z]\w{2,14}$";
-    public const string ErrorMessage = "Username is invalid.";
+    public static string ErrorMessage => "Username is invalid.";
     private readonly string _value;
 
     # endregion
@@ -58,11 +58,8 @@ public readonly partial struct Username
 
     private static bool IsValid(string value)
     {
-        return MyRegex().IsMatch(value);
+        return RegexService.UsernameRegex().IsMatch(value);
     }
-
-    [GeneratedRegex(Pattern)]
-    private static partial Regex MyRegex();
 
     # endregion
 

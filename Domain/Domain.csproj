@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="BrazilianTypes" Version="0.0.2" />
+      <PackageReference Include="BrazilianTypes" Version="7.1.1" />
     </ItemGroup>
 
 </Project>

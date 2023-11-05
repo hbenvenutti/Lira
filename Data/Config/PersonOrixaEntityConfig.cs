@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Lira.Common.Extensions;
 using Lira.Data.Entities;
 using Lira.Domain.Religion.Enums;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Lira.Data.Config;
 
+[ExcludeFromCodeCoverage]
 public class PersonOrixaEntityConfig : IEntityTypeConfiguration<PersonOrixaEntity>
 {
     public void Configure(EntityTypeBuilder<PersonOrixaEntity> builder)
@@ -16,7 +18,7 @@ public class PersonOrixaEntityConfig : IEntityTypeConfiguration<PersonOrixaEntit
 
             table.HasCheckConstraint(
                 name: "CK_person_orixas_type",
-                sql: $"type IN ('{OrixaType.Front}', '{OrixaType.Ancestor}', '{OrixaType.Close}')"
+                sql: $"type IN ('{OrixaType.Front}', '{OrixaType.Ancestral}', '{OrixaType.Adjunct}')"
             );
         });
 

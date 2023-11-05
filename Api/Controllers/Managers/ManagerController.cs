@@ -2,7 +2,6 @@ using System.Net;
 using Lira.Api.Controllers.Managers.Dto;
 using Lira.Api.Structs;
 using Lira.Application.CQRS.Accounts.Commands.Login;
-using Lira.Application.CQRS.Accounts.Commands.Login.Dto;
 using Lira.Application.CQRS.Managers.Commands.CreateAdmin;
 using Lira.Application.Responses;
 using Lira.Common.Structs;

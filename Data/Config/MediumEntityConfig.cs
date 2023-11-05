@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Lira.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Lira.Data.Config;
 
+[ExcludeFromCodeCoverage]
 public class MediumEntityConfig : IEntityTypeConfiguration<MediumEntity>
 {
     public void Configure(EntityTypeBuilder<MediumEntity> builder)

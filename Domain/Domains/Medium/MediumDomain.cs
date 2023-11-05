@@ -57,7 +57,7 @@ public class MediumDomain : BaseDomain
         DateTime? lastAmaci = null
     )
     {
-        return new(
+        return new MediumDomain(
             id: Guid.Empty,
             personId: personId,
             createdAt: DateTime.UtcNow,
