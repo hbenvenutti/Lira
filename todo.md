@@ -28,7 +28,7 @@
   - [ ] Phone
   - [ ] Email
   - [ ] Medium
-  - [ ] Person Orixa
+  - [x] Person Orixa
   - [x] Registration
 
 - [ ] Repositories

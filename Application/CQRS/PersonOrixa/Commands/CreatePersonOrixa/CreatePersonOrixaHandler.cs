@@ -92,7 +92,7 @@ public class CreatePersonOrixaHandler :
         return new Response<CreatePersonOrixaResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedTransaction,
+            statusCode: StatusCode.CreatedOne,
             data: new CreatePersonOrixaResponse(id: personOrixa.Id)
         );
 
