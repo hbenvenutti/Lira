@@ -1,6 +1,6 @@
 namespace Lira.Application.Dto;
 
-public readonly struct PaginationDto
+public class PaginationDto
 {
     public uint Page { get; init; }
     public uint PageSize { get; init; }

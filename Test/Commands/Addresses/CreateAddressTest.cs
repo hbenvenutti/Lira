@@ -63,8 +63,6 @@ public class CreateAddressTest
 
     # endregion
 
-    // todo specifications
-
     # region ---- setup --------------------------------------------------------
 
     private void SetupMock()
@@ -178,9 +176,12 @@ public class CreateAddressTest
             actual: response.StatusCode
         );
         Assert.NotNull(response.Error);
-        Assert.Equal(
+        Assert.NotNull(response.Error.Messages);
+
+        Assert.Single(response.Error.Messages);
+        Assert.Contains(
             expected: NotFoundMessages.PersonNotFound,
-            actual: response.Error?.Messages.FirstOrDefault()
+            collection: response.Error.Messages
         );
         Assert.Null(response.Pagination);
         Assert.Null(response.Data);
@@ -213,6 +214,7 @@ public class CreateAddressTest
         Assert.Null(response.Data);
         Assert.Null(response.Pagination);
         Assert.NotNull(response.Error);
+        Assert.NotEmpty(response.Error.Messages);
     }
 
     # endregion
