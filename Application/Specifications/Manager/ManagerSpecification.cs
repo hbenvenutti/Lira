@@ -17,7 +17,7 @@ public class ManagerSpecification : ISpecification<ManagerSpecificationDto>
 
         if (!Username.TryParse(data.Username, out _))
         {
-            StatusCode = StatusCode.UsernameIsInvalid;
+            StatusCode = StatusCode.InvalidUsername;
             ErrorMessages.Add(Username.ErrorMessage);
 
             return false;

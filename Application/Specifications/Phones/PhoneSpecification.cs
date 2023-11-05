@@ -19,7 +19,7 @@ public class PhoneSpecification : ISpecification<PhoneSpecificationDto>
     {
         if (!Phone.TryParse(data.Phone, out _))
         {
-            StatusCode = StatusCode.PhoneIsInvalid;
+            StatusCode = StatusCode.InvalidPhone;
             ErrorMessages.Add(PersonMessages.InvalidPhone);
 
             return false;

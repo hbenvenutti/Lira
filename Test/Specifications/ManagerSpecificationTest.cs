@@ -47,7 +47,7 @@ public class ManagerSpecificationTest
 
         Assert.False(result);
         Assert.Equal(
-            expected: StatusCode.UsernameIsInvalid,
+            expected: StatusCode.InvalidUsername,
             actual: _managerSpecification.StatusCode
         );
 

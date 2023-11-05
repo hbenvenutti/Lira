@@ -26,8 +26,8 @@ public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
 
         if (!Password.TryParse(data.Password, out _))
         {
-            StatusCode = StatusCode.PasswordIsInvalid;
-            ErrorMessages.Add(item: ManagerMessages.PasswordIsInvalid);
+            StatusCode = StatusCode.InvalidPassword;
+            ErrorMessages.Add(item: ManagerMessages.InvalidPassword);
 
             return false;
         }

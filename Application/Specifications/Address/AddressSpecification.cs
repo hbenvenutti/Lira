@@ -22,7 +22,7 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!Text.TryParse(data.Street, out _))
         {
-            StatusCode = StatusCode.StreetIsInvalid;
+            StatusCode = StatusCode.InvalidStreet;
             ErrorMessages.Add(item: AddressMessages.StreetIsInvalid);
 
             errors++;
@@ -31,7 +31,7 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!Text.TryParse(data.Number, out _))
         {
-            StatusCode = StatusCode.AddressNumberIsInvalid;
+            StatusCode = StatusCode.InvalidAddressNumber;
             ErrorMessages.Add(item: AddressMessages.AddressNumberIsInvalid);
 
             errors++;
@@ -40,7 +40,7 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!Text.TryParse(data.Neighborhood, out _))
         {
-            StatusCode = StatusCode.NeighborhoodIsInvalid;
+            StatusCode = StatusCode.InvalidNeighborhood;
             ErrorMessages.Add(item: AddressMessages.NeighborhoodIsInvalid);
 
             errors++;
@@ -49,7 +49,7 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!Text.TryParse(data.City, out _))
         {
-            StatusCode = StatusCode.CityIsInvalid;
+            StatusCode = StatusCode.InvalidCity;
             ErrorMessages.Add(item: AddressMessages.CityIsInvalid);
 
             errors++;
@@ -58,7 +58,7 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!ZipCode.TryParse(data.ZipCode, out _))
         {
-            StatusCode = StatusCode.ZipCodeIsInvalid;
+            StatusCode = StatusCode.InvalidZipCode;
             ErrorMessages.Add(item: AddressMessages.ZipCodeIsInvalid);
 
             errors++;
@@ -67,7 +67,7 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!Uf.TryParse(data.State, out _))
         {
-            StatusCode = StatusCode.UfIsInvalid;
+            StatusCode = StatusCode.InvalidUf;
             ErrorMessages.Add(item: AddressMessages.StateIsInvalid);
 
             errors++;

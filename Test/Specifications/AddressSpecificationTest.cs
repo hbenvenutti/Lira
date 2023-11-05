@@ -75,7 +75,7 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.StreetIsInvalid,
+            expected: StatusCode.InvalidStreet,
             actual: _addressSpecification.StatusCode
         );
 
@@ -115,7 +115,7 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.AddressNumberIsInvalid,
+            expected: StatusCode.InvalidAddressNumber,
             actual: _addressSpecification.StatusCode
         );
 
@@ -155,7 +155,7 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.NeighborhoodIsInvalid,
+            expected: StatusCode.InvalidNeighborhood,
             actual: _addressSpecification.StatusCode
         );
 
@@ -195,7 +195,7 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.CityIsInvalid,
+            expected: StatusCode.InvalidCity,
             actual: _addressSpecification.StatusCode
         );
 
@@ -237,7 +237,7 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.ZipCodeIsInvalid,
+            expected: StatusCode.InvalidZipCode,
             actual: _addressSpecification.StatusCode
         );
 
@@ -279,7 +279,7 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.UfIsInvalid,
+            expected: StatusCode.InvalidUf,
             actual: _addressSpecification.StatusCode
         );
 

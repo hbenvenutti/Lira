@@ -230,7 +230,7 @@ public class CreateAdminTest
         );
 
         Assert.Equal(
-            expected: StatusCode.AdminCodeIsInvalid,
+            expected: StatusCode.InvalidAdminCode,
             actual: response.StatusCode
         );
 
@@ -239,7 +239,7 @@ public class CreateAdminTest
         Assert.Single(response.Error.Messages);
 
         Assert.Contains(
-            expected: ManagerMessages.AdminCodeIsInvalid,
+            expected: ManagerMessages.InvalidAdminCode,
             collection: response.Error.Messages
         );
 

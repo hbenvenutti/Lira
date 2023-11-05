@@ -84,7 +84,7 @@ public class PasswordSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.PasswordIsInvalid,
+            expected: StatusCode.InvalidPassword,
             actual: _passwordSpecification.StatusCode
         );
 
@@ -92,7 +92,7 @@ public class PasswordSpecificationTest
         Assert.NotEmpty(_passwordSpecification.ErrorMessages);
 
         Assert.Contains(
-            expected: ManagerMessages.PasswordIsInvalid,
+            expected: ManagerMessages.InvalidPassword,
             collection: _passwordSpecification.ErrorMessages
         );
     }

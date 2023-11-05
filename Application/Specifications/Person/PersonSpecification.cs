@@ -22,7 +22,7 @@ public class PersonSpecification : ISpecification<PersonSpecificationDto>
 
         if (!Name.TryParse(data.Name, out _))
         {
-            StatusCode = StatusCode.NameIsInvalid;
+            StatusCode = StatusCode.InvalidName;
             ErrorMessages.Add(item: PersonMessages.InvalidName);
             errors++;
 
@@ -31,7 +31,7 @@ public class PersonSpecification : ISpecification<PersonSpecificationDto>
 
         if (!Name.TryParse(data.Surname, out _))
         {
-            StatusCode = StatusCode.SurnameIsInvalid;
+            StatusCode = StatusCode.InvalidSurname;
             ErrorMessages.Add(item: PersonMessages.InvalidSurname);
             errors++;
 
@@ -40,7 +40,7 @@ public class PersonSpecification : ISpecification<PersonSpecificationDto>
 
         if (!Cpf.TryParse(data.Cpf, out _))
         {
-            StatusCode = StatusCode.CpfIsInvalid;
+            StatusCode = StatusCode.InvalidCpf;
             ErrorMessages.Add(item: PersonMessages.InvalidDocument);
             errors++;
 

@@ -62,7 +62,7 @@ public class PersonSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.NameIsInvalid,
+            expected: StatusCode.InvalidName,
             actual: _personSpecification.StatusCode
         );
 
@@ -96,7 +96,7 @@ public class PersonSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.SurnameIsInvalid,
+            expected: StatusCode.InvalidSurname,
             actual: _personSpecification.StatusCode
         );
 
@@ -131,7 +131,7 @@ public class PersonSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.CpfIsInvalid,
+            expected: StatusCode.InvalidCpf,
             actual: _personSpecification.StatusCode
         );
 

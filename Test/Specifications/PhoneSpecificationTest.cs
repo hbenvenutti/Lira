@@ -52,7 +52,7 @@ public class PhoneSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.PhoneIsInvalid,
+            expected: StatusCode.InvalidPhone,
             actual: _phoneSpecification.StatusCode
         );
 
