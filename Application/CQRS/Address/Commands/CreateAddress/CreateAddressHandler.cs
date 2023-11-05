@@ -101,6 +101,7 @@ public class CreateAddressHandler
         # region ---- response -------------------------------------------------
 
         return new Response<CreateAddressResponse>(
+            isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
             statusCode: StatusCode.CreatedOne,
             data: new CreateAddressResponse(address.Id)
