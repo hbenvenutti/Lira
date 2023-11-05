@@ -5,6 +5,6 @@ namespace Lira.Application.Specifications;
 public interface ISpecification<in T> where T : struct
 {
     StatusCode StatusCode { get; protected set; }
-    ICollection<string> ErrorMessages { get; init; }
+    ICollection<string> ErrorMessages { get; }
     bool IsSatisfiedBy(T data);
 }

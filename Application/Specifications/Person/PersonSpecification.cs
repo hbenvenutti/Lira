@@ -9,7 +9,7 @@ public class PersonSpecification : ISpecification<PersonSpecificationDto>
     # region ---- properties ---------------------------------------------------
 
     public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; init; } = new List<string>();
+    public ICollection<string> ErrorMessages { get; } = new List<string>();
 
     # endregion
 

@@ -1,5 +1,3 @@
-// ReSharper disable ConvertConstructorToMemberInitializers
-
 using BrazilianTypes.Types;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
@@ -11,14 +9,9 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
     # region ---- properties ---------------------------------------------------
 
     public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; init; }
+    public ICollection<string> ErrorMessages { get; } = new List<string>();
 
     # endregion
-
-    public AddressSpecification()
-    {
-        ErrorMessages = new List<string>();
-    }
 
     # region ---- specification ------------------------------------------------
 
