@@ -12,9 +12,7 @@
 - [ ] People List
 
 ## Technical
-- [ ] Redis
 - [ ] Log
-- [ ] Email Verification
 - [ ] Password Recovery
 - [ ] Tests 70% Coverage
 - [x] Break down big services into smaller ones
