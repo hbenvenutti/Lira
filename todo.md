@@ -47,7 +47,7 @@
   - [ ] Username
 
 - [ ] Specifications
-  - [ ] Person
+  - [x] Person
   - [x] Address
   - [ ] Phone
   - [ ] Password
