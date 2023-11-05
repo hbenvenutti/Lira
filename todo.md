@@ -1,9 +1,9 @@
 # Todo
 - [x] Move Text, Name and Email to Brazilian Types Library.
 
-## First Delivery
+# First Delivery
 
-### Features
+## Features
 - [x] Seed First Admin
 - [ ] Create Manager
 - [x] Login
@@ -11,30 +11,15 @@
 - [x] Person Creation
 - [ ] People List
 
-### Technical
+## Technical
 - [ ] Redis
 - [ ] Log
 - [ ] Email Verification
 - [ ] Password Recovery
 - [ ] Tests 70% Coverage
-- [ ] Break down big services into smaller ones
+- [x] Break down big services into smaller ones
 
----
-
-## Second Delivery
-
----
-
-## Future Features
-- [ ] Baptism
-- [ ] Fees
-- [ ] Person Update
-- [ ] Marriage
-- [ ] Allowances
-- [ ] Entities Registration by Medium
-- [ ] Institution Laws
-
-# Tests to implement
+## Tests to implement
 
 - [ ] Handlers
   - [x] Login
@@ -69,3 +54,18 @@
   - [ ] Manager
   - [ ] Email
   - [ ] Orixa
+
+---
+
+# Second Delivery
+
+---
+
+# Future Features
+- [ ] Baptism
+- [ ] Fees
+- [ ] Person Update
+- [ ] Marriage
+- [ ] Allowances
+- [ ] Entities Registration by Medium
+- [ ] Institution Laws
