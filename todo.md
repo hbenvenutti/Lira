@@ -26,7 +26,7 @@
   - [x] Person
   - [x] Address
   - [x] Phone
-  - [ ] Email
+  - [x] Email
   - [x] Medium
   - [x] Person Orixa
   - [x] Registration
