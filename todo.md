@@ -5,9 +5,9 @@
 
 ## Features
 - [x] Seed First Admin
-- [ ] Create Manager
+- [x] Create Manager
 - [x] Login
-- [ ] People Registration
+- [x] People Registration
 - [x] Person Creation
 - [ ] People List
 
@@ -69,3 +69,9 @@
 - [ ] Allowances
 - [ ] Entities Registration by Medium
 - [ ] Institution Laws
+
+## Technical
+- [ ] Redis
+- [ ] Email Verification
+- [ ] Password Recovery
+- [ ] Tests 70% Coverage
