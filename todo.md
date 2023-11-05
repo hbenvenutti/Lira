@@ -48,7 +48,7 @@
   - [x] Person
   - [x] Address
   - [ ] Phone
-  - [ ] Password
+  - [x] Password
   - [x] Manager
   - [ ] Email
   - [ ] Orixa
