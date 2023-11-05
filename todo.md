@@ -51,7 +51,7 @@
   - [x] Address
   - [ ] Phone
   - [ ] Password
-  - [ ] Manager
+  - [x] Manager
   - [ ] Email
   - [ ] Orixa
 
