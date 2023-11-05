@@ -25,7 +25,7 @@
   - [x] Manager
   - [x] Person
   - [x] Address
-  - [ ] Phone
+  - [x] Phone
   - [ ] Email
   - [x] Medium
   - [x] Person Orixa
