@@ -160,9 +160,9 @@ public class PersonSpecificationTest
     )
     {
         var personSpecificationDto = new PersonSpecificationDto(
-            name: name == Invalid ? "" : Name,
-            surname: surname == Invalid ? "" : Surname,
-            cpf: document == Invalid ? "" : Document
+            name: name == Invalid ? string.Empty : Name,
+            surname: surname == Invalid ? string.Empty : Surname,
+            cpf: document == Invalid ? string.Empty : Document
         );
 
         var result = _personSpecification.IsSatisfiedBy(personSpecificationDto);
