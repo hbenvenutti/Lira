@@ -238,6 +238,8 @@ public class RegistrationTest
         Assert.Null(result.Data);
         Assert.Null(result.Pagination);
         Assert.NotNull(result.Error);
+        Assert.NotNull(result.Error.Messages);
+        Assert.NotEmpty(result.Error.Messages);
     }
 
     # endregion
@@ -268,6 +270,8 @@ public class RegistrationTest
         Assert.Null(result.Data);
         Assert.Null(result.Pagination);
         Assert.NotNull(result.Error);
+        Assert.NotNull(result.Error.Messages);
+        Assert.NotEmpty(result.Error.Messages);
     }
 
     # endregion
@@ -298,6 +302,8 @@ public class RegistrationTest
         Assert.Null(result.Data);
         Assert.Null(result.Pagination);
         Assert.NotNull(result.Error);
+        Assert.NotNull(result.Error.Messages);
+        Assert.NotEmpty(result.Error.Messages);
     }
 
     # endregion
@@ -328,6 +334,8 @@ public class RegistrationTest
         Assert.Null(result.Data);
         Assert.Null(result.Pagination);
         Assert.NotNull(result.Error);
+        Assert.NotNull(result.Error.Messages);
+        Assert.NotEmpty(result.Error.Messages);
     }
 
     # endregion
@@ -358,6 +366,8 @@ public class RegistrationTest
         Assert.Null(result.Data);
         Assert.Null(result.Pagination);
         Assert.NotNull(result.Error);
+        Assert.NotNull(result.Error.Messages);
+        Assert.NotEmpty(result.Error.Messages);
     }
 
     # endregion
@@ -417,6 +427,8 @@ public class RegistrationTest
         Assert.Null(result.Data);
         Assert.Null(result.Pagination);
         Assert.NotNull(result.Error);
+        Assert.NotNull(result.Error.Messages);
+        Assert.NotEmpty(result.Error.Messages);
     }
 
     # endregion
