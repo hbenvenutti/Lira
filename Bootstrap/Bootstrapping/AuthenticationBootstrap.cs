@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Lira.Application.Services.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -5,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Lira.Bootstrap.Bootstrapping;
 
+[ExcludeFromCodeCoverage]
 public static class AuthenticationBootstrap
 {
     public static void ConfigureAuthentication(

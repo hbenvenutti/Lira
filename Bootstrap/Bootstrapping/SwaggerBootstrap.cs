@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Lira.Bootstrap.Bootstrapping;
 
+[ExcludeFromCodeCoverage]
 public static class SwaggerBootstrap
 {
     # region ---- service ------------------------------------------------------

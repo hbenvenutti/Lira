@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Lira.Bootstrap.Bootstrapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Lira.Bootstrap;
 
+[ExcludeFromCodeCoverage]
 public static class ApiBootstrap
 {
     # region ---- services -----------------------------------------------------
