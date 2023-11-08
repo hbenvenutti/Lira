@@ -21,7 +21,7 @@ public class PersonRepository : IPersonRepository
 
     # endregion
 
-    # region ---- write --------------------------------------------------------
+    # region ---- create -------------------------------------------------------
 
     public async Task<PersonDomain> CreateAsync(PersonDomain personDomain)
     {
@@ -34,6 +34,10 @@ public class PersonRepository : IPersonRepository
         return (PersonDomain) person;
     }
 
+    # endregion
+
+    # region ---- update -------------------------------------------------------
+
     public async Task<PersonDomain> UpdateAsync(PersonDomain personDomain)
     {
         var person = (PersonEntity) personDomain;
@@ -44,6 +48,10 @@ public class PersonRepository : IPersonRepository
 
         return (PersonDomain) person;
     }
+
+    # endregion
+
+    # region ---- delete -------------------------------------------------------
 
     public async Task DeleteAsync(PersonDomain personDomain)
     {
@@ -84,10 +92,8 @@ public class PersonRepository : IPersonRepository
         {
             query = query
                 .AsNoTracking()
-                .Include(person => person.PersonOrixas)
-                .Include(person => person.PersonOrixas!
-                    .Select(personOrixa => personOrixa.Orixa)
-                );
+                .Include(person => person.PersonOrixas)!
+                .ThenInclude(personOrixa => personOrixa.Orixa);
         }
 
         if (includeEmails)
