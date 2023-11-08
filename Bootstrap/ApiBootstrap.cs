@@ -37,7 +37,6 @@ public static class ApiBootstrap
         IWebHostEnvironment environment
     )
     {
-        app.SeedDatabaseOnStartUpAsync();
         app.ConfigureSwagger(environment);
 
         app.ConfigureGlobalMiddleware();
@@ -46,7 +45,7 @@ public static class ApiBootstrap
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.MigrateDatabaseOnStartUp();
+        app.StartDatabase();
     }
 
     public static void ConfigureControllers(

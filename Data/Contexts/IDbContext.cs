@@ -1,5 +1,6 @@
 using Lira.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Lira.Data.Contexts;
 
@@ -15,6 +16,7 @@ public interface IDbContext
     DbSet<ManagerEntity> Managers { get; set; }
     DbSet<MediumEntity> Mediums { get; set; }
     DbSet<PersonOrixaEntity> PersonOrixas { get; set; }
+    DatabaseFacade Database { get; }
 
     # endregion
 
