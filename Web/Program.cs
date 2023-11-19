@@ -1,4 +1,4 @@
-using Lira.Web.Components;
+using Lira.Web.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
