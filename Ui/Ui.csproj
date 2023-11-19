@@ -24,9 +24,10 @@
       <None Update="Components\Forms\LoginForm.razor.css">
         <DependentUpon>LoginForm.razor.scss</DependentUpon>
       </None>
-      <None Update="Components\Forms\LoginForm.razor.css.map">
-        <DependentUpon>LoginForm.razor.scss</DependentUpon>
-      </None>
+      <None Include="wwwroot\styles\forms\LoginForm.css.map" />
+      <None Include="wwwroot\styles\forms\LoginForm.scss" />
+      <None Include="wwwroot\styles\inputs\LoginInput.css.map" />
+      <None Include="wwwroot\styles\inputs\LoginInput.scss" />
     </ItemGroup>
 
 </Project>

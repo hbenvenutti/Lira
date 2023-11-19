@@ -10,11 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="Pages\SignIn\SignIn.razor" />
+    <ProjectReference Include="..\Ui\Ui.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ui\Ui.csproj" />
+    <Compile Update="Pages\SignIn\SignInPage.cs">
+      <DependentUpon>SignInPage.razor</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>
