@@ -1,0 +1,10 @@
+input {
+  border: none;
+  border-radius: 4px;
+  padding: 12px 20px 12px 40px;
+  transition: width 0.4s ease-in-out;
+  width: 100%;
+  background-color: var(--transparent);
+}
+
+/*# sourceMappingURL=LoginInput.razor.css.map */

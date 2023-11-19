@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyName>Lira.Ui</AssemblyName>
+        <RootNamespace>Lira.Ui</RootNamespace>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Components\Inputs\LoginInput.razor.css">
+        <DependentUpon>LoginInput.razor.scss</DependentUpon>
+      </None>
+      <None Update="Components\Forms\LoginForm.razor.css">
+        <DependentUpon>LoginForm.razor.scss</DependentUpon>
+      </None>
+      <None Update="Components\Forms\LoginForm.razor.css.map">
+        <DependentUpon>LoginForm.razor.scss</DependentUpon>
+      </None>
+    </ItemGroup>
+
+</Project>
