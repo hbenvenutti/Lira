@@ -3,16 +3,37 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0"
+    />
+
     <base href="/" />
+
     <title>Lira</title>
-    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <link rel="stylesheet"
+          type="text/css"
+          href="css/Global.css"
+    />
+
+    <link rel="icon"
+          type="image/png"
+          href="favicon.png"
+    />
+
     <HeadOutlet />
 </head>
 
 <body>
     <Routes />
-    <script src="_framework/blazor.web.js"></script>
+
+    @* ReSharper disable once Html.PathError *@
+    <script type="text/javascript"
+            src="_framework/blazor.web.js"
+    >
+    </script>
+
 </body>
 
 </html>
