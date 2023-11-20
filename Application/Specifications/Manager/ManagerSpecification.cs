@@ -8,7 +8,7 @@ public class ManagerSpecification : ISpecification<ManagerSpecificationDto>
     # region ---- properties ---------------------------------------------------
 
     public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; init; } = new List<string>();
+    public ICollection<string> ErrorMessages { get; } = new List<string>();
 
     # endregion
 
@@ -17,7 +17,7 @@ public class ManagerSpecification : ISpecification<ManagerSpecificationDto>
 
         if (!Username.TryParse(data.Username, out _))
         {
-            StatusCode = StatusCode.UsernameIsInvalid;
+            StatusCode = StatusCode.InvalidUsername;
             ErrorMessages.Add(Username.ErrorMessage);
 
             return false;

@@ -9,7 +9,7 @@ public class PersonSpecification : ISpecification<PersonSpecificationDto>
     # region ---- properties ---------------------------------------------------
 
     public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; init; } = new List<string>();
+    public ICollection<string> ErrorMessages { get; } = new List<string>();
 
     # endregion
 
@@ -22,8 +22,8 @@ public class PersonSpecification : ISpecification<PersonSpecificationDto>
 
         if (!Name.TryParse(data.Name, out _))
         {
-            StatusCode = StatusCode.NameIsInvalid;
-            ErrorMessages.Add(item: NameErrorMessages.NameIsInvalid);
+            StatusCode = StatusCode.InvalidName;
+            ErrorMessages.Add(item: PersonMessages.InvalidName);
             errors++;
 
             isSatisfiedBy = false;
@@ -31,8 +31,8 @@ public class PersonSpecification : ISpecification<PersonSpecificationDto>
 
         if (!Name.TryParse(data.Surname, out _))
         {
-            StatusCode = StatusCode.SurnameIsInvalid;
-            ErrorMessages.Add(item: NameErrorMessages.SurnameIsInvalid);
+            StatusCode = StatusCode.InvalidSurname;
+            ErrorMessages.Add(item: PersonMessages.InvalidSurname);
             errors++;
 
             isSatisfiedBy = false;
@@ -40,8 +40,8 @@ public class PersonSpecification : ISpecification<PersonSpecificationDto>
 
         if (!Cpf.TryParse(data.Cpf, out _))
         {
-            StatusCode = StatusCode.CpfIsInvalid;
-            ErrorMessages.Add(item: Cpf.ErrorMessage);
+            StatusCode = StatusCode.InvalidCpf;
+            ErrorMessages.Add(item: PersonMessages.InvalidDocument);
             errors++;
 
             isSatisfiedBy = false;

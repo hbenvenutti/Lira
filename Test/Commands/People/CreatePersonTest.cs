@@ -177,10 +177,12 @@ public class CreatePersonTest
         Assert.Null(response.Pagination);
 
         Assert.NotNull(response.Error);
+        Assert.NotNull(response.Error.Messages);
+        Assert.Single(response.Error.Messages);
 
-        Assert.Equal(
+        Assert.Contains(
             expected: ConflictMessages.PersonAlreadyExists,
-            actual: response.Error?.Messages.FirstOrDefault()
+            collection: response.Error.Messages
         );
     }
 
@@ -212,6 +214,8 @@ public class CreatePersonTest
         Assert.Null(response.Data);
         Assert.Null(response.Pagination);
         Assert.NotNull(response.Error);
+        Assert.NotNull(response.Error.Messages);
+        Assert.NotEmpty(response.Error.Messages);
     }
 
     # endregion

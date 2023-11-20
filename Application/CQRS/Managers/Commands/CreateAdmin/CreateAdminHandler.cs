@@ -56,9 +56,9 @@ public class CreateAdminHandler
         {
             return new Response<CreateAdminResponseDto>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: StatusCode.AdminCodeIsInvalid,
+                statusCode: StatusCode.InvalidAdminCode,
                 error: new ErrorDto(
-                    message: ManagerMessages.AdminCodeIsInvalid
+                    message: ManagerMessages.InvalidAdminCode
                 )
             );
         }

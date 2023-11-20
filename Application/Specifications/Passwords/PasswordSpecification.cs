@@ -8,7 +8,7 @@ public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
 {
     # region ---- properties ---------------------------------------------------
     public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; init; } = new List<string>();
+    public ICollection<string> ErrorMessages { get; } = new List<string>();
 
     # endregion
 
@@ -26,8 +26,8 @@ public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
 
         if (!Password.TryParse(data.Password, out _))
         {
-            StatusCode = StatusCode.PasswordIsInvalid;
-            ErrorMessages.Add(item: ManagerMessages.PasswordIsInvalid);
+            StatusCode = StatusCode.InvalidPassword;
+            ErrorMessages.Add(item: ManagerMessages.InvalidPassword);
 
             return false;
         }

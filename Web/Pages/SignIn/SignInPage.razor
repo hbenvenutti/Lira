@@ -1,0 +1,18 @@
+@namespace Lira.Web.Pages.SignIn
+@page "/sign-in"
+@layout LoginLayout
+
+<PageTitle>Sign In</PageTitle>
+
+<link href="css/SignInPage.css" rel="stylesheet" />
+
+<div class="login-body">
+    <LoginForm/>
+</div>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @ErrorMessage
+    </div>
+}

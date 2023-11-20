@@ -9,7 +9,7 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
     # region ---- properties ---------------------------------------------------
 
     public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; init; } = new List<string>();
+    public ICollection<string> ErrorMessages { get; } = new List<string>();
 
     # endregion
 
@@ -22,7 +22,7 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!Text.TryParse(data.Street, out _))
         {
-            StatusCode = StatusCode.StreetIsInvalid;
+            StatusCode = StatusCode.InvalidStreet;
             ErrorMessages.Add(item: AddressMessages.StreetIsInvalid);
 
             errors++;
@@ -31,8 +31,8 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!Text.TryParse(data.Number, out _))
         {
-            StatusCode = StatusCode.StreetIsInvalid;
-            ErrorMessages.Add(item: AddressMessages.StreetIsInvalid);
+            StatusCode = StatusCode.InvalidAddressNumber;
+            ErrorMessages.Add(item: AddressMessages.AddressNumberIsInvalid);
 
             errors++;
             isSatisfiedBy = false;
@@ -40,8 +40,8 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!Text.TryParse(data.Neighborhood, out _))
         {
-            StatusCode = StatusCode.StreetIsInvalid;
-            ErrorMessages.Add(item: AddressMessages.StreetIsInvalid);
+            StatusCode = StatusCode.InvalidNeighborhood;
+            ErrorMessages.Add(item: AddressMessages.NeighborhoodIsInvalid);
 
             errors++;
             isSatisfiedBy = false;
@@ -49,8 +49,8 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!Text.TryParse(data.City, out _))
         {
-            StatusCode = StatusCode.StreetIsInvalid;
-            ErrorMessages.Add(item: AddressMessages.StreetIsInvalid);
+            StatusCode = StatusCode.InvalidCity;
+            ErrorMessages.Add(item: AddressMessages.CityIsInvalid);
 
             errors++;
             isSatisfiedBy = false;
@@ -58,8 +58,8 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!ZipCode.TryParse(data.ZipCode, out _))
         {
-            StatusCode = StatusCode.ZipCodeIsInvalid;
-            ErrorMessages.Add(item: ZipCode.ErrorMessage);
+            StatusCode = StatusCode.InvalidZipCode;
+            ErrorMessages.Add(item: AddressMessages.ZipCodeIsInvalid);
 
             errors++;
             isSatisfiedBy = false;
@@ -67,8 +67,8 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
         if (!Uf.TryParse(data.State, out _))
         {
-            StatusCode = StatusCode.UfIsInvalid;
-            ErrorMessages.Add(item: Uf.ErrorMessage);
+            StatusCode = StatusCode.InvalidUf;
+            ErrorMessages.Add(item: AddressMessages.StateIsInvalid);
 
             errors++;
             isSatisfiedBy = false;

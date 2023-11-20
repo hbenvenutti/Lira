@@ -1,6 +1,6 @@
 namespace Lira.Application.Dto;
 
-public readonly struct ErrorDto
+public class ErrorDto
 {
     # region ---- properties ---------------------------------------------------
 

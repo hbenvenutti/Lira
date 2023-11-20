@@ -38,14 +38,13 @@ public readonly struct Username : IType<Username>
 
     public static bool TryParse(string value, out Username username)
     {
+        username = default;
+
+        if (string.IsNullOrWhiteSpace(value)) { return false; }
+
         value = value.Trim();
 
-        if (!IsValid(value))
-        {
-            username = default;
-
-            return false;
-        }
+        if (!IsValid(value)) { return false; }
 
         username = new Username(value);
 

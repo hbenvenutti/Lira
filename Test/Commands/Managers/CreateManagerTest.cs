@@ -163,9 +163,11 @@ public class CreateManagerTest
 
         Assert.NotNull(response.Error);
 
-        Assert.Equal(
+        Assert.Single(response.Error.Messages);
+
+        Assert.Contains(
             expected: NotFoundMessages.PersonNotFound,
-            actual: response.Error?.Messages.FirstOrDefault()
+            collection: response.Error.Messages
         );
 
         Assert.Null(response.Pagination);
@@ -212,9 +214,11 @@ public class CreateManagerTest
 
         Assert.NotNull(response.Error);
 
-        Assert.Equal(
+        Assert.Single(response.Error.Messages);
+
+        Assert.Contains(
             expected: ConflictMessages.UsernameIsInUse,
-            actual: response.Error?.Messages.FirstOrDefault()
+            collection: response.Error.Messages
         );
 
         Assert.Null(response.Pagination);
@@ -248,7 +252,8 @@ public class CreateManagerTest
         );
 
         Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error?.Messages);
+        Assert.NotNull(response.Error.Messages);
+        Assert.NotEmpty(response.Error.Messages);
         Assert.Null(response.Pagination);
         Assert.Null(response.Data);
     }
@@ -280,7 +285,8 @@ public class CreateManagerTest
         );
 
         Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error?.Messages);
+        Assert.NotNull(response.Error.Messages);
+        Assert.NotEmpty(response.Error.Messages);
         Assert.Null(response.Pagination);
         Assert.Null(response.Data);
     }

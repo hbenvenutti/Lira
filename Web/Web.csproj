@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Lira.Web</AssemblyName>
+    <RootNamespace>Lira.Web</RootNamespace>
+    <OutputType>exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Ui\Ui.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Pages\SignIn\SignInPage.cs">
+      <DependentUpon>SignInPage.razor</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

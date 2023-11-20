@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Lira.Data.Config;
 using Lira.Data.Entities;
 using Lira.Data.Extensions;
@@ -5,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lira.Data.Contexts;
 
+[ExcludeFromCodeCoverage]
 public sealed class LiraDbContext : DbContext, IDbContext
 {
     # region ---- tables -------------------------------------------------------

@@ -1,0 +1,26 @@
+button
+{
+    background-color: color-mix(in srgb, var(--secondary) 20%, transparent 80%);
+    color: var(--gray-300);
+    border: none;
+    border-radius: 4px;
+    padding: 1rem;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+}
+
+button:focus
+{
+    outline: none;
+    background-color: color-mix(in srgb, var(--secondary) 30%, transparent 70%);
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover
+{
+    background-color: color-mix(in srgb, var(--secondary) 50%, transparent 50%);
+    transition: all 0.2s ease-in-out;
+}

@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+:root
+{
+    --primary: #00875b;
+    --secondary: #26303D;
+    --transparent: transparent;
+    --text: #e1e1e6;
+    --error: #943636;
+
+  // from demen:
+    --white: #fff;
+
+    --yellow-500: #ffc452;
+
+    --gray-100: #e1e1e6;
+    --gray-300: #c4c4cc;
+    --gray-400: #8d8d99;
+    --gray-600: #323238;
+    --gray-700: #29292e;
+    --gray-800: #202024;
+    --gray-900: #121212;
+    --green-500: #00875b;
+}
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body
+{
+    background: var(--gray-300);
+    color: var(--gray-800);
+}
+
+body, input, textarea, button
+{
+    font-family: 'Monstserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+a
+{
+    text-decoration: none;
+    color: inherit;
+}

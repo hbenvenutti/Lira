@@ -22,13 +22,13 @@ public class PersonEntity : BaseEntity
 
     # region ---- relations ----------------------------------------------------
 
-    public ManagerEntity? Manager { get; set; }
-    public MediumEntity? Medium { get; set; }
+    public required ManagerEntity? Manager { get; set; }
+    public required MediumEntity? Medium { get; set; }
 
-    public IEnumerable<EmailEntity>? Emails { get; set; }
-    public IEnumerable<PhoneEntity>? Phones { get; set; }
-    public IEnumerable<AddressEntity>? Addresses { get; set; }
-    public IEnumerable<PersonOrixaEntity>? PersonOrixas { get; set; }
+    public required IEnumerable<EmailEntity>? Emails { get; set; }
+    public required IEnumerable<PhoneEntity>? Phones { get; set; }
+    public required IEnumerable<AddressEntity>? Addresses { get; set; }
+    public required IEnumerable<PersonOrixaEntity>? PersonOrixas { get; set; }
 
     # endregion
 
@@ -38,7 +38,7 @@ public class PersonEntity : BaseEntity
         new()
         {
             Id = domain.Id,
-            Status = (EntityStatus)domain.Status,
+            Status = (EntityStatus) domain.Status,
             CreatedAt = domain.CreatedAt,
             DeletedAt = domain.DeletedAt,
             UpdatedAt = domain.UpdatedAt,
@@ -84,16 +84,36 @@ public class PersonEntity : BaseEntity
                 : (MediumDomain) entity.Medium,
 
             addresses: entity.Addresses?
-                .Select(address => (AddressDomain) address),
+                .ToList()
+                .ConvertAll(address =>
+                {
+                    address.Person = null;
+                    return (AddressDomain) address;
+                }),
 
             phones: entity.Phones?
-                .Select(phone => (PhoneDomain) phone),
+                .ToList()
+                .ConvertAll(phone =>
+                {
+                    phone.Person = null;
+                    return (PhoneDomain) phone;
+                }),
 
             personOrixas: entity.PersonOrixas?
-                .Select(personOrixa => (PersonOrixaDomain) personOrixa),
+                .ToList()
+                .ConvertAll(personOrixa =>
+                {
+                    personOrixa.Person = null;
+                    return (PersonOrixaDomain) personOrixa;
+                }),
 
             emails: entity.Emails?
-                .Select(email => (EmailDomain) email)
+                .ToList()
+                .ConvertAll(email =>
+                {
+                    email.Person = null;
+                    return (EmailDomain) email;
+                })
         );
     }
 

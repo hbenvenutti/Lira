@@ -4,6 +4,7 @@ using BrazilianTypes.Types;
 using Lira.Application.CQRS.Managers.Commands.CreateAdmin;
 using Lira.Application.CQRS.Managers.Commands.CreateManager;
 using Lira.Application.CQRS.People.Commands.CreatePerson;
+using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
@@ -188,9 +189,11 @@ public class CreateAdminTest
 
         Assert.NotNull(response.Error);
 
-        Assert.Equal(
+        Assert.Single(response.Error.Messages);
+
+        Assert.Contains(
             expected: ManagerMessages.AdminAlreadyExists,
-            actual: response.Error?.Messages.First()
+            collection: response.Error.Messages
         );
 
         Assert.Null(response.Pagination);
@@ -227,15 +230,17 @@ public class CreateAdminTest
         );
 
         Assert.Equal(
-            expected: StatusCode.AdminCodeIsInvalid,
+            expected: StatusCode.InvalidAdminCode,
             actual: response.StatusCode
         );
 
         Assert.NotNull(response.Error);
 
-        Assert.Equal(
-            expected: ManagerMessages.AdminCodeIsInvalid,
-            actual: response.Error?.Messages.FirstOrDefault()
+        Assert.Single(response.Error.Messages);
+
+        Assert.Contains(
+            expected: ManagerMessages.InvalidAdminCode,
+            collection: response.Error.Messages
         );
 
         Assert.Null(response.Pagination);
@@ -257,7 +262,10 @@ public class CreateAdminTest
             .ReturnsAsync(new Response<CreatePersonResponse>(
                 isSuccess: false,
                 httpStatusCode: HttpStatusCode.BadGateway,
-                statusCode: StatusCode.Empty
+                statusCode: StatusCode.Empty,
+                error: new ErrorDto(
+                    message: PersonMessages.InvalidDocument
+                )
             ));
 
         var result = await _handler.Handle(
@@ -268,6 +276,8 @@ public class CreateAdminTest
         Assert.False(result.IsSuccess);
         Assert.Null(result.Data);
         Assert.Null(result.Pagination);
+        Assert.NotNull(result.Error);
+        Assert.NotEmpty(result.Error.Messages);
     }
 
     # endregion
@@ -285,7 +295,10 @@ public class CreateAdminTest
             .ReturnsAsync(new Response<CreateManagerResponse>(
                 isSuccess: false,
                 httpStatusCode: HttpStatusCode.BadGateway,
-                statusCode: StatusCode.Empty
+                statusCode: StatusCode.Empty,
+                error: new ErrorDto(
+                    message: ManagerMessages.InvalidUsernameOrPassword
+                )
             ));
 
         var result = await _handler.Handle(
@@ -296,6 +309,8 @@ public class CreateAdminTest
         Assert.False(result.IsSuccess);
         Assert.Null(result.Data);
         Assert.Null(result.Pagination);
+        Assert.NotNull(result.Error);
+        Assert.NotEmpty(result.Error.Messages);
     }
 
     # endregion

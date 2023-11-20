@@ -5,16 +5,14 @@
 
 ## Features
 - [x] Seed First Admin
-- [ ] Create Manager
+- [x] Create Manager
 - [x] Login
-- [ ] People Registration
+- [x] People Registration
 - [x] Person Creation
 - [ ] People List
 
 ## Technical
-- [ ] Redis
 - [ ] Log
-- [ ] Email Verification
 - [ ] Password Recovery
 - [ ] Tests 70% Coverage
 - [x] Break down big services into smaller ones
@@ -26,11 +24,11 @@
   - [x] Admin
   - [x] Manager
   - [x] Person
-  - [ ] Address
-  - [ ] Phone
-  - [ ] Email
-  - [ ] Medium
-  - [ ] Person Orixa
+  - [x] Address
+  - [x] Phone
+  - [x] Email
+  - [x] Medium
+  - [x] Person Orixa
   - [x] Registration
 
 - [ ] Repositories
@@ -44,16 +42,16 @@
 
 - [ ] Types
   - [x] Password
-  - [ ] Username
+  - [x] Username
 
 - [ ] Specifications
-  - [ ] Person
-  - [ ] Address
-  - [ ] Phone
-  - [ ] Password
-  - [ ] Manager
-  - [ ] Email
-  - [ ] Orixa
+  - [x] Person
+  - [x] Address
+  - [x] Phone
+  - [x] Password
+  - [x] Manager
+  - [x] Email
+  - Orixa: Does not exist.
 
 ---
 
@@ -69,3 +67,9 @@
 - [ ] Allowances
 - [ ] Entities Registration by Medium
 - [ ] Institution Laws
+
+## Technical
+- [ ] Redis
+- [ ] Email Verification
+- [ ] Password Recovery
+- [ ] Tests 70% Coverage

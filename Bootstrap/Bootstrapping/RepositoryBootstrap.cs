@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Lira.Data.Repositories;
 using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Emails;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Lira.Bootstrap.Bootstrapping;
 
+[ExcludeFromCodeCoverage]
 public static class RepositoryBootstrap
 {
     public static void ConfigureRepositories(

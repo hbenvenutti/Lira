@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Lira.Data.Contexts;
 using Lira.Data.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Lira.Bootstrap.Bootstrapping;
 
+[ExcludeFromCodeCoverage]
 public static class ContextBootstrap
 {
     # region ---- connection ---------------------------------------------------
@@ -20,43 +22,51 @@ public static class ContextBootstrap
             .GetConnectionString(name: "DefaultConnection");
 
         services.AddDbContext<IDbContext, LiraDbContext>(
-            optionsAction: options => options.UseNpgsql(connectionString)
+            optionsAction: options => options.UseNpgsql(connectionString),
+            ServiceLifetime.Transient
         );
+    }
+
+    # endregion
+
+    # region ---- services -----------------------------------------------------
+
+    public static void StartDatabase(this IApplicationBuilder builder)
+    {
+        using var scope = builder.ApplicationServices.CreateAsyncScope();
+
+        using var dbContext = scope
+            .ServiceProvider
+            .GetRequiredService<LiraDbContext>();
+
+        dbContext.MigrateDatabaseOnStartUp();
+        dbContext.SeedDatabaseOnStartUpAsync();
     }
 
     # endregion
 
     # region ---- migration ----------------------------------------------------
 
-    public static void MigrateDatabaseOnStartUp(
-        this IApplicationBuilder builder
+    private static void MigrateDatabaseOnStartUp(
+        this IDbContext dbContext
     )
     {
-        using var scope = builder.ApplicationServices.CreateAsyncScope();
-
-        using var contentContext = scope
-            .ServiceProvider
-            .GetRequiredService<LiraDbContext>();
-
-        contentContext.Database.Migrate();
+        dbContext.Database.Migrate();
     }
 
     # endregion
 
     # region ---- seed ---------------------------------------------------------
 
-    public static async void SeedDatabaseOnStartUpAsync(
-        this IApplicationBuilder builder
+    private static async void SeedDatabaseOnStartUpAsync(
+        this IDbContext dbContext
     )
     {
-        await using var scope = builder.ApplicationServices.CreateAsyncScope();
 
-        await using var contentContext = scope
-            .ServiceProvider
-            .GetRequiredService<LiraDbContext>();
-
-        await contentContext.SeedDatabaseAsync();
+        await dbContext.SeedDatabaseAsync();
     }
 
     # endregion
+
+
 }
