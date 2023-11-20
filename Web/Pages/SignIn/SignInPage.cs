@@ -2,10 +2,10 @@ namespace Lira.Web.Pages.SignIn;
 
 public partial class SignInPage
 {
-    public string Email { get; set; }
+    public string Username { get; set; }
     public string Password { get; set; }
     public string? ErrorMessage { get; set; }
-    
+
     private async Task LoginUser()
     {
         try
