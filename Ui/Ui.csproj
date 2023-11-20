@@ -30,4 +30,8 @@
       <None Include="wwwroot\styles\inputs\LoginInput.scss" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -1,3 +1,5 @@
+@rendermode InteractiveServer
+
 @namespace Lira.Ui.Components.Forms
 
 <link href="styles/forms/LoginForm.css"
@@ -5,20 +7,37 @@
       type="text/css"
 />
 
-<form>
+<EditForm Model="@Credentials"
+          OnValidSubmit="Submit"
+          FormName="loginForm"
+>
     <h3>Lira</h3>
 
-    <LoginInput Type="@InputTypes.Text"
-                Name="username"
-                Id="username"
-                Placeholder="Username"
+    @* <LoginInput Type="@InputTypes.Text" *@
+    @*             Id="username" *@
+    @*             Placeholder="Username" *@
+    @*             Value="@Credentials.Username" *@
+    @* /> *@
+
+    <InputText type="@InputTypes.Text"
+               id="username"
+               placeholder="Username"
+               @bind-Value="@Credentials.Username"
+               required
     />
 
-    <LoginInput Type="@InputTypes.Password"
-                Name="password"
-                Id="password"
-                Placeholder="Password"
+    <InputText type="@InputTypes.Password"
+               id="password"
+               placeholder="Password"
+               @bind-Value="@Credentials.Password"
+               required
     />
+
+    @* <LoginInput Type="@InputTypes.Password" *@
+    @*             Id="password" *@
+    @*             Placeholder="Password" *@
+    @*             Value="@Credentials.Password" *@
+    @* /> *@
 
     <ConfirmButton Text="Login"
                    Type="@InputTypes.Submit"
@@ -28,4 +47,4 @@
          alt="Logo"
          class="logo"
     />
-</form>
+</EditForm>

@@ -3,14 +3,21 @@ input
     border: none;
     border-radius: 4px;
     padding: 12px 20px 12px 40px;
-    transition: width 0.4s ease-in-out;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.1);
     color: var(--gray-300);
+    transition: background-color 0.2s ease-in-out;
 }
 
-input:focus
+input:focus, input:hover
 {
     background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease-in-out;
     outline: none;
 }
+
+//input:required:invalid
+//{
+//    background-color: color-mix(in srgb, var(--error) 20%, transparent 80%);
+//    transition: background-color 0.2s ease-in-out;
+//}

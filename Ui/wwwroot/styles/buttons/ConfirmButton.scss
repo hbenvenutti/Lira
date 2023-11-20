@@ -15,11 +15,12 @@ button
 button:focus
 {
     outline: none;
-    background-color: color-mix(in srgb, var(--secondary) 25%, transparent 75%);
+    background-color: color-mix(in srgb, var(--secondary) 30%, transparent 70%);
+    transition: all 0.2s ease-in-out;
 }
 
 button:hover
 {
-    background-color: color-mix(in srgb, var(--secondary) 40%, transparent 60%);
+    background-color: color-mix(in srgb, var(--secondary) 50%, transparent 50%);
     transition: all 0.2s ease-in-out;
 }
