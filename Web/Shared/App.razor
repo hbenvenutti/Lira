@@ -3,33 +3,17 @@
 
 <head>
     <meta charset="utf-8" />
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0"
-    />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-
     <title>Lira</title>
 
+    @* ReSharper disable once Html.PathError *@
+    <link rel="stylesheet" href="Lira.Web.styles.css" />
+
     <link rel="stylesheet"
           type="text/css"
+          @* ReSharper disable Html.PathError *@
           href="_content/Lira.Ui/styles/Global.css"
-    />
-
-    <link rel="stylesheet"
-          type="text/css"
-          href="_content/Lira.Ui/styles/forms/LoginForm.css"
-    />
-
-    <link rel="stylesheet"
-          type="text/css"
-          href="_content/Lira.Ui/styles/buttons/ConfirmButton.css"
-    />
-
-    <link rel="stylesheet"
-          type="text/css"
-          href="_content/Lira.Ui/styles/inputs/LoginInput.css"
     />
 
     <link rel="icon"
@@ -41,14 +25,9 @@
 </head>
 
 <body>
-<Routes />
-
-@* ReSharper disable once Html.PathError *@
-<script type="text/javascript"
-        src="_framework/blazor.web.js"
->
-    </script>
-
+    <Routes />
+    @* ReSharper disable once Html.PathError *@
+    <script src="_framework/blazor.web.js"></script>
 </body>
 
 </html>

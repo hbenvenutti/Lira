@@ -34,4 +34,27 @@
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\styles\buttons\" />
+      <Folder Include="wwwroot\styles\forms\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="Components\Buttons\ConfirmButton.razor.scss">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Update="Components\Buttons\ConfirmButton.razor.css.map">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Update="Components\Buttons\ConfirmButton.razor.css">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Update="Components\Forms\LoginForm.razor.css">
+        <DependentUpon>LoginForm.razor</DependentUpon>
+      </Content>
+    </ItemGroup>
+
 </Project>
