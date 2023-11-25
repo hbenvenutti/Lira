@@ -4,7 +4,7 @@ using Lira.Application.Enums;
 
 namespace Lira.Application.Responses;
 
-public readonly struct Response<T> where T : class
+public readonly struct Response<T> : IHandlerResponse<T> where T : struct
 {
     # region ---- properties ---------------------------------------------------
 
@@ -12,7 +12,7 @@ public readonly struct Response<T> where T : class
     public T? Data { get; init; }
     public ErrorDto? Error { get; init; }
     public HttpStatusCode HttpStatusCode { get; init; }
-    public StatusCode StatusCode { get; init; }
+    public AppStatusCode AppStatusCode { get; init; }
     public PaginationDto? Pagination { get; init; }
 
     # endregion
@@ -21,15 +21,15 @@ public readonly struct Response<T> where T : class
 
     public Response(
         HttpStatusCode httpStatusCode,
-        StatusCode statusCode,
+        AppStatusCode appStatusCode,
         bool isSuccess = false,
         PaginationDto? pagination = null,
         ErrorDto? error = null,
-        T? data = null
+        T? data = default
     )
     {
         HttpStatusCode = httpStatusCode;
-        StatusCode = statusCode;
+        AppStatusCode = appStatusCode;
         Pagination = pagination;
         Error = error;
         IsSuccess = isSuccess;

@@ -1,6 +1,6 @@
 namespace Lira.Application.Enums;
 
-public enum StatusCode
+public enum AppStatusCode
 {
     Empty = 0,
 
