@@ -33,9 +33,9 @@ public static class ContextBootstrap
 
     public static void StartDatabase(this IApplicationBuilder builder)
     {
-        using var scope = builder.ApplicationServices.CreateAsyncScope();
+        var scope = builder.ApplicationServices.CreateAsyncScope();
 
-        using var dbContext = scope
+        var dbContext = scope
             .ServiceProvider
             .GetRequiredService<LiraDbContext>();
 
@@ -62,11 +62,8 @@ public static class ContextBootstrap
         this IDbContext dbContext
     )
     {
-
         await dbContext.SeedDatabaseAsync();
     }
 
     # endregion
-
-
 }
