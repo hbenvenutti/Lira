@@ -4,7 +4,7 @@ namespace Lira.Application.Specifications;
 
 public interface ISpecification<in T> where T : struct
 {
-    StatusCode StatusCode { get; protected set; }
-    ICollection<string> ErrorMessages { get; }
+    AppStatusCode AppStatusCode { get; protected set; }
+    List<string> ErrorMessages { get; }
     bool IsSatisfiedBy(T data);
 }

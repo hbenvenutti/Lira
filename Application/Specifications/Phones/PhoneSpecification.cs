@@ -8,8 +8,8 @@ public class PhoneSpecification : ISpecification<PhoneSpecificationDto>
 {
     # region ---- properties ---------------------------------------------------
 
-    public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; } = new List<string>();
+    public AppStatusCode AppStatusCode { get; set; } = AppStatusCode.Empty;
+    public List<string> ErrorMessages { get; } = new List<string>();
 
     # endregion
 
@@ -19,7 +19,7 @@ public class PhoneSpecification : ISpecification<PhoneSpecificationDto>
     {
         if (!Phone.TryParse(data.Phone, out _))
         {
-            StatusCode = StatusCode.InvalidPhone;
+            AppStatusCode = AppStatusCode.InvalidPhone;
             ErrorMessages.Add(PersonMessages.InvalidPhone);
 
             return false;

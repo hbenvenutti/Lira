@@ -6,14 +6,14 @@ namespace Lira.Application.Specifications.Emails;
 
 public class EmailSpecification : ISpecification<EmailSpecificationDto>
 {
-    public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; } = new List<string>();
+    public AppStatusCode AppStatusCode { get; set; } = AppStatusCode.Empty;
+    public List<string> ErrorMessages { get; } = new List<string>();
 
     public bool IsSatisfiedBy(EmailSpecificationDto data)
     {
         if (!Email.TryParse(data.Address, out _))
         {
-            StatusCode = StatusCode.InvalidEmailAddress;
+            AppStatusCode = AppStatusCode.InvalidEmailAddress;
             ErrorMessages.Add(item: PersonMessages.InvalidEmail);
             return false;
         }
