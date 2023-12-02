@@ -1,9 +1,9 @@
 using System.Net;
+using Lira.Application.CQRS.People.Queries.GetPersonById;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Common.Enums;
 using Lira.Domain.Domains.Emails;
-using Lira.Domain.Domains.Person;
 using MediatR;
 
 namespace Lira.Application.CQRS.Emails.Commands.CreateEmail;
@@ -13,20 +13,20 @@ public class CreateEmailHandler :
 {
     # region ---- repositories -------------------------------------------------
 
+    private readonly IMediator _mediator;
     private readonly IEmailRepository _emailRepository;
-    private readonly IPersonRepository _personRepository;
 
     # endregion
 
     # region ---- constructor --------------------------------------------------
 
     public CreateEmailHandler(
-        IEmailRepository emailRepository,
-        IPersonRepository personRepository
+        IMediator mediator,
+        IEmailRepository emailRepository
     )
     {
+        _mediator = mediator;
         _emailRepository = emailRepository;
-        _personRepository = personRepository;
     }
 
     # endregion
@@ -55,24 +55,27 @@ public class CreateEmailHandler :
 
         # region ---- person ---------------------------------------------------
 
-        if (!request.ValidatePerson) { goto email; }
-
-        var person = await _personRepository.FindByIdAsync(request.PersonId);
-
-        if (person is null)
+        if (request.ValidatePerson)
         {
-            return new HandlerResponse<CreateEmailResponse>(
-                httpStatusCode: HttpStatusCode.NotFound,
-                appStatusCode: AppStatusCode.PersonNotFound,
-                errors: PersonMessages.NotFound
+            var personRequest = new GetPersonByIdRequest(request.PersonId);
+            var personResult = await _mediator.Send(
+                personRequest,
+                cancellationToken
             );
+
+            if (!personResult.IsSuccess)
+            {
+                return new HandlerResponse<CreateEmailResponse>(
+                    httpStatusCode: personResult.HttpStatusCode,
+                    appStatusCode: personResult.AppStatusCode,
+                    errors: personResult.Errors ?? new List<string>()
+                );
+            }
         }
 
         # endregion
 
         # region ---- email ----------------------------------------------------
-
-        email:
 
         var email = await _emailRepository
             .FindByAddressAsync(request.Address);
