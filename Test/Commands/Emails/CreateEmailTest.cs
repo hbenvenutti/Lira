@@ -102,14 +102,13 @@ public class CreateEmailTest
         );
 
         Assert.Equal(
-            expected: StatusCode.CreatedOne,
-            actual: response.StatusCode
+            expected: AppStatusCode.CreatedOne,
+            actual: response.AppStatusCode
         );
 
         Assert.NotNull(response.Data);
         Assert.Equal(expected: EmailId, actual: response.Data.Id);
-        Assert.Null(response.Error);
-        Assert.Null(response.Pagination);
+        Assert.Null(response.Errors);
     }
 
     # endregion
@@ -139,22 +138,20 @@ public class CreateEmailTest
         );
 
         Assert.Equal(
-            expected: StatusCode.PersonNotFound,
-            actual: response.StatusCode
+            expected: AppStatusCode.PersonNotFound,
+            actual: response.AppStatusCode
         );
 
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Single(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
+        Assert.Single(response.Errors);
 
         Assert.Contains(
             expected: NotFoundMessages.PersonNotFound,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
 
         Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
     }
 
     # endregion
@@ -192,22 +189,20 @@ public class CreateEmailTest
         );
 
         Assert.Equal(
-            expected: StatusCode.EmailAlreadyExists,
-            actual: response.StatusCode
+            expected: AppStatusCode.EmailAlreadyExists,
+            actual: response.AppStatusCode
         );
 
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Single(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
+        Assert.Single(response.Errors);
 
         Assert.Contains(
             expected: ConflictMessages.EmailIsInUse,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
 
         Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
     }
 
     # endregion
@@ -237,22 +232,20 @@ public class CreateEmailTest
         );
 
         Assert.Equal(
-            expected: StatusCode.InvalidEmailAddress,
-            actual: response.StatusCode
+            expected: AppStatusCode.InvalidEmailAddress,
+            actual: response.AppStatusCode
         );
 
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Single(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
+        Assert.Single(response.Errors);
 
         Assert.Contains(
             expected: PersonMessages.InvalidEmail,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
 
         Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
     }
 
     # endregion

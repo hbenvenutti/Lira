@@ -25,8 +25,8 @@ public class EmailSpecificationTest
 
         Assert.True(result);
         Assert.Equal(
-            expected: StatusCode.Empty,
-            actual: _emailSpecification.StatusCode
+            expected: AppStatusCode.Empty,
+            actual: _emailSpecification.AppStatusCode
         );
 
         Assert.NotNull(_emailSpecification.ErrorMessages);
@@ -47,8 +47,8 @@ public class EmailSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.InvalidEmailAddress,
-            actual: _emailSpecification.StatusCode
+            expected: AppStatusCode.InvalidEmailAddress,
+            actual: _emailSpecification.AppStatusCode
         );
 
         Assert.NotNull(_emailSpecification.ErrorMessages);

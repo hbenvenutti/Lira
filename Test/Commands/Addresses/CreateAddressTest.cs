@@ -110,11 +110,10 @@ public class CreateAddressTest
             actual: response.HttpStatusCode
         );
         Assert.Equal(
-            expected: StatusCode.CreatedOne,
-            actual: response.StatusCode
+            expected: AppStatusCode.CreatedOne,
+            actual: response.AppStatusCode
         );
-        Assert.Null(response.Error);
-        Assert.Null(response.Pagination);
+        Assert.Null(response.Errors);
         Assert.NotNull(response.Data);
         Assert.Equal(
             expected: AddressId,
@@ -148,18 +147,18 @@ public class CreateAddressTest
             actual: response.HttpStatusCode
         );
         Assert.Equal(
-            expected: StatusCode.PersonNotFound,
-            actual: response.StatusCode
+            expected: AppStatusCode.PersonNotFound,
+            actual: response.AppStatusCode
         );
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
+        Assert.NotNull(response.Errors);
 
-        Assert.Single(response.Error.Messages);
+        Assert.Single(response.Errors);
+
         Assert.Contains(
             expected: NotFoundMessages.PersonNotFound,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
-        Assert.Null(response.Pagination);
+
         Assert.Null(response.Data);
     }
 
@@ -188,9 +187,8 @@ public class CreateAddressTest
             actual: response.HttpStatusCode
         );
         Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
-        Assert.NotNull(response.Error);
-        Assert.NotEmpty(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
     }
 
     # endregion

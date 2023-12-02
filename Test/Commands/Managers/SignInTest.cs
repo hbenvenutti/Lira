@@ -110,13 +110,12 @@ public class SignInTest
         );
 
         Assert.Equal(
-            expected: StatusCode.SignInSuccess,
-            actual: response.StatusCode
+            expected: AppStatusCode.SignInSuccess,
+            actual: response.AppStatusCode
         );
 
         Assert.True(response.IsSuccess);
-        Assert.Null(response.Error);
-        Assert.Null(response.Pagination);
+        Assert.Null(response.Errors);
 
         Assert.NotNull(response.Data);
 
@@ -156,19 +155,18 @@ public class SignInTest
         );
 
         Assert.Equal(
-            expected: StatusCode.SignInFailed,
-            actual: response.StatusCode
+            expected: AppStatusCode.SignInFailed,
+            actual: response.AppStatusCode
         );
 
         Assert.False(response.IsSuccess);
-        Assert.NotNull(response.Error);
-        Assert.Single(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.Single(response.Errors);
         Assert.Contains(
             expected: ManagerMessages.InvalidUsernameOrPassword,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
 
-        Assert.Null(response.Pagination);
         Assert.Null(response.Data);
     }
 
@@ -202,21 +200,20 @@ public class SignInTest
         );
 
         Assert.Equal(
-            expected: StatusCode.SignInFailed,
-            actual: response.StatusCode
+            expected: AppStatusCode.SignInFailed,
+            actual: response.AppStatusCode
         );
 
         Assert.False(response.IsSuccess);
-        Assert.NotNull(response.Error);
+        Assert.NotNull(response.Errors);
 
-        Assert.Single(response.Error.Messages);
+        Assert.Single(response.Errors);
 
         Assert.Contains(
             expected: ManagerMessages.InvalidUsernameOrPassword,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
 
-        Assert.Null(response.Pagination);
         Assert.Null(response.Data);
     }
 

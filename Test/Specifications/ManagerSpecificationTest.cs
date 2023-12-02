@@ -23,8 +23,8 @@ public class ManagerSpecificationTest
 
         Assert.True(result);
         Assert.Equal(
-            expected: StatusCode.Empty,
-            actual: _managerSpecification.StatusCode
+            expected: AppStatusCode.Empty,
+            actual: _managerSpecification.AppStatusCode
         );
 
         Assert.NotNull(_managerSpecification.ErrorMessages);
@@ -47,8 +47,8 @@ public class ManagerSpecificationTest
 
         Assert.False(result);
         Assert.Equal(
-            expected: StatusCode.InvalidUsername,
-            actual: _managerSpecification.StatusCode
+            expected: AppStatusCode.InvalidUsername,
+            actual: _managerSpecification.AppStatusCode
         );
 
         Assert.NotNull(_managerSpecification.ErrorMessages);
