@@ -1,13 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Lira.Application.CQRS.Medium.Commands.CreateMedium;
-using Lira.Application.CQRS.People.Commands.CreatePerson;
 using Lira.Application.CQRS.People.Queries.GetPersonById;
-using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Common.Enums;
 using Lira.Domain.Domains.Medium;
-using Lira.Domain.Domains.Person;
 using MediatR;
 using Moq;
 

@@ -1,5 +1,4 @@
 using System.Net;
-using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Application.Specifications.Phones;
 using Lira.Common.Enums;
