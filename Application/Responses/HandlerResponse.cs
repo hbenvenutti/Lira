@@ -1,39 +1,36 @@
 using System.Net;
-using Lira.Application.Dto;
 using Lira.Application.Enums;
+using Lira.Common.Types;
 
 namespace Lira.Application.Responses;
 
-public readonly struct Response<T> : IHandlerResponse<T> where T : struct
+public class HandlerResponse<T> : IHandlerResponse<T>
 {
     # region ---- properties ---------------------------------------------------
 
     public bool IsSuccess { get; init; }
     public T? Data { get; init; }
-    public ErrorDto? Error { get; init; }
+    public List<string>? Errors { get; init; }
     public HttpStatusCode HttpStatusCode { get; init; }
     public AppStatusCode AppStatusCode { get; init; }
-    public PaginationDto? Pagination { get; init; }
 
     # endregion
 
-    # region ---- constructors -------------------------------------------------
+    # region ---- constructor --------------------------------------------------
 
-    public Response(
+    public HandlerResponse(
         HttpStatusCode httpStatusCode,
         AppStatusCode appStatusCode,
-        bool isSuccess = false,
-        PaginationDto? pagination = null,
-        ErrorDto? error = null,
-        T? data = default
+        T? data = default,
+        Errors? errors = null,
+        bool isSuccess = false
     )
     {
-        HttpStatusCode = httpStatusCode;
-        AppStatusCode = appStatusCode;
-        Pagination = pagination;
-        Error = error;
         IsSuccess = isSuccess;
         Data = data;
+        Errors = errors;
+        HttpStatusCode = httpStatusCode;
+        AppStatusCode = appStatusCode;
     }
 
     # endregion
