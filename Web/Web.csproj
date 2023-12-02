@@ -17,12 +17,12 @@
     <_ContentIncludedByDefault Remove="Components\Pages\Error.razor" />
     <_ContentIncludedByDefault Remove="Components\Pages\Home.razor" />
     <_ContentIncludedByDefault Remove="Components\Pages\SignIn\SignInPage.razor" />
+    <_ContentIncludedByDefault Remove="Pages\SignIn\SignInPage.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="Pages\Error.razor" />
     <AdditionalFiles Include="Pages\Home.razor" />
-    <AdditionalFiles Include="Pages\SignIn\SignInPage.razor" />
   </ItemGroup>
 
 </Project>
