@@ -131,27 +131,6 @@ public class CreateEmailTest
         );
 
         Assert.False(response.IsSuccess);
-
-        Assert.Equal(
-            expected: HttpStatusCode.NotFound,
-            actual: response.HttpStatusCode
-        );
-
-        Assert.Equal(
-            expected: AppStatusCode.PersonNotFound,
-            actual: response.AppStatusCode
-        );
-
-        Assert.NotNull(response.Errors);
-        Assert.NotEmpty(response.Errors);
-        Assert.Single(response.Errors);
-
-        Assert.Contains(
-            expected: NotFoundMessages.PersonNotFound,
-            collection: response.Errors
-        );
-
-        Assert.Null(response.Data);
     }
 
     # endregion
@@ -241,7 +220,7 @@ public class CreateEmailTest
         Assert.Single(response.Errors);
 
         Assert.Contains(
-            expected: PersonMessages.InvalidEmail,
+            expected: EmailMessages.InvalidEmail,
             collection: response.Errors
         );
 

@@ -1,6 +1,6 @@
 namespace Lira.Application.CQRS.People.Queries.GetPersonById;
 
-public readonly struct GetPersonByIdResponse
+public class GetPersonByIdResponse
 {
     public Guid Id { get; init; }
 

@@ -1,8 +1,8 @@
 using System.Net;
+using Lira.Application.CQRS.People.Queries.GetPersonById;
 using Lira.Application.Responses;
 using Lira.Common.Enums;
 using Lira.Domain.Domains.Medium;
-using Lira.Domain.Domains.Person;
 using MediatR;
 
 namespace Lira.Application.CQRS.Medium.Commands.CreateMedium;
@@ -12,20 +12,20 @@ public class CreateMediumHandler :
 {
     # region ---- properties ---------------------------------------------------
 
+    private readonly IMediator _mediator;
     private readonly IMediumRepository _mediumRepository;
-    private readonly IPersonRepository _personRepository;
 
     # endregion
 
     # region ---- constructor --------------------------------------------------
 
     public CreateMediumHandler(
-        IMediumRepository mediumRepository,
-        IPersonRepository personRepository
+        IMediator mediator,
+        IMediumRepository mediumRepository
     )
     {
+        _mediator = mediator;
         _mediumRepository = mediumRepository;
-        _personRepository = personRepository;
     }
 
     # endregion
@@ -35,26 +35,33 @@ public class CreateMediumHandler :
         CancellationToken cancellationToken
     )
     {
-        if (!request.ValidatePerson) { goto medium; }
-
         # region ---- person ---------------------------------------------------
 
-        var person = await _personRepository.FindByIdAsync(request.PersonId);
-
-        if (person is null)
+        if (request.ValidatePerson)
         {
-            return new HandlerResponse<CreateMediumResponse>(
-                httpStatusCode: HttpStatusCode.NotFound,
-                appStatusCode: AppStatusCode.PersonNotFound,
-                errors: PersonMessages.NotFound
+
+            var personRequest = new GetPersonByIdRequest(
+                request.PersonId
             );
+
+            var personResult = await _mediator.Send(
+                personRequest,
+                cancellationToken
+            );
+
+            if (!personResult.IsSuccess)
+            {
+                return new HandlerResponse<CreateMediumResponse>(
+                    httpStatusCode: personResult.HttpStatusCode,
+                    appStatusCode: personResult.AppStatusCode,
+                    errors: personResult.Errors ?? new List<string>()
+                );
+            }
         }
 
         # endregion
 
         # region ---- medium ---------------------------------------------------
-
-        medium:
 
         var medium = MediumDomain.Create(
             personId: request.PersonId,

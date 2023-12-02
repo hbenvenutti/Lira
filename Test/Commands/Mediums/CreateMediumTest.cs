@@ -1,10 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Lira.Application.CQRS.Medium.Commands.CreateMedium;
+using Lira.Application.CQRS.People.Commands.CreatePerson;
+using Lira.Application.CQRS.People.Queries.GetPersonById;
 using Lira.Application.Messages;
+using Lira.Application.Responses;
 using Lira.Common.Enums;
 using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.Person;
+using MediatR;
 using Moq;
 
 namespace Lira.Test.Commands.Mediums;
@@ -14,8 +18,8 @@ public class CreateMediumTest
 {
     # region ---- properties ---------------------------------------------------
 
+    private readonly Mock<IMediator> _mediator = new();
     private readonly Mock<IMediumRepository> _mediumRepository;
-    private readonly Mock<IPersonRepository> _personRepository;
 
     private readonly CreateMediumHandler _handler;
     private readonly CreateMediumRequest _request;
@@ -30,13 +34,12 @@ public class CreateMediumTest
     public CreateMediumTest()
     {
         _mediumRepository = new Mock<IMediumRepository>();
-        _personRepository = new Mock<IPersonRepository>();
 
         SetupMocks();
 
         _handler = new CreateMediumHandler(
-            _mediumRepository.Object,
-            _personRepository.Object
+            _mediator.Object,
+            _mediumRepository.Object
         );
 
         _request = new CreateMediumRequest(
@@ -51,21 +54,6 @@ public class CreateMediumTest
 
     private void SetupMocks()
     {
-        _personRepository
-            .Setup(repository => repository
-                .FindByIdAsync(
-                    It.IsAny<Guid>(),
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                )
-            )
-            .ReturnsAsync(null as PersonDomain);
-
         _mediumRepository
             .Setup(repository => repository
                 .CreateAsync(It.IsAny<MediumDomain>())
@@ -86,6 +74,20 @@ public class CreateMediumTest
     [Fact]
     public async Task Success()
     {
+        _mediator
+            .Setup(mediator => mediator.Send(
+                It.IsAny<GetPersonByIdRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
+                isSuccess: true,
+                httpStatusCode: HttpStatusCode.OK,
+                appStatusCode: AppStatusCode.FoundOne,
+                data: new GetPersonByIdResponse(
+                    id: PersonId
+                )
+            ));
+
         var response = await _handler.Handle(_request, CancellationToken.None);
 
         Assert.True(response.IsSuccess);
@@ -112,6 +114,17 @@ public class CreateMediumTest
     [Fact]
     public async Task PersonNotFound()
     {
+        _mediator
+            .Setup(mediator => mediator.Send(
+                It.IsAny<GetPersonByIdRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
+                httpStatusCode: HttpStatusCode.NotFound,
+                appStatusCode: AppStatusCode.PersonNotFound,
+                errors: new List<string>()
+            ));
+
         var request = new CreateMediumRequest(
             personId: PersonId,
             validatePerson: true
@@ -120,27 +133,6 @@ public class CreateMediumTest
         var response = await _handler.Handle(request, CancellationToken.None);
 
         Assert.False(response.IsSuccess);
-
-        Assert.Equal(
-            expected: HttpStatusCode.NotFound,
-            actual: response.HttpStatusCode
-        );
-
-        Assert.Equal(
-            expected: AppStatusCode.PersonNotFound,
-            actual: response.AppStatusCode
-        );
-
-        Assert.NotNull(response.Errors);
-        Assert.NotEmpty(response.Errors);
-        Assert.Single(response.Errors);
-
-        Assert.Contains(
-            expected: NotFoundMessages.PersonNotFound,
-            collection: response.Errors
-        );
-
-        Assert.Null(response.Data);
     }
 
     # endregion

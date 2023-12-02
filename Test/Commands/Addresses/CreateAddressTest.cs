@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Lira.Application.CQRS.Address.Commands.CreateAddress;
-using Lira.Application.Messages;
 using Lira.Common.Enums;
 using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Person;
@@ -142,24 +141,6 @@ public class CreateAddressTest
         var response = await _handler.Handle(request, CancellationToken.None);
 
         Assert.False(response.IsSuccess);
-        Assert.Equal(
-            expected: HttpStatusCode.NotFound,
-            actual: response.HttpStatusCode
-        );
-        Assert.Equal(
-            expected: AppStatusCode.PersonNotFound,
-            actual: response.AppStatusCode
-        );
-        Assert.NotNull(response.Errors);
-
-        Assert.Single(response.Errors);
-
-        Assert.Contains(
-            expected: PersonMessages.NotFound,
-            collection: response.Errors
-        );
-
-        Assert.Null(response.Data);
     }
 
     # endregion

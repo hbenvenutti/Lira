@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using BrazilianTypes.Types;
 using Lira.Application.CQRS.People.Queries.GetPersonById;
@@ -8,6 +9,7 @@ using Moq;
 
 namespace Lira.Test.Commands.People;
 
+[ExcludeFromCodeCoverage]
 public class GetPersonByIdTest
 {
     private readonly Mock<IPersonRepository> _personRepositoryMock;
@@ -72,6 +74,8 @@ public class GetPersonByIdTest
 
     # endregion
 
+    # region ---- not found ----------------------------------------------------
+
     [Fact]
     public async Task Handle_WhenPersonDoesNotExist_ReturnsNotFoundResponse()
     {
@@ -106,12 +110,15 @@ public class GetPersonByIdTest
             expected: AppStatusCode.PersonNotFound,
             actual: result.AppStatusCode
         );
+
         Assert.NotNull(result.Errors);
         Assert.NotEmpty(result.Errors);
-
+        Assert.Single(result.Errors);
         Assert.Contains(
             expected: PersonMessages.NotFound,
             collection: result.Errors
         );
     }
+
+    # endregion
 }
