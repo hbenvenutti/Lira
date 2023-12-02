@@ -1,6 +1,7 @@
-using Lira.Application.Enums;
 using Lira.Application.Messages;
+using Lira.Common.Enums;
 using Lira.Common.Types;
+using Lira.Domain.Domains.Base;
 
 namespace Lira.Application.Specifications.Passwords;
 

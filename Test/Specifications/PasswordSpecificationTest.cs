@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Specifications.Passwords;
+using Lira.Common.Enums;
 using Lira.Common.Types;
 
 namespace Lira.Test.Specifications;

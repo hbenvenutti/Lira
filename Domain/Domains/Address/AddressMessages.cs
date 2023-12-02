@@ -8,4 +8,5 @@ public readonly struct AddressMessages
     public const string CityIsInvalid = "City is invalid.";
     public const string ZipCodeIsInvalid = "Zip code is invalid.";
     public const string StateIsInvalid = "State is invalid.";
+    public const string NotFound = "Address not found.";
 }

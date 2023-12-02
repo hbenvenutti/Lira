@@ -1,7 +1,7 @@
 using System.Net;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Orixa;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Domains.PersonOrixa;
@@ -51,7 +51,7 @@ public class CreatePersonOrixaHandler :
             return new HandlerResponse<CreatePersonOrixaResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
                 appStatusCode: AppStatusCode.PersonNotFound,
-                errors: NotFoundMessages.PersonNotFound
+                errors: PersonMessages.NotFound
             );
         }
 

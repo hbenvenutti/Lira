@@ -1,6 +1,8 @@
 using BrazilianTypes.Types;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
+using Lira.Common.Enums;
+using Lira.Domain.Domains.Base;
+using Lira.Domain.Domains.Person;
 
 namespace Lira.Application.Specifications.Phones;
 

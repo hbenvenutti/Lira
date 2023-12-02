@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Lira.Application.Enums;
-using Lira.Application.Messages;
-using Lira.Application.Specifications.Address;
+using Lira.Common.Enums;
+using Lira.Domain.Domains.Address;
 
 namespace Lira.Test.Specifications;
 

@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Lira.Application.CQRS.Address.Commands.CreateAddress;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Person;
 using Moq;
@@ -155,7 +155,7 @@ public class CreateAddressTest
         Assert.Single(response.Errors);
 
         Assert.Contains(
-            expected: NotFoundMessages.PersonNotFound,
+            expected: PersonMessages.NotFound,
             collection: response.Errors
         );
 

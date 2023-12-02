@@ -2,12 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using BrazilianTypes.Types;
 using Lira.Application.CQRS.PersonOrixa.Commands.CreatePersonOrixa;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Orixa;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Domains.PersonOrixa;
-using Lira.Domain.Religion.Enums;
+using Lira.Domain.Enums;
 using Moq;
 
 namespace Lira.Test.Commands.PersonOrixas;

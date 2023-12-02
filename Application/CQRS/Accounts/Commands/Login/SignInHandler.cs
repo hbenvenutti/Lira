@@ -1,8 +1,8 @@
 using System.Net;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Application.Services.Token;
+using Lira.Common.Enums;
 using Lira.Common.Types;
 using Lira.Domain.Domains.Manager;
 using MediatR;

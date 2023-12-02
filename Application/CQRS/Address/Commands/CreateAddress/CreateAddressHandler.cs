@@ -1,8 +1,6 @@
 using System.Net;
-using Lira.Application.Enums;
-using Lira.Application.Messages;
 using Lira.Application.Responses;
-using Lira.Application.Specifications.Address;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Address;
 using Lira.Domain.Domains.Person;
 using MediatR;
@@ -72,7 +70,7 @@ public class CreateAddressHandler
             return new HandlerResponse<CreateAddressResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
                 appStatusCode: AppStatusCode.PersonNotFound,
-                errors: NotFoundMessages.PersonNotFound
+                errors: PersonMessages.NotFound
             );
         }
 

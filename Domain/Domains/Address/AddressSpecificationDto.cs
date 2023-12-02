@@ -1,4 +1,4 @@
-namespace Lira.Application.Specifications.Address;
+namespace Lira.Domain.Domains.Address;
 
 public readonly struct AddressSpecificationDto
 {

@@ -1,8 +1,8 @@
 using System.Net;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Application.Specifications.Phones;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Domains.Phones;
 using MediatR;
@@ -64,7 +64,7 @@ public class CreatePhoneHandler
             return new HandlerResponse<CreatePhoneResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
                 appStatusCode: AppStatusCode.PersonNotFound,
-                errors: NotFoundMessages.PersonNotFound
+                errors: PersonMessages.NotFound
             );
         }
 

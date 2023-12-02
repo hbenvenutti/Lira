@@ -1,8 +1,7 @@
 using System.Net;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
-using Lira.Application.Specifications.Emails;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Emails;
 using Lira.Domain.Domains.Person;
 using MediatR;
@@ -65,7 +64,7 @@ public class CreateEmailHandler :
             return new HandlerResponse<CreateEmailResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
                 appStatusCode: AppStatusCode.PersonNotFound,
-                errors: NotFoundMessages.PersonNotFound
+                errors: PersonMessages.NotFound
             );
         }
 

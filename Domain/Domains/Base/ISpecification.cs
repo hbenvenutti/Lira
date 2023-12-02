@@ -1,6 +1,6 @@
-using Lira.Application.Enums;
+using Lira.Common.Enums;
 
-namespace Lira.Application.Specifications;
+namespace Lira.Domain.Domains.Base;
 
 public interface ISpecification<in T> where T : struct
 {

@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text.Json;
-using Lira.Application.Enums;
 using Lira.Application.Responses;
+using Lira.Common.Enums;
 using Lira.Common.Structs;
 using Microsoft.AspNetCore.Http;
 

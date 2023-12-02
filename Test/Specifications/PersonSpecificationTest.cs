@@ -1,8 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using BrazilianTypes.Types;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Specifications.Person;
+using Lira.Common.Enums;
+using Lira.Domain.Domains.Person;
 
 namespace Lira.Test.Specifications;
 

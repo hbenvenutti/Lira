@@ -1,4 +1,4 @@
-namespace Lira.Application.Specifications.Emails;
+namespace Lira.Domain.Domains.Emails;
 
 public readonly struct EmailSpecificationDto
 {

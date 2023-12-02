@@ -1,7 +1,6 @@
 using System.Net;
-using Lira.Application.Enums;
-using Lira.Application.Messages;
 using Lira.Application.Responses;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.Person;
 using MediatR;
@@ -47,7 +46,7 @@ public class CreateMediumHandler :
             return new HandlerResponse<CreateMediumResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
                 appStatusCode: AppStatusCode.PersonNotFound,
-                errors: NotFoundMessages.PersonNotFound
+                errors: PersonMessages.NotFound
             );
         }
 

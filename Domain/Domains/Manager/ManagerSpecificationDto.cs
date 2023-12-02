@@ -1,4 +1,4 @@
-namespace Lira.Application.Specifications.Manager;
+namespace Lira.Domain.Domains.Manager;
 
 public readonly struct ManagerSpecificationDto
 {

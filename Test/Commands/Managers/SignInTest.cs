@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Lira.Application.CQRS.Accounts.Commands.Login;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Services.Token;
+using Lira.Common.Enums;
 using Lira.Common.Services.Hash;
 using Lira.Common.Types;
 using Lira.Domain.Authentication.Manager;

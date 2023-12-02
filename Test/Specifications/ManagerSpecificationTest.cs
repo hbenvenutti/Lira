@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Lira.Application.Enums;
-using Lira.Application.Specifications.Manager;
+using Lira.Common.Enums;
 using Lira.Common.Types;
+using Lira.Domain.Domains.Manager;
 
 namespace Lira.Test.Specifications;
 

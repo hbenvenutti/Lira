@@ -1,4 +1,4 @@
-namespace Lira.Domain.Religion.Enums;
+namespace Lira.Domain.Enums;
 
 public enum OrixaType
 {

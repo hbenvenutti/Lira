@@ -1,5 +1,3 @@
-using Lira.Common.Types;
-
 namespace Lira.Domain.Authentication.Manager;
 
 public class ManagerCredentials

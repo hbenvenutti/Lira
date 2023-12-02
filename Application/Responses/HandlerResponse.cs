@@ -1,5 +1,5 @@
 using System.Net;
-using Lira.Application.Enums;
+using Lira.Common.Enums;
 using Lira.Common.Types;
 
 namespace Lira.Application.Responses;

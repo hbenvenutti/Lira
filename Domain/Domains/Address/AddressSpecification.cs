@@ -1,8 +1,8 @@
 using BrazilianTypes.Types;
-using Lira.Application.Enums;
-using Lira.Domain.Domains.Address;
+using Lira.Common.Enums;
+using Lira.Domain.Domains.Base;
 
-namespace Lira.Application.Specifications.Address;
+namespace Lira.Domain.Domains.Address;
 
 public class AddressSpecification : ISpecification<AddressSpecificationDto>
 {
@@ -17,7 +17,6 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
 
     public bool IsSatisfiedBy(AddressSpecificationDto data)
     {
-        var isSatisfiedBy = true;
         byte errors = 0;
 
         if (!Text.TryParse(data.Street, out _))
@@ -26,7 +25,6 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
             ErrorMessages.Add(item: AddressMessages.StreetIsInvalid);
 
             errors++;
-            isSatisfiedBy = false;
         }
 
         if (!Text.TryParse(data.Number, out _))
@@ -35,7 +33,6 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
             ErrorMessages.Add(item: AddressMessages.AddressNumberIsInvalid);
 
             errors++;
-            isSatisfiedBy = false;
         }
 
         if (!Text.TryParse(data.Neighborhood, out _))
@@ -44,7 +41,6 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
             ErrorMessages.Add(item: AddressMessages.NeighborhoodIsInvalid);
 
             errors++;
-            isSatisfiedBy = false;
         }
 
         if (!Text.TryParse(data.City, out _))
@@ -53,7 +49,6 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
             ErrorMessages.Add(item: AddressMessages.CityIsInvalid);
 
             errors++;
-            isSatisfiedBy = false;
         }
 
         if (!ZipCode.TryParse(data.ZipCode, out _))
@@ -62,7 +57,6 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
             ErrorMessages.Add(item: AddressMessages.ZipCodeIsInvalid);
 
             errors++;
-            isSatisfiedBy = false;
         }
 
         if (!Uf.TryParse(data.State, out _))
@@ -71,12 +65,11 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
             ErrorMessages.Add(item: AddressMessages.StateIsInvalid);
 
             errors++;
-            isSatisfiedBy = false;
         }
 
         if (errors > 1) { AppStatusCode = AppStatusCode.SeveralInvalidFields; }
 
-        return isSatisfiedBy;
+        return errors == 0;
     }
 
     # endregion

@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Lira.Application.CQRS.Medium.Commands.CreateMedium;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Medium;
 using Lira.Domain.Domains.Person;
 using Moq;

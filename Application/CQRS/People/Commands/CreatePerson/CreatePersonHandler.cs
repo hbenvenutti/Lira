@@ -1,8 +1,8 @@
 using System.Net;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Application.Specifications.Person;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Person;
 using MediatR;
 

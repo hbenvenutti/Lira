@@ -1,8 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using BrazilianTypes.Types;
-using Lira.Application.Enums;
-using Lira.Application.Messages;
-using Lira.Application.Specifications.Emails;
+using Lira.Common.Enums;
+using Lira.Domain.Domains.Emails;
 
 namespace Lira.Test.Specifications;
 
@@ -54,7 +53,7 @@ public class EmailSpecificationTest
         Assert.NotNull(_emailSpecification.ErrorMessages);
         Assert.NotEmpty(_emailSpecification.ErrorMessages);
         Assert.Contains(
-            expected: PersonMessages.InvalidEmail,
+            expected: EmailMessages.InvalidEmail,
             collection: _emailSpecification.ErrorMessages
         );
     }

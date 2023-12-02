@@ -6,10 +6,9 @@ using Lira.Application.CQRS.Medium.Commands.CreateMedium;
 using Lira.Application.CQRS.People.Commands.CreatePerson;
 using Lira.Application.CQRS.PersonOrixa.Commands.CreatePersonOrixa;
 using Lira.Application.CQRS.Phone.Commands.CreatePhone;
-using Lira.Application.Enums;
 using Lira.Application.Responses;
+using Lira.Common.Enums;
 using Lira.Domain.Enums;
-using Lira.Domain.Religion.Enums;
 using MediatR;
 
 namespace Lira.Application.CQRS.People.Commands.RegisterPerson;
