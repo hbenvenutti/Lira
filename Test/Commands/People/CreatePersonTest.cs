@@ -115,8 +115,8 @@ public class CreatePersonTest
         );
 
         Assert.Equal(
-            expected: StatusCode.CreatedOne,
-            actual: response.StatusCode
+            expected: AppStatusCode.CreatedOne,
+            actual: response.AppStatusCode
         );
 
         Assert.NotNull(response.Data);
@@ -126,8 +126,7 @@ public class CreatePersonTest
             actual: response.Data.Id
         );
 
-        Assert.Null(response.Error);
-        Assert.Null(response.Pagination);
+        Assert.Null(response.Errors);
     }
 
     # endregion
@@ -169,20 +168,18 @@ public class CreatePersonTest
         );
 
         Assert.Equal(
-            expected: StatusCode.PersonAlreadyExists,
-            actual: response.StatusCode
+            expected: AppStatusCode.PersonAlreadyExists,
+            actual: response.AppStatusCode
         );
 
         Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
 
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.Single(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.Single(response.Errors);
 
         Assert.Contains(
             expected: ConflictMessages.PersonAlreadyExists,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
     }
 
@@ -212,10 +209,8 @@ public class CreatePersonTest
         );
 
         Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
     }
 
     # endregion

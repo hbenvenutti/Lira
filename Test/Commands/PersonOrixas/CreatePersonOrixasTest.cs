@@ -122,12 +122,11 @@ public class CreatePersonOrixasTest
         );
 
         Assert.Equal(
-            expected: StatusCode.CreatedOne,
-            actual: response.StatusCode
+            expected: AppStatusCode.CreatedOne,
+            actual: response.AppStatusCode
         );
 
-        Assert.Null(response.Error);
-        Assert.Null(response.Pagination);
+        Assert.Null(response.Errors);
 
         Assert.NotNull(response.Data);
 
@@ -161,22 +160,20 @@ public class CreatePersonOrixasTest
         );
 
         Assert.Equal(
-            expected: StatusCode.PersonNotFound,
-            actual: response.StatusCode
+            expected: AppStatusCode.PersonNotFound,
+            actual: response.AppStatusCode
         );
 
-        Assert.NotNull(response.Error);
+        Assert.NotNull(response.Errors);
 
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Single(response.Error.Messages);
+        Assert.NotEmpty(response.Errors);
+        Assert.Single(response.Errors);
 
         Assert.Contains(
             expected: NotFoundMessages.PersonNotFound,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
 
-        Assert.Null(response.Pagination);
         Assert.Null(response.Data);
     }
 
@@ -205,22 +202,20 @@ public class CreatePersonOrixasTest
         );
 
         Assert.Equal(
-            expected: StatusCode.OrixaNotFound,
-            actual: response.StatusCode
+            expected: AppStatusCode.OrixaNotFound,
+            actual: response.AppStatusCode
         );
 
-        Assert.NotNull(response.Error);
+        Assert.NotNull(response.Errors);
 
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Single(response.Error.Messages);
+        Assert.NotEmpty(response.Errors);
+        Assert.Single(response.Errors);
 
         Assert.Contains(
             expected: NotFoundMessages.OrixaNotFound,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
 
-        Assert.Null(response.Pagination);
         Assert.Null(response.Data);
     }
 
