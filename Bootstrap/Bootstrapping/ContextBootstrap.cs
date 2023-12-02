@@ -1,10 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
+using Lira.Bootstrap.Config;
 using Lira.Data.Contexts;
 using Lira.Data.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Lira.Bootstrap.Bootstrapping;
 
@@ -18,8 +20,12 @@ public static class ContextBootstrap
         IConfiguration configuration
     )
     {
-        var connectionString = configuration
-            .GetConnectionString(name: "DefaultConnection");
+        var connectionStringConfig = services
+            .BuildServiceProvider()
+            .GetRequiredService<IOptions<ConnectionStringConfig>>()
+            .Value;
+
+        var connectionString = connectionStringConfig.DefaultConnection;
 
         services.AddDbContext<IDbContext, LiraDbContext>(
             optionsAction: options => options.UseNpgsql(connectionString),
