@@ -25,19 +25,19 @@ public class ManagerController : ControllerBase
 
     [HttpPost(template: "admin")]
     [ProducesResponseType(
-        typeof(Response<CreateAdminResponseDto>),
+        typeof(IHandlerResponse<CreateAdminResponseDto>),
         statusCode: (int) HttpStatusCode.Created)
     ]
     [ProducesResponseType(
-        typeof(Response<CreateAdminResponseDto>),
+        typeof(IHandlerResponse<CreateAdminResponseDto>),
         statusCode: (int) HttpStatusCode.BadRequest)
     ]
     [ProducesResponseType(
-        typeof(Response<CreateAdminResponseDto>),
+        typeof(IHandlerResponse<CreateAdminResponseDto>),
         statusCode: (int) HttpStatusCode.UnprocessableEntity)
     ]
     [ProducesResponseType(
-        typeof(Response<CreateAdminResponseDto>),
+        typeof(IHandlerResponse<CreateAdminResponseDto>),
         statusCode: (int) HttpStatusCode.InternalServerError)
     ]
 
@@ -55,19 +55,19 @@ public class ManagerController : ControllerBase
 
     [HttpPost(template: "signin")]
     [ProducesResponseType(
-        typeof(Response<SignInResponseDto>),
+        typeof(IHandlerResponse<SignInResponse>),
         statusCode: (int) HttpStatusCode.OK)
     ]
     [ProducesResponseType(
-        typeof(Response<SignInResponseDto>),
+        typeof(IHandlerResponse<SignInResponse>),
         statusCode: (int) HttpStatusCode.BadRequest)
     ]
     [ProducesResponseType(
-        typeof(Response<SignInResponseDto>),
+        typeof(IHandlerResponse<SignInResponse>),
         statusCode: (int) HttpStatusCode.NotFound)
     ]
     [ProducesResponseType(
-        typeof(Response<SignInResponseDto>),
+        typeof(IHandlerResponse<SignInResponse>),
         statusCode: (int) HttpStatusCode.InternalServerError)
     ]
     public async Task<IActionResult> SignInAsync(

@@ -1,5 +1,4 @@
 using System.Net;
-using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
@@ -11,7 +10,7 @@ using MediatR;
 namespace Lira.Application.CQRS.Phone.Commands.CreatePhone;
 
 public class CreatePhoneHandler
-    : IRequestHandler<CreatePhoneRequest, Response<CreatePhoneResponse>>
+    : IRequestHandler<CreatePhoneRequest, IHandlerResponse<CreatePhoneResponse>>
 {
     # region ---- properties ---------------------------------------------------
 
@@ -33,7 +32,7 @@ public class CreatePhoneHandler
 
     # endregion
 
-    public async Task<Response<CreatePhoneResponse>> Handle(
+    public async Task<IHandlerResponse<CreatePhoneResponse>> Handle(
         CreatePhoneRequest request, CancellationToken cancellationToken
     )
     {
@@ -45,10 +44,10 @@ public class CreatePhoneHandler
 
         if (!specification.IsSatisfiedBy(specificationData))
         {
-            return new Response<CreatePhoneResponse>(
+            return new HandlerResponse<CreatePhoneResponse>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: specification.StatusCode,
-                error: new ErrorDto(specification.ErrorMessages)
+                appStatusCode: specification.AppStatusCode,
+                errors: specification.ErrorMessages
             );
         }
 
@@ -62,10 +61,10 @@ public class CreatePhoneHandler
 
         if (person is null)
         {
-            return new Response<CreatePhoneResponse>(
+            return new HandlerResponse<CreatePhoneResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
-                statusCode: StatusCode.PersonNotFound,
-                error: new ErrorDto(message: NotFoundMessages.PersonNotFound)
+                appStatusCode: AppStatusCode.PersonNotFound,
+                errors: NotFoundMessages.PersonNotFound
             );
         }
 
@@ -86,10 +85,10 @@ public class CreatePhoneHandler
 
         # region ---- response -------------------------------------------------
 
-        return new Response<CreatePhoneResponse>(
+        return new HandlerResponse<CreatePhoneResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedOne,
+            appStatusCode: AppStatusCode.CreatedOne,
             data: new CreatePhoneResponse(phone.Id)
         );
 
