@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Lira.Domain.Authentication.Manager;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Lira.Application.Services.Token;
@@ -15,9 +16,9 @@ public class TokenService : ITokenService
 
     # region ---- constructor --------------------------------------------------
 
-    public TokenService(TokenConfig tokenConfig)
+    public TokenService(IOptions<TokenConfig> tokenConfig)
     {
-        _tokenConfig = tokenConfig;
+        _tokenConfig = tokenConfig.Value;
     }
 
     # endregion
