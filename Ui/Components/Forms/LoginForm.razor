@@ -11,7 +11,9 @@
            id="username"
            placeholder="Username"
            value="@Username"
-           @oninput="@((e) => Username = e.Value?.ToString()?? string.Empty)"
+           @oninput="@(e => Username = e.Value?.ToString()
+                ?? string.Empty
+           )"
            Required
     />
 
