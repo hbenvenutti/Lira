@@ -1,6 +1,6 @@
 namespace Lira.Application.CQRS.Accounts.Commands.Login;
 
-public class SignInResponseDto
+public class SignInResponse
 {
     # region ---- properties ---------------------------------------------------
 
@@ -8,7 +8,7 @@ public class SignInResponseDto
 
     # endregion
 
-    public SignInResponseDto(string token)
+    public SignInResponse(string token)
     {
         Token = token;
     }
