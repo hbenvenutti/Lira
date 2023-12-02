@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Lira.Application.CQRS.Accounts.Commands.Login;
+using Lira.Application.CQRS.Address.Commands.CreateAddress;
+using Lira.Application.CQRS.Emails.Commands.CreateEmail;
 using Lira.Application.CQRS.Managers.Commands.CreateAdmin;
 using Lira.Application.CQRS.Managers.Commands.CreateManager;
 using Lira.Application.CQRS.Medium.Commands.CreateMedium;
@@ -39,7 +41,15 @@ public static class MediatorBootstrap
         );
 
         services.AddMediatR(mediatorServiceConfig => mediatorServiceConfig
+            .RegisterServicesFromAssemblies(typeof(CreateAddressHandler).Assembly)
+        );
+
+        services.AddMediatR(mediatorServiceConfig => mediatorServiceConfig
             .RegisterServicesFromAssemblies(typeof(CreateManagerHandler).Assembly)
+        );
+
+        services.AddMediatR(mediatorServiceConfig => mediatorServiceConfig
+            .RegisterServicesFromAssemblies(typeof(CreateEmailHandler).Assembly)
         );
 
         services.AddMediatR(mediatorServiceConfig => mediatorServiceConfig
