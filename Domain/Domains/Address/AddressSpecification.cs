@@ -1,6 +1,6 @@
 using BrazilianTypes.Types;
 using Lira.Application.Enums;
-using Lira.Application.Messages;
+using Lira.Domain.Domains.Address;
 
 namespace Lira.Application.Specifications.Address;
 
@@ -9,7 +9,7 @@ public class AddressSpecification : ISpecification<AddressSpecificationDto>
     # region ---- properties ---------------------------------------------------
 
     public AppStatusCode AppStatusCode { get; set; } = AppStatusCode.Empty;
-    public List<string> ErrorMessages { get; } = new List<string>();
+    public List<string> ErrorMessages { get; } = new();
 
     # endregion
 

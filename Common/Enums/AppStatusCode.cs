@@ -1,4 +1,4 @@
-namespace Lira.Application.Enums;
+namespace Lira.Common.Enums;
 
 public enum AppStatusCode
 {
