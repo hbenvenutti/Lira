@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Lira.Application.CQRS.Managers.Commands.CreateManager;
 
-public class CreateManagerRequest : IRequest<Response<CreateManagerResponse>>
+public class CreateManagerRequest : IRequest<IHandlerResponse<CreateManagerResponse>>
 {
     public Guid PersonId { get; init; }
     public string Username { get; init; }

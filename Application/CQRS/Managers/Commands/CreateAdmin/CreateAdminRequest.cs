@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Lira.Application.CQRS.Managers.Commands.CreateAdmin;
 
-public class CreateAdminRequest : IRequest<Response<CreateAdminResponseDto>>
+public class CreateAdminRequest : IRequest<IHandlerResponse<CreateAdminResponseDto>>
 {
     # region ---- properties ---------------------------------------------------
 

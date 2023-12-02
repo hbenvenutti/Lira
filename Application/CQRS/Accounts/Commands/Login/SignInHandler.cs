@@ -1,5 +1,4 @@
 using System.Net;
-using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
@@ -11,7 +10,7 @@ using MediatR;
 namespace Lira.Application.CQRS.Accounts.Commands.Login;
 
 public class SignInHandler
-    : IRequestHandler<SignInRequest, Response<SignInResponseDto>>
+    : IRequestHandler<SignInRequest, IHandlerResponse<SignInResponse>>
 {
     private readonly IManagerRepository _managerRepository;
     private readonly ITokenService _tokenService;
@@ -25,7 +24,7 @@ public class SignInHandler
         _tokenService = tokenService;
     }
 
-    public async Task<Response<SignInResponseDto>> Handle(
+    public async Task<IHandlerResponse<SignInResponse>> Handle(
         SignInRequest request,
         CancellationToken cancellationToken
     )
@@ -38,12 +37,10 @@ public class SignInHandler
 
         if (!isPasswordValid || !isUsernameValid)
         {
-            return new Response<SignInResponseDto>(
+            return new HandlerResponse<SignInResponse>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: StatusCode.SignInFailed,
-                error: new ErrorDto(message: ManagerMessages
-                    .InvalidUsernameOrPassword
-                )
+                appStatusCode: AppStatusCode.SignInFailed,
+                errors: ManagerMessages.InvalidUsernameOrPassword
             );
         }
 
@@ -52,33 +49,29 @@ public class SignInHandler
 
         if (manager is null)
         {
-            return new Response<SignInResponseDto>(
+            return new HandlerResponse<SignInResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
-                statusCode: StatusCode.SignInFailed,
-                error: new ErrorDto(message: ManagerMessages
-                    .InvalidUsernameOrPassword
-                )
+                appStatusCode: AppStatusCode.SignInFailed,
+                errors: ManagerMessages.InvalidUsernameOrPassword
             );
         }
 
         if (!Password.Compare(manager.Password, password))
         {
-            return new Response<SignInResponseDto>(
+            return new HandlerResponse<SignInResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
-                statusCode: StatusCode.SignInFailed,
-                error: new ErrorDto(message: ManagerMessages
-                    .InvalidUsernameOrPassword
-                )
+                appStatusCode: AppStatusCode.SignInFailed,
+                errors: ManagerMessages.InvalidUsernameOrPassword
             );
         }
 
         var token = _tokenService.Sign(manager);
 
-        return new Response<SignInResponseDto>(
+        return new HandlerResponse<SignInResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.OK,
-            statusCode: StatusCode.SignInSuccess,
-            data: new SignInResponseDto(token)
+            appStatusCode: AppStatusCode.SignInSuccess,
+            data: new SignInResponse(token)
         );
     }
 }

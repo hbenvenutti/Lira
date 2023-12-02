@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Lira.Application.CQRS.Accounts.Commands.Login;
 
-public class SignInRequest : IRequest<Response<SignInResponseDto>>
+public class SignInRequest : IRequest<IHandlerResponse<SignInResponse>>
 {
     public string Password { get; init; }
     public string Username { get; init; }

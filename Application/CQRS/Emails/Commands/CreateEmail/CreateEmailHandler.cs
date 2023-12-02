@@ -1,5 +1,4 @@
 using System.Net;
-using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
@@ -11,7 +10,7 @@ using MediatR;
 namespace Lira.Application.CQRS.Emails.Commands.CreateEmail;
 
 public class CreateEmailHandler :
-    IRequestHandler<CreateEmailRequest, Response<CreateEmailResponse>>
+    IRequestHandler<CreateEmailRequest, IHandlerResponse<CreateEmailResponse>>
 {
     # region ---- repositories -------------------------------------------------
 
@@ -33,7 +32,7 @@ public class CreateEmailHandler :
 
     # endregion
 
-    public async Task<Response<CreateEmailResponse>> Handle(
+    public async Task<IHandlerResponse<CreateEmailResponse>> Handle(
         CreateEmailRequest request,
         CancellationToken cancellationToken
     )
@@ -46,10 +45,10 @@ public class CreateEmailHandler :
 
         if (!specification.IsSatisfiedBy(emailData))
         {
-            return new Response<CreateEmailResponse>(
+            return new HandlerResponse<CreateEmailResponse>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: specification.StatusCode,
-                error: new ErrorDto(specification.ErrorMessages)
+                appStatusCode: specification.AppStatusCode,
+                errors: specification.ErrorMessages
             );
         }
 
@@ -63,10 +62,10 @@ public class CreateEmailHandler :
 
         if (person is null)
         {
-            return new Response<CreateEmailResponse>(
+            return new HandlerResponse<CreateEmailResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
-                statusCode: StatusCode.PersonNotFound,
-                error: new ErrorDto(message: NotFoundMessages.PersonNotFound)
+                appStatusCode: AppStatusCode.PersonNotFound,
+                errors: NotFoundMessages.PersonNotFound
             );
         }
 
@@ -76,14 +75,15 @@ public class CreateEmailHandler :
 
         email:
 
-        var email = await _emailRepository.FindByAddressAsync(request.Address);
+        var email = await _emailRepository
+            .FindByAddressAsync(request.Address);
 
         if (email is not null)
         {
-            return new Response<CreateEmailResponse>(
+            return new HandlerResponse<CreateEmailResponse>(
                 httpStatusCode: HttpStatusCode.Conflict,
-                statusCode: StatusCode.EmailAlreadyExists,
-                error: new ErrorDto(message: ConflictMessages.EmailIsInUse)
+                appStatusCode: AppStatusCode.EmailAlreadyExists,
+                errors:ConflictMessages.EmailIsInUse
             );
         }
 
@@ -99,10 +99,10 @@ public class CreateEmailHandler :
 
         # region ---- response -------------------------------------------------
 
-        return new Response<CreateEmailResponse>(
+        return new HandlerResponse<CreateEmailResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedOne,
+            appStatusCode: AppStatusCode.CreatedOne,
             data: new CreateEmailResponse(email.Id)
         );
 

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Lira.Application.CQRS.Emails.Commands.CreateEmail;
 
-public class CreateEmailRequest : IRequest<Response<CreateEmailResponse>>
+public class CreateEmailRequest : IRequest<IHandlerResponse<CreateEmailResponse>>
 {
     public string Address { get; init; }
     public EmailType Type { get; init; }

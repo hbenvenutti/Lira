@@ -1,5 +1,4 @@
 using System.Net;
-using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
@@ -10,7 +9,7 @@ using MediatR;
 namespace Lira.Application.CQRS.Medium.Commands.CreateMedium;
 
 public class CreateMediumHandler :
-    IRequestHandler<CreateMediumRequest, Response<CreateMediumResponse>>
+    IRequestHandler<CreateMediumRequest, IHandlerResponse<CreateMediumResponse>>
 {
     # region ---- properties ---------------------------------------------------
 
@@ -32,7 +31,7 @@ public class CreateMediumHandler :
 
     # endregion
 
-    public async Task<Response<CreateMediumResponse>> Handle(
+    public async Task<IHandlerResponse<CreateMediumResponse>> Handle(
         CreateMediumRequest request,
         CancellationToken cancellationToken
     )
@@ -45,10 +44,10 @@ public class CreateMediumHandler :
 
         if (person is null)
         {
-            return new Response<CreateMediumResponse>(
+            return new HandlerResponse<CreateMediumResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
-                statusCode: StatusCode.PersonNotFound,
-                error: new ErrorDto( message: NotFoundMessages.PersonNotFound)
+                appStatusCode: AppStatusCode.PersonNotFound,
+                errors: NotFoundMessages.PersonNotFound
             );
         }
 
@@ -70,10 +69,10 @@ public class CreateMediumHandler :
 
         # region ---- response -------------------------------------------------
 
-        return new Response<CreateMediumResponse>(
+        return new HandlerResponse<CreateMediumResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedOne,
+            appStatusCode: AppStatusCode.CreatedOne,
             data: new CreateMediumResponse(id: medium.Id)
         );
 

@@ -2,7 +2,6 @@ using System.Net;
 using System.Transactions;
 using Lira.Application.CQRS.Managers.Commands.CreateManager;
 using Lira.Application.CQRS.People.Commands.CreatePerson;
-using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
@@ -14,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Lira.Application.CQRS.Managers.Commands.CreateAdmin;
 
 public class CreateAdminHandler
-    : IRequestHandler<CreateAdminRequest, Response<CreateAdminResponseDto>>
+    : IRequestHandler<CreateAdminRequest, IHandlerResponse<CreateAdminResponseDto>>
 {
     # region ---- properties ---------------------------------------------------
 
@@ -39,7 +38,7 @@ public class CreateAdminHandler
 
     # endregion
 
-    public async Task<Response<CreateAdminResponseDto>> Handle(
+    public async Task<IHandlerResponse<CreateAdminResponseDto>> Handle(
         CreateAdminRequest request,
         CancellationToken cancellationToken
     )
@@ -54,12 +53,10 @@ public class CreateAdminHandler
 
         if (!request.Code.Equals(code))
         {
-            return new Response<CreateAdminResponseDto>(
+            return new HandlerResponse<CreateAdminResponseDto>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: StatusCode.InvalidAdminCode,
-                error: new ErrorDto(
-                    message: ManagerMessages.InvalidAdminCode
-                )
+                appStatusCode: AppStatusCode.InvalidAdminCode,
+                errors: ManagerMessages.InvalidAdminCode
             );
         }
 
@@ -71,12 +68,10 @@ public class CreateAdminHandler
 
         if (managers.Any())
         {
-            return new Response<CreateAdminResponseDto>(
+            return new HandlerResponse<CreateAdminResponseDto>(
                 httpStatusCode: HttpStatusCode.UnprocessableEntity,
-                statusCode: StatusCode.AdminAlreadyExists,
-                error: new ErrorDto(
-                    message: ManagerMessages.AdminAlreadyExists
-                )
+                appStatusCode: AppStatusCode.AdminAlreadyExists,
+                errors: ManagerMessages.AdminAlreadyExists
             );
         }
 
@@ -95,10 +90,11 @@ public class CreateAdminHandler
 
         if (!personResult.IsSuccess)
         {
-            return new Response<CreateAdminResponseDto>(
+            return new HandlerResponse<CreateAdminResponseDto>(
                 httpStatusCode: personResult.HttpStatusCode,
-                statusCode: personResult.StatusCode,
-                error: personResult.Error
+                appStatusCode: personResult.AppStatusCode,
+                errors: personResult.Errors
+                        ?? throw new NullReferenceException()
             );
         }
 
@@ -119,10 +115,11 @@ public class CreateAdminHandler
 
         if (!managerResult.IsSuccess)
         {
-            return new Response<CreateAdminResponseDto>(
+            return new HandlerResponse<CreateAdminResponseDto>(
                 httpStatusCode: managerResult.HttpStatusCode,
-                statusCode: managerResult.StatusCode,
-                error: managerResult.Error
+                appStatusCode: managerResult.AppStatusCode,
+                errors: managerResult.Errors
+                        ?? throw new NullReferenceException()
             );
         }
 
@@ -135,9 +132,9 @@ public class CreateAdminHandler
 
         transaction.Complete();
 
-        return new Response<CreateAdminResponseDto>(
+        return new HandlerResponse<CreateAdminResponseDto>(
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedTransaction,
+            appStatusCode: AppStatusCode.CreatedTransaction,
             isSuccess: true,
             data: new CreateAdminResponseDto(managerId)
         );
