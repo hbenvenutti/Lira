@@ -15,6 +15,8 @@ public enum AppStatusCode
 
     # region ---- generic 11-xx-xxx --------------------------------------------
 
+    FoundOne = 11_00_200,
+    FoundMany = 11_01_200,
     CreatedOne = 11_00_201,
     CreatedMany = 11_01_201,
     CreatedTransaction = 11_03_201,
