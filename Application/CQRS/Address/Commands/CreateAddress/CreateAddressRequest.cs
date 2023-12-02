@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Lira.Application.CQRS.Address.Commands.CreateAddress;
 
-public class CreateAddressRequest : IRequest<Response<CreateAddressResponse>>
+public class CreateAddressRequest : IRequest<IHandlerResponse<CreateAddressResponse>>
 {
     public string Street { get; init; }
     public string Number { get; init; }
