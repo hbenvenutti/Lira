@@ -15,7 +15,7 @@ using MediatR;
 namespace Lira.Application.CQRS.People.Commands.RegisterPerson;
 
 public class RegisterPersonHandler
-    : IRequestHandler<RegisterPersonRequest, Response<RegisterPersonResponse>>
+    : IRequestHandler<RegisterPersonRequest, HandlerResponse<RegisterPersonResponse>>
 {
     # region ---- properties ---------------------------------------------------
 
@@ -34,7 +34,7 @@ public class RegisterPersonHandler
 
     # endregion
 
-    public async Task<Response<RegisterPersonResponse>> Handle(
+    public async Task<HandlerResponse<RegisterPersonResponse>> Handle(
         RegisterPersonRequest request,
         CancellationToken cancellationToken
     )
@@ -55,10 +55,11 @@ public class RegisterPersonHandler
 
         if (!personResult.IsSuccess)
         {
-            return new Response<RegisterPersonResponse>(
+            return new HandlerResponse<RegisterPersonResponse>(
                 httpStatusCode: personResult.HttpStatusCode,
-                statusCode: personResult.StatusCode,
-                error: personResult.Error
+                appStatusCode: personResult.AppStatusCode,
+                errors: personResult.Errors
+                        ?? throw new NullReferenceException()
             );
         }
 
@@ -86,10 +87,11 @@ public class RegisterPersonHandler
 
         if (!addressResult.IsSuccess)
         {
-            return new Response<RegisterPersonResponse>(
+            return new HandlerResponse<RegisterPersonResponse>(
                 httpStatusCode: addressResult.HttpStatusCode,
-                statusCode: addressResult.StatusCode,
-                error: addressResult.Error
+                appStatusCode: addressResult.AppStatusCode,
+                errors: addressResult.Errors
+                        ?? throw new NullReferenceException()
             );
         }
 
@@ -109,10 +111,11 @@ public class RegisterPersonHandler
 
         if (!emailResult.IsSuccess)
         {
-            return new Response<RegisterPersonResponse>(
+            return new HandlerResponse<RegisterPersonResponse>(
                 httpStatusCode: emailResult.HttpStatusCode,
-                statusCode: emailResult.StatusCode,
-                error: emailResult.Error
+                appStatusCode: emailResult.AppStatusCode,
+                errors: emailResult.Errors
+                        ?? throw new NullReferenceException()
             );
         }
 
@@ -131,10 +134,11 @@ public class RegisterPersonHandler
 
         if (!phoneResult.IsSuccess)
         {
-            return new Response<RegisterPersonResponse>(
+            return new HandlerResponse<RegisterPersonResponse>(
                 httpStatusCode: phoneResult.HttpStatusCode,
-                statusCode: phoneResult.StatusCode,
-                error: phoneResult.Error
+                appStatusCode: phoneResult.AppStatusCode,
+                errors: phoneResult.Errors
+                        ?? throw new NullReferenceException()
             );
         }
 
@@ -156,10 +160,11 @@ public class RegisterPersonHandler
 
             if (!mediumResult.IsSuccess)
             {
-                return new Response<RegisterPersonResponse>(
+                return new HandlerResponse<RegisterPersonResponse>(
                     httpStatusCode: mediumResult.HttpStatusCode,
-                    statusCode: mediumResult.StatusCode,
-                    error: mediumResult.Error
+                    appStatusCode: mediumResult.AppStatusCode,
+                    errors: mediumResult.Errors
+                            ?? throw new NullReferenceException()
                 );
             }
         }
@@ -182,10 +187,11 @@ public class RegisterPersonHandler
 
             if (!adjunctOrixaResult.IsSuccess)
             {
-                return new Response<RegisterPersonResponse>(
+                return new HandlerResponse<RegisterPersonResponse>(
                     httpStatusCode: adjunctOrixaResult.HttpStatusCode,
-                    statusCode: adjunctOrixaResult.StatusCode,
-                    error: adjunctOrixaResult.Error
+                    appStatusCode: adjunctOrixaResult.AppStatusCode,
+                    errors: adjunctOrixaResult.Errors
+                            ?? throw new NullReferenceException()
                 );
             }
         }
@@ -204,10 +210,11 @@ public class RegisterPersonHandler
 
             if (!ancestralOrixaResult.IsSuccess)
             {
-                return new Response<RegisterPersonResponse>(
+                return new HandlerResponse<RegisterPersonResponse>(
                     httpStatusCode: ancestralOrixaResult.HttpStatusCode,
-                    statusCode: ancestralOrixaResult.StatusCode,
-                    error: ancestralOrixaResult.Error
+                    appStatusCode: ancestralOrixaResult.AppStatusCode,
+                    errors: ancestralOrixaResult.Errors
+                            ?? throw new NullReferenceException()
                 );
             }
         }
@@ -226,10 +233,11 @@ public class RegisterPersonHandler
 
             if (!frontOrixaResult.IsSuccess)
             {
-                return new Response<RegisterPersonResponse>(
+                return new HandlerResponse<RegisterPersonResponse>(
                     httpStatusCode: frontOrixaResult.HttpStatusCode,
-                    statusCode: frontOrixaResult.StatusCode,
-                    error: frontOrixaResult.Error
+                    appStatusCode: frontOrixaResult.AppStatusCode,
+                    errors: frontOrixaResult.Errors
+                            ?? throw new NullReferenceException()
                 );
             }
         }
@@ -240,10 +248,10 @@ public class RegisterPersonHandler
 
         transaction.Complete();
 
-        return new Response<RegisterPersonResponse>(
+        return new HandlerResponse<RegisterPersonResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedTransaction,
+            appStatusCode: AppStatusCode.CreatedTransaction,
             data: new RegisterPersonResponse(id: personId)
         );
 

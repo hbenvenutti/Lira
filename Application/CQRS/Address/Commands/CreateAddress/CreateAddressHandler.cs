@@ -1,5 +1,4 @@
 using System.Net;
-using Lira.Application.Dto;
 using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
@@ -11,7 +10,7 @@ using MediatR;
 namespace Lira.Application.CQRS.Address.Commands.CreateAddress;
 
 public class CreateAddressHandler
-    : IRequestHandler<CreateAddressRequest, Response<CreateAddressResponse>>
+    : IRequestHandler<CreateAddressRequest, IHandlerResponse<CreateAddressResponse>>
 {
     # region ---- properties ---------------------------------------------------
 
@@ -33,7 +32,7 @@ public class CreateAddressHandler
 
     # endregion
 
-    public async Task<Response<CreateAddressResponse>> Handle(
+    public async Task<IHandlerResponse<CreateAddressResponse>> Handle(
         CreateAddressRequest request,
         CancellationToken cancellationToken
     )
@@ -53,10 +52,10 @@ public class CreateAddressHandler
 
         if (!addressSpecification.IsSatisfiedBy(addressData))
         {
-            return new Response<CreateAddressResponse>(
+            return new HandlerResponse<CreateAddressResponse>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: addressSpecification.StatusCode,
-                error: new ErrorDto(addressSpecification.ErrorMessages)
+                appStatusCode: addressSpecification.AppStatusCode,
+                errors: addressSpecification.ErrorMessages
             );
         }
 
@@ -70,10 +69,10 @@ public class CreateAddressHandler
 
         if (person is null)
         {
-            return new Response<CreateAddressResponse>(
+            return new HandlerResponse<CreateAddressResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
-                statusCode: StatusCode.PersonNotFound,
-                error: new ErrorDto(message: NotFoundMessages.PersonNotFound)
+                appStatusCode: AppStatusCode.PersonNotFound,
+                errors: NotFoundMessages.PersonNotFound
             );
         }
 
@@ -100,10 +99,10 @@ public class CreateAddressHandler
 
         # region ---- response -------------------------------------------------
 
-        return new Response<CreateAddressResponse>(
+        return new HandlerResponse<CreateAddressResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedOne,
+            appStatusCode: AppStatusCode.CreatedOne,
             data: new CreateAddressResponse(address.Id)
         );
 
