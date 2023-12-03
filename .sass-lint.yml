@@ -1,0 +1,10 @@
+rules:
+    no-ids: 2
+    no-important: 2
+    brace-style:
+        - 2
+        - style: allman
+        - allowSingleLine: false
+    indentation:
+        - 2
+        - size: 4

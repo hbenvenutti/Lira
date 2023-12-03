@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SassLintProjectComponent">
-    <option name="nodeInterpreter" value="" />
+    <option name="lintExecutable" value="$USER_HOME$/.nvm/versions/node/v18.18.0/bin/sass-lint" />
+    <option name="nodeInterpreter" value="/snap/bin/node" />
   </component>
 </project>
