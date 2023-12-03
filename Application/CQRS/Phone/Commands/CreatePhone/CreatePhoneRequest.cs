@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Lira.Application.CQRS.Phone.Commands.CreatePhone;
 
-public class CreatePhoneRequest : IRequest<Response<CreatePhoneResponse>>
+public class CreatePhoneRequest : IRequest<IHandlerResponse<CreatePhoneResponse>>
 {
     public Guid PersonId { get; init; }
     public string PhoneNumber { get; init; }

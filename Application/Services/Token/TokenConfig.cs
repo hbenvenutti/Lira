@@ -1,36 +1,29 @@
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Lira.Common.Exceptions;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Lira.Application.Services.Token;
 
+[ExcludeFromCodeCoverage]
 public class TokenConfig
 {
+    public const string SectionName = "Token";
+
     # region ---- properties ---------------------------------------------------
 
-    public string Issuer { get; init; }
-    public string Audience { get; init; }
-    public string PrivateKey { get; init; }
+    [Required]
+    public required string PrivateKey { get; init; }
+
+    [Required]
+    public required string Issuer { get; init; }
+
+    [Required]
+    public required string Audience { get; init; }
+
     public static DateTime Expires => DateTime.UtcNow.AddHours(12);
     public SigningCredentials Credentials => GenerateCredentials();
     public SymmetricSecurityKey Key => new(Encoding.UTF8.GetBytes(PrivateKey));
-
-    # endregion
-
-    # region ---- constructor --------------------------------------------------
-
-    public TokenConfig(IConfiguration configuration)
-    {
-        PrivateKey = configuration["Token:PrivateKey"]
-            ?? throw new MissingEnvironmentVariableException(nameof(PrivateKey));
-
-        Issuer = configuration["Token:Issuer"]
-            ?? throw new MissingEnvironmentVariableException(nameof(Issuer));
-
-        Audience = configuration["Token:Audience"]
-            ?? throw new MissingEnvironmentVariableException(nameof(Audience));
-    }
 
     # endregion
 

@@ -1,50 +1,37 @@
-@rendermode InteractiveServer
+@rendermode InteractiveAuto
+@* @rendermode InteractiveServer *@
+@* @rendermode InteractiveWebAssembly *@
 
-@namespace Lira.Ui.Components.Forms
+@* ReSharper disable once CSharpWarnings::CS8974 *@
+<form onsubmit="@Submit">
 
-<link href="styles/forms/LoginForm.css"
-      rel="stylesheet"
-      type="text/css"
-/>
-
-<EditForm Model="@Credentials"
-          OnValidSubmit="Submit"
-          FormName="loginForm"
->
     <h3>Lira</h3>
 
-    @* <LoginInput Type="@InputTypes.Text" *@
-    @*             Id="username" *@
-    @*             Placeholder="Username" *@
-    @*             Value="@Credentials.Username" *@
-    @* /> *@
-
-    <InputText type="@InputTypes.Text"
-               id="username"
-               placeholder="Username"
-               @bind-Value="@Credentials.Username"
-               required
+    <input type="@InputTypes.Text"
+           id="username"
+           placeholder="Username"
+           value="@Username"
+           @oninput="@(e => Username = e.Value?.ToString()
+                ?? string.Empty
+           )"
+           Required
     />
 
-    <InputText type="@InputTypes.Password"
-               id="password"
-               placeholder="Password"
-               @bind-Value="@Credentials.Password"
-               required
+    <input type="@InputTypes.Password"
+           id="password"
+           placeholder="Password"
+           @bind="@Password"
+           required
     />
-
-    @* <LoginInput Type="@InputTypes.Password" *@
-    @*             Id="password" *@
-    @*             Placeholder="Password" *@
-    @*             Value="@Credentials.Password" *@
-    @* /> *@
 
     <ConfirmButton Text="Login"
                    Type="@InputTypes.Submit"
     />
 
+    @* Username: @Username *@
+
     <img src="img/logo.svg"
          alt="Logo"
          class="logo"
     />
-</EditForm>
+</form>

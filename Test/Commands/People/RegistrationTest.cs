@@ -7,9 +7,8 @@ using Lira.Application.CQRS.People.Commands.CreatePerson;
 using Lira.Application.CQRS.People.Commands.RegisterPerson;
 using Lira.Application.CQRS.PersonOrixa.Commands.CreatePersonOrixa;
 using Lira.Application.CQRS.Phone.Commands.CreatePhone;
-using Lira.Application.Dto;
-using Lira.Application.Enums;
 using Lira.Application.Responses;
+using Lira.Common.Enums;
 using Lira.Domain.Enums;
 using MediatR;
 using Moq;
@@ -96,10 +95,10 @@ public class RegistrationTest
                 It.IsAny<CreatePersonRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreatePersonResponse>(
+            .ReturnsAsync(new HandlerResponse<CreatePersonResponse>(
                 isSuccess: true,
                 httpStatusCode: HttpStatusCode.Created,
-                statusCode: StatusCode.CreatedOne,
+                appStatusCode: AppStatusCode.CreatedOne,
                 data: new CreatePersonResponse(
                     id: PersonId
                 )
@@ -110,10 +109,10 @@ public class RegistrationTest
                 It.IsAny<CreateAddressRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreateAddressResponse>(
+            .ReturnsAsync(new HandlerResponse<CreateAddressResponse>(
                 isSuccess: true,
                 httpStatusCode: HttpStatusCode.Created,
-                statusCode: StatusCode.CreatedOne,
+                appStatusCode: AppStatusCode.CreatedOne,
                 data: new CreateAddressResponse(
                     id: Guid.NewGuid()
                 )
@@ -124,10 +123,10 @@ public class RegistrationTest
                 It.IsAny<CreateEmailRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreateEmailResponse>(
+            .ReturnsAsync(new HandlerResponse<CreateEmailResponse>(
                 isSuccess: true,
                 httpStatusCode: HttpStatusCode.Created,
-                statusCode: StatusCode.CreatedOne,
+                appStatusCode: AppStatusCode.CreatedOne,
                 data: new CreateEmailResponse(
                     id: Guid.NewGuid()
                 )
@@ -138,10 +137,10 @@ public class RegistrationTest
                 It.IsAny<CreatePhoneRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreatePhoneResponse>(
+            .ReturnsAsync(new HandlerResponse<CreatePhoneResponse>(
                 isSuccess: true,
                 httpStatusCode: HttpStatusCode.Created,
-                statusCode: StatusCode.CreatedOne,
+                appStatusCode: AppStatusCode.CreatedOne,
                 data: new CreatePhoneResponse(
                     id: Guid.NewGuid()
                 )
@@ -152,10 +151,10 @@ public class RegistrationTest
                 It.IsAny<CreatePersonOrixaRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreatePersonOrixaResponse>(
+            .ReturnsAsync(new HandlerResponse<CreatePersonOrixaResponse>(
                 isSuccess: true,
                 httpStatusCode: HttpStatusCode.Created,
-                statusCode: StatusCode.CreatedOne,
+                appStatusCode: AppStatusCode.CreatedOne,
                 data: new CreatePersonOrixaResponse(
                     id: Guid.NewGuid()
                 )
@@ -166,10 +165,10 @@ public class RegistrationTest
                 It.IsAny<CreateMediumRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreateMediumResponse>(
+            .ReturnsAsync(new HandlerResponse<CreateMediumResponse>(
                 isSuccess: true,
                 httpStatusCode: HttpStatusCode.Created,
-                statusCode: StatusCode.CreatedOne,
+                appStatusCode: AppStatusCode.CreatedOne,
                 data: new CreateMediumResponse(
                     id: Guid.NewGuid()
                 )
@@ -195,8 +194,8 @@ public class RegistrationTest
         );
 
         Assert.Equal(
-            expected: StatusCode.CreatedTransaction,
-            actual: result.StatusCode
+            expected: AppStatusCode.CreatedTransaction,
+            actual: result.AppStatusCode
         );
 
         Assert.NotNull(result.Data);
@@ -206,8 +205,7 @@ public class RegistrationTest
             actual: result.Data.Id
         );
 
-        Assert.Null(result.Error);
-        Assert.Null(result.Pagination);
+        Assert.Null(result.Errors);
     }
 
     # endregion
@@ -222,11 +220,11 @@ public class RegistrationTest
                 It.IsAny<CreatePersonRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreatePersonResponse>(
+            .ReturnsAsync(new HandlerResponse<CreatePersonResponse>(
                 isSuccess: false,
                 httpStatusCode: HttpStatusCode.BadGateway,
-                statusCode: StatusCode.Empty,
-                error: new ErrorDto(message: string.Empty)
+                appStatusCode: AppStatusCode.Empty,
+                errors: string.Empty
             ));
 
         var result = await _handler.Handle(
@@ -236,10 +234,8 @@ public class RegistrationTest
 
         Assert.False(result.IsSuccess);
         Assert.Null(result.Data);
-        Assert.Null(result.Pagination);
-        Assert.NotNull(result.Error);
-        Assert.NotNull(result.Error.Messages);
-        Assert.NotEmpty(result.Error.Messages);
+        Assert.NotNull(result.Errors);
+        Assert.NotEmpty(result.Errors);
     }
 
     # endregion
@@ -254,11 +250,11 @@ public class RegistrationTest
                 It.IsAny<CreateAddressRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreateAddressResponse>(
+            .ReturnsAsync(new HandlerResponse<CreateAddressResponse>(
                 isSuccess: false,
                 httpStatusCode: HttpStatusCode.BadGateway,
-                statusCode: StatusCode.Empty,
-                error: new ErrorDto(message: string.Empty)
+                appStatusCode: AppStatusCode.Empty,
+                errors: string.Empty
             ));
 
         var result = await _handler.Handle(
@@ -268,10 +264,8 @@ public class RegistrationTest
 
         Assert.False(result.IsSuccess);
         Assert.Null(result.Data);
-        Assert.Null(result.Pagination);
-        Assert.NotNull(result.Error);
-        Assert.NotNull(result.Error.Messages);
-        Assert.NotEmpty(result.Error.Messages);
+        Assert.NotNull(result.Errors);
+        Assert.NotEmpty(result.Errors);
     }
 
     # endregion
@@ -286,11 +280,11 @@ public class RegistrationTest
                 It.IsAny<CreateEmailRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreateEmailResponse>(
+            .ReturnsAsync(new HandlerResponse<CreateEmailResponse>(
                 isSuccess: false,
                 httpStatusCode: HttpStatusCode.BadGateway,
-                statusCode: StatusCode.Empty,
-                error: new ErrorDto(message: string.Empty)
+                appStatusCode: AppStatusCode.Empty,
+                errors: string.Empty
             ));
 
         var result = await _handler.Handle(
@@ -300,10 +294,8 @@ public class RegistrationTest
 
         Assert.False(result.IsSuccess);
         Assert.Null(result.Data);
-        Assert.Null(result.Pagination);
-        Assert.NotNull(result.Error);
-        Assert.NotNull(result.Error.Messages);
-        Assert.NotEmpty(result.Error.Messages);
+        Assert.NotNull(result.Errors);
+        Assert.NotEmpty(result.Errors);
     }
 
     # endregion
@@ -318,11 +310,11 @@ public class RegistrationTest
                 It.IsAny<CreatePhoneRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreatePhoneResponse>(
+            .ReturnsAsync(new HandlerResponse<CreatePhoneResponse>(
                 isSuccess: false,
                 httpStatusCode: HttpStatusCode.BadGateway,
-                statusCode: StatusCode.Empty,
-                error: new ErrorDto(message: string.Empty)
+                appStatusCode: AppStatusCode.Empty,
+                errors: string.Empty
             ));
 
         var result = await _handler.Handle(
@@ -332,10 +324,8 @@ public class RegistrationTest
 
         Assert.False(result.IsSuccess);
         Assert.Null(result.Data);
-        Assert.Null(result.Pagination);
-        Assert.NotNull(result.Error);
-        Assert.NotNull(result.Error.Messages);
-        Assert.NotEmpty(result.Error.Messages);
+        Assert.NotNull(result.Errors);
+        Assert.NotEmpty(result.Errors);
     }
 
     # endregion
@@ -350,11 +340,11 @@ public class RegistrationTest
                 It.IsAny<CreateMediumRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreateMediumResponse>(
+            .ReturnsAsync(new HandlerResponse<CreateMediumResponse>(
                 isSuccess: false,
                 httpStatusCode: HttpStatusCode.BadGateway,
-                statusCode: StatusCode.Empty,
-                error: new ErrorDto(message: string.Empty)
+                appStatusCode: AppStatusCode.Empty,
+                errors: string.Empty
             ));
 
         var result = await _handler.Handle(
@@ -364,10 +354,8 @@ public class RegistrationTest
 
         Assert.False(result.IsSuccess);
         Assert.Null(result.Data);
-        Assert.Null(result.Pagination);
-        Assert.NotNull(result.Error);
-        Assert.NotNull(result.Error.Messages);
-        Assert.NotEmpty(result.Error.Messages);
+        Assert.NotNull(result.Errors);
+        Assert.NotEmpty(result.Errors);
     }
 
     # endregion
@@ -411,11 +399,11 @@ public class RegistrationTest
                 It.IsAny<CreatePersonOrixaRequest>(),
                 It.IsAny<CancellationToken>()
             ))
-            .ReturnsAsync(new Response<CreatePersonOrixaResponse>(
+            .ReturnsAsync(new HandlerResponse<CreatePersonOrixaResponse>(
                 isSuccess: false,
                 httpStatusCode: HttpStatusCode.BadGateway,
-                statusCode: StatusCode.Empty,
-                error: new ErrorDto(message: string.Empty)
+                appStatusCode: AppStatusCode.Empty,
+                errors: string.Empty
             ));
 
         var result = await _handler.Handle(
@@ -425,10 +413,8 @@ public class RegistrationTest
 
         Assert.False(result.IsSuccess);
         Assert.Null(result.Data);
-        Assert.Null(result.Pagination);
-        Assert.NotNull(result.Error);
-        Assert.NotNull(result.Error.Messages);
-        Assert.NotEmpty(result.Error.Messages);
+        Assert.NotNull(result.Errors);
+        Assert.NotEmpty(result.Errors);
     }
 
     # endregion

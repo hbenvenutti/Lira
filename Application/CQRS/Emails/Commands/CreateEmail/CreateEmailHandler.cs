@@ -1,39 +1,37 @@
 using System.Net;
-using Lira.Application.Dto;
-using Lira.Application.Enums;
+using Lira.Application.CQRS.People.Queries.GetPersonById;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
-using Lira.Application.Specifications.Emails;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Emails;
-using Lira.Domain.Domains.Person;
 using MediatR;
 
 namespace Lira.Application.CQRS.Emails.Commands.CreateEmail;
 
 public class CreateEmailHandler :
-    IRequestHandler<CreateEmailRequest, Response<CreateEmailResponse>>
+    IRequestHandler<CreateEmailRequest, IHandlerResponse<CreateEmailResponse>>
 {
     # region ---- repositories -------------------------------------------------
 
+    private readonly IMediator _mediator;
     private readonly IEmailRepository _emailRepository;
-    private readonly IPersonRepository _personRepository;
 
     # endregion
 
     # region ---- constructor --------------------------------------------------
 
     public CreateEmailHandler(
-        IEmailRepository emailRepository,
-        IPersonRepository personRepository
+        IMediator mediator,
+        IEmailRepository emailRepository
     )
     {
+        _mediator = mediator;
         _emailRepository = emailRepository;
-        _personRepository = personRepository;
     }
 
     # endregion
 
-    public async Task<Response<CreateEmailResponse>> Handle(
+    public async Task<IHandlerResponse<CreateEmailResponse>> Handle(
         CreateEmailRequest request,
         CancellationToken cancellationToken
     )
@@ -46,10 +44,10 @@ public class CreateEmailHandler :
 
         if (!specification.IsSatisfiedBy(emailData))
         {
-            return new Response<CreateEmailResponse>(
+            return new HandlerResponse<CreateEmailResponse>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: specification.StatusCode,
-                error: new ErrorDto(specification.ErrorMessages)
+                appStatusCode: specification.AppStatusCode,
+                errors: specification.ErrorMessages
             );
         }
 
@@ -57,33 +55,38 @@ public class CreateEmailHandler :
 
         # region ---- person ---------------------------------------------------
 
-        if (!request.ValidatePerson) { goto email; }
-
-        var person = await _personRepository.FindByIdAsync(request.PersonId);
-
-        if (person is null)
+        if (request.ValidatePerson)
         {
-            return new Response<CreateEmailResponse>(
-                httpStatusCode: HttpStatusCode.NotFound,
-                statusCode: StatusCode.PersonNotFound,
-                error: new ErrorDto(message: NotFoundMessages.PersonNotFound)
+            var personRequest = new GetPersonByIdRequest(request.PersonId);
+
+            var personResult = await _mediator.Send(
+                personRequest,
+                cancellationToken
             );
+
+            if (!personResult.IsSuccess)
+            {
+                return new HandlerResponse<CreateEmailResponse>(
+                    httpStatusCode: personResult.HttpStatusCode,
+                    appStatusCode: personResult.AppStatusCode,
+                    errors: personResult.Errors ?? new List<string>()
+                );
+            }
         }
 
         # endregion
 
         # region ---- email ----------------------------------------------------
 
-        email:
-
-        var email = await _emailRepository.FindByAddressAsync(request.Address);
+        var email = await _emailRepository
+            .FindByAddressAsync(request.Address);
 
         if (email is not null)
         {
-            return new Response<CreateEmailResponse>(
+            return new HandlerResponse<CreateEmailResponse>(
                 httpStatusCode: HttpStatusCode.Conflict,
-                statusCode: StatusCode.EmailAlreadyExists,
-                error: new ErrorDto(message: ConflictMessages.EmailIsInUse)
+                appStatusCode: AppStatusCode.EmailAlreadyExists,
+                errors:ConflictMessages.EmailIsInUse
             );
         }
 
@@ -99,10 +102,10 @@ public class CreateEmailHandler :
 
         # region ---- response -------------------------------------------------
 
-        return new Response<CreateEmailResponse>(
+        return new HandlerResponse<CreateEmailResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedOne,
+            appStatusCode: AppStatusCode.CreatedOne,
             data: new CreateEmailResponse(email.Id)
         );
 

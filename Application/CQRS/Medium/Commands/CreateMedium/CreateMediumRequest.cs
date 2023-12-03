@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Lira.Application.CQRS.Medium.Commands.CreateMedium;
 
-public class CreateMediumRequest : IRequest<Response<CreateMediumResponse>>
+public class CreateMediumRequest : IRequest<IHandlerResponse<CreateMediumResponse>>
 {
     public Guid PersonId { get; init; }
     public DateTime? FirstAmaci { get; init; }

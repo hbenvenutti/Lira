@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>Lira.Common</AssemblyName>
@@ -10,12 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="BrazilianTypes">
-        <HintPath>..\..\..\.nuget\packages\braziliantypes\7.1.0.2\lib\net7.0\BrazilianTypes.dll</HintPath>
-      </Reference>
+      <PackageReference Include="BrazilianTypes" Version="8.1.1.2" />
     </ItemGroup>
 
 </Project>

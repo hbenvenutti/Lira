@@ -1,8 +1,7 @@
 using System.Net;
-using Lira.Application.Dto;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Orixa;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Domains.PersonOrixa;
@@ -11,7 +10,7 @@ using MediatR;
 namespace Lira.Application.CQRS.PersonOrixa.Commands.CreatePersonOrixa;
 
 public class CreatePersonOrixaHandler :
-    IRequestHandler<CreatePersonOrixaRequest, Response<CreatePersonOrixaResponse>>
+    IRequestHandler<CreatePersonOrixaRequest, IHandlerResponse<CreatePersonOrixaResponse>>
 {
     # region ---- properties ---------------------------------------------------
 
@@ -36,7 +35,7 @@ public class CreatePersonOrixaHandler :
 
     # endregion
 
-    public async Task<Response<CreatePersonOrixaResponse>> Handle(
+    public async Task<IHandlerResponse<CreatePersonOrixaResponse>> Handle(
         CreatePersonOrixaRequest request,
         CancellationToken cancellationToken
     )
@@ -49,10 +48,10 @@ public class CreatePersonOrixaHandler :
 
         if (person is null)
         {
-            return new Response<CreatePersonOrixaResponse>(
+            return new HandlerResponse<CreatePersonOrixaResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
-                statusCode: StatusCode.PersonNotFound,
-                error: new ErrorDto(message: NotFoundMessages.PersonNotFound)
+                appStatusCode: AppStatusCode.PersonNotFound,
+                errors: PersonMessages.NotFound
             );
         }
 
@@ -66,10 +65,10 @@ public class CreatePersonOrixaHandler :
 
         if (orixa is null)
         {
-            return new Response<CreatePersonOrixaResponse>(
+            return new HandlerResponse<CreatePersonOrixaResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
-                statusCode: StatusCode.OrixaNotFound,
-                error: new ErrorDto(message: NotFoundMessages.OrixaNotFound)
+                appStatusCode: AppStatusCode.OrixaNotFound,
+                errors: NotFoundMessages.OrixaNotFound
             );
         }
 
@@ -89,10 +88,10 @@ public class CreatePersonOrixaHandler :
 
         # region ---- response -------------------------------------------------
 
-        return new Response<CreatePersonOrixaResponse>(
+        return new HandlerResponse<CreatePersonOrixaResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedOne,
+            appStatusCode: AppStatusCode.CreatedOne,
             data: new CreatePersonOrixaResponse(id: personOrixa.Id)
         );
 

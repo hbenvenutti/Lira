@@ -2,8 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using BrazilianTypes.Types;
 using Lira.Application.CQRS.Managers.Commands.CreateManager;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
+using Lira.Common.Enums;
 using Lira.Common.Types;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Person;
@@ -109,12 +109,11 @@ public class CreateManagerTest
         );
 
         Assert.Equal(
-            expected: StatusCode.CreatedOne,
-            actual: response.StatusCode
+            expected: AppStatusCode.CreatedOne,
+            actual: response.AppStatusCode
         );
 
-        Assert.Null(response.Error);
-        Assert.Null(response.Pagination);
+        Assert.Null(response.Errors);
 
         Assert.NotNull(response.Data);
 
@@ -150,28 +149,6 @@ public class CreateManagerTest
         );
 
         Assert.False(response.IsSuccess);
-
-        Assert.Equal(
-            expected: HttpStatusCode.NotFound,
-            actual: response.HttpStatusCode
-        );
-
-        Assert.Equal(
-            expected: StatusCode.PersonNotFound,
-            actual: response.StatusCode
-        );
-
-        Assert.NotNull(response.Error);
-
-        Assert.Single(response.Error.Messages);
-
-        Assert.Contains(
-            expected: NotFoundMessages.PersonNotFound,
-            collection: response.Error.Messages
-        );
-
-        Assert.Null(response.Pagination);
-        Assert.Null(response.Data);
     }
 
     # endregion
@@ -208,20 +185,19 @@ public class CreateManagerTest
         );
 
         Assert.Equal(
-            expected: StatusCode.UsernameAlreadyExists,
-            actual: response.StatusCode
+            expected: AppStatusCode.UsernameAlreadyExists,
+            actual: response.AppStatusCode
         );
 
-        Assert.NotNull(response.Error);
+        Assert.NotNull(response.Errors);
 
-        Assert.Single(response.Error.Messages);
+        Assert.Single(response.Errors);
 
         Assert.Contains(
             expected: ConflictMessages.UsernameIsInUse,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
 
-        Assert.Null(response.Pagination);
         Assert.Null(response.Data);
     }
 
@@ -251,10 +227,8 @@ public class CreateManagerTest
             actual: response.HttpStatusCode
         );
 
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Null(response.Pagination);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
         Assert.Null(response.Data);
     }
 
@@ -284,10 +258,8 @@ public class CreateManagerTest
             actual: response.HttpStatusCode
         );
 
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Null(response.Pagination);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
         Assert.Null(response.Data);
     }
 

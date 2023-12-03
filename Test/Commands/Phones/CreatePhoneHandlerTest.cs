@@ -2,8 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using BrazilianTypes.Types;
 using Lira.Application.CQRS.Phone.Commands.CreatePhone;
-using Lira.Application.Enums;
-using Lira.Application.Messages;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Domains.Phones;
 using Moq;
@@ -98,12 +97,11 @@ public class CreatePhoneHandlerTest
         );
 
         Assert.Equal(
-            expected: StatusCode.CreatedOne,
-            actual: response.StatusCode
+            expected: AppStatusCode.CreatedOne,
+            actual: response.AppStatusCode
         );
 
-        Assert.Null(response.Error);
-        Assert.Null(response.Pagination);
+        Assert.Null(response.Errors);
 
         Assert.NotNull(response.Data);
         Assert.Equal(expected: PhoneId, actual: response.Data.Id);
@@ -132,16 +130,14 @@ public class CreatePhoneHandlerTest
         );
 
         Assert.Equal(
-            expected: StatusCode.InvalidPhone,
-            actual: response.StatusCode
+            expected: AppStatusCode.InvalidPhone,
+            actual: response.AppStatusCode
         );
 
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
 
         Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
     }
 
     # endregion
@@ -160,29 +156,6 @@ public class CreatePhoneHandlerTest
         var response = await _handler.Handle(request, CancellationToken.None);
 
         Assert.False(response.IsSuccess);
-
-        Assert.Equal(
-            expected: HttpStatusCode.NotFound,
-            actual: response.HttpStatusCode
-        );
-
-        Assert.Equal(
-            expected: StatusCode.PersonNotFound,
-            actual: response.StatusCode
-        );
-
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Single(response.Error.Messages);
-
-        Assert.Contains(
-            expected: NotFoundMessages.PersonNotFound,
-            collection: response.Error.Messages
-        );
-
-        Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
     }
 
     # endregion

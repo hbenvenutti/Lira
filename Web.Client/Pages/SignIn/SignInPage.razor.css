@@ -1,0 +1,12 @@
+div.login-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-clip: content-box;
+  background: url("img/login_background.jpg") no-repeat center center fixed;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+}
+
+/*# sourceMappingURL=SignInPage.razor.css.map */

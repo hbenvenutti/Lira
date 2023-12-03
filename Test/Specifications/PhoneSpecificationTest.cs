@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using BrazilianTypes.Types;
-using Lira.Application.Enums;
-using Lira.Application.Messages;
 using Lira.Application.Specifications.Phones;
+using Lira.Common.Enums;
+using Lira.Domain.Domains.Person;
 
 namespace Lira.Test.Specifications;
 
@@ -28,8 +28,8 @@ public class PhoneSpecificationTest
         Assert.True(result);
 
         Assert.Equal(
-            expected: StatusCode.Empty,
-            actual: _phoneSpecification.StatusCode
+            expected: AppStatusCode.Empty,
+            actual: _phoneSpecification.AppStatusCode
         );
 
         Assert.NotNull(_phoneSpecification.ErrorMessages);
@@ -52,8 +52,8 @@ public class PhoneSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.InvalidPhone,
-            actual: _phoneSpecification.StatusCode
+            expected: AppStatusCode.InvalidPhone,
+            actual: _phoneSpecification.AppStatusCode
         );
 
         Assert.NotNull(_phoneSpecification.ErrorMessages);

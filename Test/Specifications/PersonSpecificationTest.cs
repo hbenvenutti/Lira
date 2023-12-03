@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using BrazilianTypes.Types;
-using Lira.Application.Enums;
-using Lira.Application.Messages;
 using Lira.Application.Specifications.Person;
+using Lira.Common.Enums;
+using Lira.Domain.Domains.Person;
 
 namespace Lira.Test.Specifications;
 
@@ -33,8 +33,8 @@ public class PersonSpecificationTest
         Assert.True(result);
 
         Assert.Equal(
-            expected: StatusCode.Empty,
-            actual: _personSpecification.StatusCode
+            expected: AppStatusCode.Empty,
+            actual: _personSpecification.AppStatusCode
         );
 
         Assert.NotNull(_personSpecification.ErrorMessages);
@@ -62,8 +62,8 @@ public class PersonSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.InvalidName,
-            actual: _personSpecification.StatusCode
+            expected: AppStatusCode.InvalidName,
+            actual: _personSpecification.AppStatusCode
         );
 
         Assert.NotNull(_personSpecification.ErrorMessages);
@@ -96,8 +96,8 @@ public class PersonSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.InvalidSurname,
-            actual: _personSpecification.StatusCode
+            expected: AppStatusCode.InvalidSurname,
+            actual: _personSpecification.AppStatusCode
         );
 
         Assert.NotNull(_personSpecification.ErrorMessages);
@@ -131,8 +131,8 @@ public class PersonSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.InvalidCpf,
-            actual: _personSpecification.StatusCode
+            expected: AppStatusCode.InvalidCpf,
+            actual: _personSpecification.AppStatusCode
         );
 
         Assert.NotNull(_personSpecification.ErrorMessages);
@@ -170,8 +170,8 @@ public class PersonSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.SeveralInvalidFields,
-            actual: _personSpecification.StatusCode
+            expected: AppStatusCode.SeveralInvalidFields,
+            actual: _personSpecification.AppStatusCode
         );
 
         Assert.NotNull(_personSpecification.ErrorMessages);

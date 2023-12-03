@@ -3,7 +3,6 @@ using Lira.Domain.Domains.Orixa;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Domains.PersonOrixa;
 using Lira.Domain.Enums;
-using Lira.Domain.Religion.Enums;
 
 namespace Lira.Data.Entities;
 

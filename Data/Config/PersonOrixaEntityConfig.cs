@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Lira.Common.Extensions;
 using Lira.Data.Entities;
-using Lira.Domain.Religion.Enums;
+using Lira.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

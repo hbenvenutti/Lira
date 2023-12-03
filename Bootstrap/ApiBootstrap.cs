@@ -19,6 +19,7 @@ public static class ApiBootstrap
         IConfiguration configuration
     )
     {
+        services.ConfigureOptions(configuration);
         services.ConfigureDbContext(configuration);
         services.ConfigureProviders();
         services.ConfigureMediatorServices();

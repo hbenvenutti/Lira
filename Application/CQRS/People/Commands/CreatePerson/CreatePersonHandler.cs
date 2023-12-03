@@ -1,16 +1,15 @@
 using System.Net;
-using Lira.Application.Dto;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
 using Lira.Application.Specifications.Person;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Person;
 using MediatR;
 
 namespace Lira.Application.CQRS.People.Commands.CreatePerson;
 
 public class CreatePersonHandler :
-    IRequestHandler<CreatePersonRequest, Response<CreatePersonResponse>>
+    IRequestHandler<CreatePersonRequest, IHandlerResponse<CreatePersonResponse>>
 {
     # region ---- properties ---------------------------------------------------
 
@@ -27,7 +26,7 @@ public class CreatePersonHandler :
 
     # endregion
 
-    public async Task<Response<CreatePersonResponse>> Handle(
+    public async Task<IHandlerResponse<CreatePersonResponse>> Handle(
         CreatePersonRequest request,
         CancellationToken cancellationToken
     )
@@ -44,10 +43,10 @@ public class CreatePersonHandler :
 
         if (!personSpecification.IsSatisfiedBy(personData))
         {
-            return new Response<CreatePersonResponse>(
+            return new HandlerResponse<CreatePersonResponse>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: personSpecification.StatusCode,
-                error: new ErrorDto(personSpecification.ErrorMessages)
+                appStatusCode: personSpecification.AppStatusCode,
+                errors: personSpecification.ErrorMessages
             );
         }
 
@@ -60,10 +59,10 @@ public class CreatePersonHandler :
 
         if (person is not null)
         {
-            return new Response<CreatePersonResponse>(
+            return new HandlerResponse<CreatePersonResponse>(
                 httpStatusCode: HttpStatusCode.Conflict,
-                statusCode: StatusCode.PersonAlreadyExists,
-                error: new ErrorDto(message: ConflictMessages.PersonAlreadyExists)
+                appStatusCode: AppStatusCode.PersonAlreadyExists,
+                errors: ConflictMessages.PersonAlreadyExists
             );
         }
 
@@ -79,10 +78,10 @@ public class CreatePersonHandler :
 
         # region ---- response --------------------------------------------------
 
-        return new Response<CreatePersonResponse>(
+        return new HandlerResponse<CreatePersonResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedOne,
+            appStatusCode: AppStatusCode.CreatedOne,
             data: new CreatePersonResponse(person.Id)
         );
 

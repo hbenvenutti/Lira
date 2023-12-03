@@ -1,11 +1,11 @@
 using Lira.Application.Responses;
-using Lira.Domain.Religion.Enums;
+using Lira.Domain.Enums;
 using MediatR;
 
 namespace Lira.Application.CQRS.PersonOrixa.Commands.CreatePersonOrixa;
 
 public class CreatePersonOrixaRequest :
-    IRequest<Response<CreatePersonOrixaResponse>>
+    IRequest<IHandlerResponse<CreatePersonOrixaResponse>>
 {
     public Guid PersonId { get; init; }
     public Guid OrixaId { get; init; }

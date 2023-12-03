@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Lira.Application.CQRS.People.Commands.CreatePerson;
 
-public class CreatePersonRequest : IRequest<Response<CreatePersonResponse>>
+public class CreatePersonRequest : IRequest<IHandlerResponse<CreatePersonResponse>>
 {
     # region ---- properties ---------------------------------------------------
 

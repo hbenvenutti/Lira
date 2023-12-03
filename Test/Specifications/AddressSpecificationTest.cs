@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Lira.Application.Enums;
-using Lira.Application.Messages;
-using Lira.Application.Specifications.Address;
+using Lira.Common.Enums;
+using Lira.Domain.Domains.Address;
 
 namespace Lira.Test.Specifications;
 
@@ -40,8 +39,8 @@ public class AddressSpecificationTest
 
         Assert.True(isSatisfiedBy);
         Assert.Equal(
-            expected: StatusCode.Empty,
-            actual: _addressSpecification.StatusCode
+            expected: AppStatusCode.Empty,
+            actual: _addressSpecification.AppStatusCode
         );
         Assert.IsType<List<string>>(_addressSpecification.ErrorMessages);
         Assert.Empty(_addressSpecification.ErrorMessages);
@@ -75,8 +74,8 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.InvalidStreet,
-            actual: _addressSpecification.StatusCode
+            expected: AppStatusCode.InvalidStreet,
+            actual: _addressSpecification.AppStatusCode
         );
 
         Assert.Single(_addressSpecification.ErrorMessages);
@@ -115,8 +114,8 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.InvalidAddressNumber,
-            actual: _addressSpecification.StatusCode
+            expected: AppStatusCode.InvalidAddressNumber,
+            actual: _addressSpecification.AppStatusCode
         );
 
         Assert.Single(_addressSpecification.ErrorMessages);
@@ -155,8 +154,8 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.InvalidNeighborhood,
-            actual: _addressSpecification.StatusCode
+            expected: AppStatusCode.InvalidNeighborhood,
+            actual: _addressSpecification.AppStatusCode
         );
 
         Assert.Single(_addressSpecification.ErrorMessages);
@@ -195,8 +194,8 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.InvalidCity,
-            actual: _addressSpecification.StatusCode
+            expected: AppStatusCode.InvalidCity,
+            actual: _addressSpecification.AppStatusCode
         );
 
         Assert.Single(_addressSpecification.ErrorMessages);
@@ -237,8 +236,8 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.InvalidZipCode,
-            actual: _addressSpecification.StatusCode
+            expected: AppStatusCode.InvalidZipCode,
+            actual: _addressSpecification.AppStatusCode
         );
 
         Assert.Single(_addressSpecification.ErrorMessages);
@@ -279,8 +278,8 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.InvalidUf,
-            actual: _addressSpecification.StatusCode
+            expected: AppStatusCode.InvalidUf,
+            actual: _addressSpecification.AppStatusCode
         );
 
         Assert.Single(_addressSpecification.ErrorMessages);
@@ -378,8 +377,8 @@ public class AddressSpecificationTest
         Assert.False(isSatisfiedBy);
 
         Assert.Equal(
-            expected: StatusCode.SeveralInvalidFields,
-            actual: _addressSpecification.StatusCode
+            expected: AppStatusCode.SeveralInvalidFields,
+            actual: _addressSpecification.AppStatusCode
         );
 
         Assert.NotEmpty(_addressSpecification.ErrorMessages);

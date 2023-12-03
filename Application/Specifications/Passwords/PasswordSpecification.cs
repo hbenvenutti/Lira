@@ -1,14 +1,15 @@
-using Lira.Application.Enums;
 using Lira.Application.Messages;
+using Lira.Common.Enums;
 using Lira.Common.Types;
+using Lira.Domain.Domains.Base;
 
 namespace Lira.Application.Specifications.Passwords;
 
 public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
 {
     # region ---- properties ---------------------------------------------------
-    public StatusCode StatusCode { get; set; } = StatusCode.Empty;
-    public ICollection<string> ErrorMessages { get; } = new List<string>();
+    public AppStatusCode AppStatusCode { get; set; } = AppStatusCode.Empty;
+    public List<string> ErrorMessages { get; } = new List<string>();
 
     # endregion
 
@@ -18,7 +19,7 @@ public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
     {
         if (data.Password != data.Confirmation)
         {
-            StatusCode = StatusCode.PasswordsDoNotMatch;
+            AppStatusCode = AppStatusCode.PasswordsDoNotMatch;
             ErrorMessages.Add(item: ManagerMessages.PasswordsDoNotMatch);
 
             return false;
@@ -26,7 +27,7 @@ public class PasswordSpecification : ISpecification<PasswordSpecificationDto>
 
         if (!Password.TryParse(data.Password, out _))
         {
-            StatusCode = StatusCode.InvalidPassword;
+            AppStatusCode = AppStatusCode.InvalidPassword;
             ErrorMessages.Add(item: ManagerMessages.InvalidPassword);
 
             return false;

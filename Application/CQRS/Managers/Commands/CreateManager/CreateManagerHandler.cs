@@ -1,10 +1,8 @@
 using System.Net;
-using Lira.Application.Dto;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Responses;
-using Lira.Application.Specifications.Manager;
 using Lira.Application.Specifications.Passwords;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Manager;
 using Lira.Domain.Domains.Person;
 using MediatR;
@@ -12,7 +10,7 @@ using MediatR;
 namespace Lira.Application.CQRS.Managers.Commands.CreateManager;
 
 public class CreateManagerHandler :
-    IRequestHandler<CreateManagerRequest, Response<CreateManagerResponse>>
+    IRequestHandler<CreateManagerRequest, IHandlerResponse<CreateManagerResponse>>
 {
     # region ---- properties ---------------------------------------------------
 
@@ -34,7 +32,7 @@ public class CreateManagerHandler :
 
     # endregion
 
-    public async Task<Response<CreateManagerResponse>> Handle(
+    public async Task<IHandlerResponse<CreateManagerResponse>> Handle(
         CreateManagerRequest request,
         CancellationToken cancellationToken
     )
@@ -56,21 +54,19 @@ public class CreateManagerHandler :
 
         if (!passwordSpecification.IsSatisfiedBy(passwordData))
         {
-            return new Response<CreateManagerResponse>(
+            return new HandlerResponse<CreateManagerResponse>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: passwordSpecification.StatusCode,
-                error: new ErrorDto(
-                    messages: passwordSpecification.ErrorMessages
-                )
+                appStatusCode: passwordSpecification.AppStatusCode,
+                errors: passwordSpecification.ErrorMessages
             );
         }
 
         if (!managerSpecification.IsSatisfiedBy(managerData))
         {
-            return new Response<CreateManagerResponse>(
+            return new HandlerResponse<CreateManagerResponse>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: managerSpecification.StatusCode,
-                error: new ErrorDto(managerSpecification.ErrorMessages)
+                appStatusCode: managerSpecification.AppStatusCode,
+                errors: managerSpecification.ErrorMessages
             );
         }
 
@@ -82,15 +78,10 @@ public class CreateManagerHandler :
 
         if (person is null)
         {
-            return new Response<CreateManagerResponse>(
+            return new HandlerResponse<CreateManagerResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
-                statusCode: StatusCode.PersonNotFound,
-                error: new ErrorDto(
-                    messages: new List<string>
-                    {
-                        NotFoundMessages.PersonNotFound
-                    }
-                )
+                appStatusCode: AppStatusCode.PersonNotFound,
+                errors: PersonMessages.NotFound
             );
         }
 
@@ -104,15 +95,10 @@ public class CreateManagerHandler :
 
         if (managerWithUsername is not null)
         {
-            return new Response<CreateManagerResponse>(
+            return new HandlerResponse<CreateManagerResponse>(
                 httpStatusCode: HttpStatusCode.BadRequest,
-                statusCode: StatusCode.UsernameAlreadyExists,
-                error: new ErrorDto(
-                    messages: new List<string>
-                    {
-                        ConflictMessages.UsernameIsInUse
-                    }
-                )
+                appStatusCode: AppStatusCode.UsernameAlreadyExists,
+                errors: ConflictMessages.UsernameIsInUse
             );
         }
 
@@ -128,10 +114,10 @@ public class CreateManagerHandler :
 
         # region ---- response -------------------------------------------------
 
-        return new Response<CreateManagerResponse>(
+        return new HandlerResponse<CreateManagerResponse>(
             isSuccess: true,
             httpStatusCode: HttpStatusCode.Created,
-            statusCode: StatusCode.CreatedOne,
+            appStatusCode: AppStatusCode.CreatedOne,
             data: new CreateManagerResponse(manager.Id)
         );
 

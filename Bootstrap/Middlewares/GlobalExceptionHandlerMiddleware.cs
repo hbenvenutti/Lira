@@ -1,8 +1,7 @@
 using System.Net;
 using System.Text.Json;
-using Lira.Application.Dto;
-using Lira.Application.Enums;
 using Lira.Application.Responses;
+using Lira.Common.Enums;
 using Lira.Common.Structs;
 using Microsoft.AspNetCore.Http;
 
@@ -53,10 +52,10 @@ public class GlobalExceptionHandlerMiddleware
             ? new List<string> { exception.Message }
             : new List<string> { exception.Message, exception.InnerException.Message };
 
-        var response = new Response<object>(
+        var response = new HandlerResponse<object>(
             HttpStatusCode.InternalServerError,
-            StatusCode.UnexpectedError,
-            error: new ErrorDto(messages)
+            AppStatusCode.UnexpectedError,
+            errors: messages
         );
 
         httpContext.Response.ContentType = HttpContentTypes.Json;

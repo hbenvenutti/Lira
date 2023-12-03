@@ -2,11 +2,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using BrazilianTypes.Types;
 using Lira.Application.CQRS.Emails.Commands.CreateEmail;
-using Lira.Application.Enums;
+using Lira.Application.CQRS.People.Queries.GetPersonById;
 using Lira.Application.Messages;
+using Lira.Application.Responses;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Emails;
-using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
+using MediatR;
 using Moq;
 
 namespace Lira.Test.Commands.Emails;
@@ -16,8 +18,8 @@ public class CreateEmailTest
 {
     # region ---- properties ---------------------------------------------------
 
+    private readonly Mock<IMediator> _mediator = new();
     private readonly Mock<IEmailRepository> _emailRepository = new();
-    private readonly Mock<IPersonRepository> _personRepository = new();
 
     private readonly CreateEmailHandler _handler;
     private readonly CreateEmailRequest _request;
@@ -36,8 +38,8 @@ public class CreateEmailTest
         SetupMocks();
 
         _handler = new CreateEmailHandler(
-            _emailRepository.Object,
-            _personRepository.Object
+            _mediator.Object,
+            _emailRepository.Object
         );
 
         _request = new CreateEmailRequest(
@@ -54,6 +56,17 @@ public class CreateEmailTest
 
     private void SetupMocks()
     {
+        _mediator
+            .Setup(mediator => mediator.Send(
+                It.IsAny<GetPersonByIdRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
+                isSuccess: true,
+                httpStatusCode: HttpStatusCode.OK,
+                appStatusCode: AppStatusCode.Empty
+            ));
+
         _emailRepository
             .Setup(repository => repository
                 .CreateAsync(It.IsAny<EmailDomain>())
@@ -65,21 +78,6 @@ public class CreateEmailTest
                 personId: PersonId,
                 createdAt: DateTime.UtcNow
             ));
-
-        _personRepository
-            .Setup(repository => repository
-                .FindByIdAsync(
-                    It.IsAny<Guid>(),
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                )
-            )
-            .ReturnsAsync(null as PersonDomain);
     }
 
     # endregion
@@ -102,14 +100,13 @@ public class CreateEmailTest
         );
 
         Assert.Equal(
-            expected: StatusCode.CreatedOne,
-            actual: response.StatusCode
+            expected: AppStatusCode.CreatedOne,
+            actual: response.AppStatusCode
         );
 
         Assert.NotNull(response.Data);
         Assert.Equal(expected: EmailId, actual: response.Data.Id);
-        Assert.Null(response.Error);
-        Assert.Null(response.Pagination);
+        Assert.Null(response.Errors);
     }
 
     # endregion
@@ -119,6 +116,16 @@ public class CreateEmailTest
     [Fact]
     public async void ShouldReturnPersonNotFound()
     {
+        _mediator
+            .Setup(mediator => mediator.Send(
+                It.IsAny<GetPersonByIdRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
+                httpStatusCode: HttpStatusCode.NotFound,
+                appStatusCode: AppStatusCode.Empty
+            ));
+
         var request = new CreateEmailRequest(
             address: Email,
             personId: PersonId,
@@ -132,29 +139,6 @@ public class CreateEmailTest
         );
 
         Assert.False(response.IsSuccess);
-
-        Assert.Equal(
-            expected: HttpStatusCode.NotFound,
-            actual: response.HttpStatusCode
-        );
-
-        Assert.Equal(
-            expected: StatusCode.PersonNotFound,
-            actual: response.StatusCode
-        );
-
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Single(response.Error.Messages);
-
-        Assert.Contains(
-            expected: NotFoundMessages.PersonNotFound,
-            collection: response.Error.Messages
-        );
-
-        Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
     }
 
     # endregion
@@ -192,22 +176,20 @@ public class CreateEmailTest
         );
 
         Assert.Equal(
-            expected: StatusCode.EmailAlreadyExists,
-            actual: response.StatusCode
+            expected: AppStatusCode.EmailAlreadyExists,
+            actual: response.AppStatusCode
         );
 
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Single(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
+        Assert.Single(response.Errors);
 
         Assert.Contains(
             expected: ConflictMessages.EmailIsInUse,
-            collection: response.Error.Messages
+            collection: response.Errors
         );
 
         Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
     }
 
     # endregion
@@ -237,22 +219,20 @@ public class CreateEmailTest
         );
 
         Assert.Equal(
-            expected: StatusCode.InvalidEmailAddress,
-            actual: response.StatusCode
+            expected: AppStatusCode.InvalidEmailAddress,
+            actual: response.AppStatusCode
         );
 
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-        Assert.NotEmpty(response.Error.Messages);
-        Assert.Single(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
+        Assert.Single(response.Errors);
 
         Assert.Contains(
-            expected: PersonMessages.InvalidEmail,
-            collection: response.Error.Messages
+            expected: EmailMessages.InvalidEmail,
+            collection: response.Errors
         );
 
         Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
     }
 
     # endregion

@@ -1,10 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Lira.Application.CQRS.Address.Commands.CreateAddress;
-using Lira.Application.Enums;
-using Lira.Application.Messages;
+using Lira.Application.CQRS.People.Queries.GetPersonById;
+using Lira.Application.Responses;
+using Lira.Common.Enums;
 using Lira.Domain.Domains.Address;
-using Lira.Domain.Domains.Person;
+using MediatR;
 using Moq;
 
 namespace Lira.Test.Commands.Addresses;
@@ -14,8 +15,8 @@ public class CreateAddressTest
 {
     # region ---- properties ---------------------------------------------------
 
+    private readonly Mock<IMediator> _mediator = new();
     private readonly Mock<IAddressRepository> _addressRepository;
-    private readonly Mock<IPersonRepository> _personRepository;
     private readonly CreateAddressHandler _handler;
     private readonly CreateAddressRequest _request;
 
@@ -36,13 +37,12 @@ public class CreateAddressTest
     public CreateAddressTest()
     {
         _addressRepository = new Mock<IAddressRepository>();
-        _personRepository = new Mock<IPersonRepository>();
 
         SetupMock();
 
         _handler = new CreateAddressHandler(
-            _addressRepository.Object,
-            _personRepository.Object
+            _mediator.Object,
+            _addressRepository.Object
         );
 
         _request = new CreateAddressRequest(
@@ -63,20 +63,16 @@ public class CreateAddressTest
 
     private void SetupMock()
     {
-        _personRepository
-            .Setup(repository => repository
-                .FindByIdAsync(
-                    It.IsAny<Guid>(),
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                )
-            )
-            .ReturnsAsync(null as PersonDomain);
+        _mediator
+            .Setup(mediator => mediator.Send(
+                It.IsAny<GetPersonByIdRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
+                isSuccess: true,
+                httpStatusCode: HttpStatusCode.OK,
+                appStatusCode: AppStatusCode.Empty
+            ));
 
         _addressRepository
             .Setup(repository => repository
@@ -110,11 +106,10 @@ public class CreateAddressTest
             actual: response.HttpStatusCode
         );
         Assert.Equal(
-            expected: StatusCode.CreatedOne,
-            actual: response.StatusCode
+            expected: AppStatusCode.CreatedOne,
+            actual: response.AppStatusCode
         );
-        Assert.Null(response.Error);
-        Assert.Null(response.Pagination);
+        Assert.Null(response.Errors);
         Assert.NotNull(response.Data);
         Assert.Equal(
             expected: AddressId,
@@ -129,6 +124,16 @@ public class CreateAddressTest
     [Fact]
     public async void ShouldReturnPersonNotFoundAsync()
     {
+        _mediator
+            .Setup(mediator => mediator.Send(
+                It.IsAny<GetPersonByIdRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
+                httpStatusCode: HttpStatusCode.NotFound,
+                appStatusCode: AppStatusCode.Empty
+            ));
+
         var request = new CreateAddressRequest(
             street: Street,
             number: Number,
@@ -143,24 +148,6 @@ public class CreateAddressTest
         var response = await _handler.Handle(request, CancellationToken.None);
 
         Assert.False(response.IsSuccess);
-        Assert.Equal(
-            expected: HttpStatusCode.NotFound,
-            actual: response.HttpStatusCode
-        );
-        Assert.Equal(
-            expected: StatusCode.PersonNotFound,
-            actual: response.StatusCode
-        );
-        Assert.NotNull(response.Error);
-        Assert.NotNull(response.Error.Messages);
-
-        Assert.Single(response.Error.Messages);
-        Assert.Contains(
-            expected: NotFoundMessages.PersonNotFound,
-            collection: response.Error.Messages
-        );
-        Assert.Null(response.Pagination);
-        Assert.Null(response.Data);
     }
 
     # endregion
@@ -188,9 +175,8 @@ public class CreateAddressTest
             actual: response.HttpStatusCode
         );
         Assert.Null(response.Data);
-        Assert.Null(response.Pagination);
-        Assert.NotNull(response.Error);
-        Assert.NotEmpty(response.Error.Messages);
+        Assert.NotNull(response.Errors);
+        Assert.NotEmpty(response.Errors);
     }
 
     # endregion

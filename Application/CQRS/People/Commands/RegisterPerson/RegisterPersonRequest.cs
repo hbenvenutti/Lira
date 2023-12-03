@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Lira.Application.CQRS.People.Commands.RegisterPerson;
 
-public class RegisterPersonRequest : IRequest<Response<RegisterPersonResponse>>
+public class RegisterPersonRequest : IRequest<HandlerResponse<RegisterPersonResponse>>
 {
     # region ---- properties ---------------------------------------------------
 

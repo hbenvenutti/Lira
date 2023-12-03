@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Lira.Application.Enums;
 using Lira.Application.Messages;
 using Lira.Application.Specifications.Passwords;
+using Lira.Common.Enums;
 using Lira.Common.Types;
 
 namespace Lira.Test.Specifications;
@@ -29,8 +29,8 @@ public class PasswordSpecificationTest
         Assert.True(result);
 
         Assert.Equal(
-            expected: StatusCode.Empty,
-            actual: _passwordSpecification.StatusCode
+            expected: AppStatusCode.Empty,
+            actual: _passwordSpecification.AppStatusCode
         );
 
         Assert.NotNull(_passwordSpecification.ErrorMessages);
@@ -54,8 +54,8 @@ public class PasswordSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.PasswordsDoNotMatch,
-            actual: _passwordSpecification.StatusCode
+            expected: AppStatusCode.PasswordsDoNotMatch,
+            actual: _passwordSpecification.AppStatusCode
         );
 
         Assert.NotNull(_passwordSpecification.ErrorMessages);
@@ -84,8 +84,8 @@ public class PasswordSpecificationTest
         Assert.False(result);
 
         Assert.Equal(
-            expected: StatusCode.InvalidPassword,
-            actual: _passwordSpecification.StatusCode
+            expected: AppStatusCode.InvalidPassword,
+            actual: _passwordSpecification.AppStatusCode
         );
 
         Assert.NotNull(_passwordSpecification.ErrorMessages);

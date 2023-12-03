@@ -2,7 +2,6 @@ using Lira.Domain.Domains.Base;
 using Lira.Domain.Domains.Orixa;
 using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
-using Lira.Domain.Religion.Enums;
 
 namespace Lira.Domain.Domains.PersonOrixa;
 
