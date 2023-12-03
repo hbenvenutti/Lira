@@ -1,8 +1,8 @@
 using System.Net;
+using Lira.Application.CQRS.People.Queries.GetPersonById;
 using Lira.Application.Responses;
 using Lira.Common.Enums;
 using Lira.Domain.Domains.Address;
-using Lira.Domain.Domains.Person;
 using MediatR;
 
 namespace Lira.Application.CQRS.Address.Commands.CreateAddress;
@@ -12,20 +12,20 @@ public class CreateAddressHandler
 {
     # region ---- properties ---------------------------------------------------
 
+    private readonly IMediator _mediator;
     private readonly IAddressRepository _addressRepository;
-    private readonly IPersonRepository _personRepository;
 
     # endregion
 
     # region ---- constructor --------------------------------------------------
 
     public CreateAddressHandler(
-        IAddressRepository addressRepository,
-        IPersonRepository personRepository
+        IMediator mediator,
+        IAddressRepository addressRepository
     )
     {
+        _mediator = mediator;
         _addressRepository = addressRepository;
-        _personRepository = personRepository;
     }
 
     # endregion
@@ -61,24 +61,28 @@ public class CreateAddressHandler
 
         # region ---- person ---------------------------------------------------
 
-        if (!request.ValidatePerson) { goto address; }
-
-        var person = await _personRepository.FindByIdAsync(request.PersonId);
-
-        if (person is null)
+        if (request.ValidatePerson)
         {
-            return new HandlerResponse<CreateAddressResponse>(
-                httpStatusCode: HttpStatusCode.NotFound,
-                appStatusCode: AppStatusCode.PersonNotFound,
-                errors: PersonMessages.NotFound
+            var personRequest = new GetPersonByIdRequest(request.PersonId);
+
+            var personResult = await _mediator.Send(
+                personRequest,
+                cancellationToken
             );
+
+            if (!personResult.IsSuccess)
+            {
+                return new HandlerResponse<CreateAddressResponse>(
+                    httpStatusCode: personResult.HttpStatusCode,
+                    appStatusCode: personResult.AppStatusCode,
+                    errors: personResult.Errors ?? new List<string>()
+                );
+            }
         }
 
         # endregion
 
         # region ---- address --------------------------------------------------
-
-        address:
 
         var address = AddressDomain.Create(
             street: request.Street,

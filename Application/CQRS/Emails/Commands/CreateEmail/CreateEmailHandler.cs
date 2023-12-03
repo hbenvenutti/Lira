@@ -58,6 +58,7 @@ public class CreateEmailHandler :
         if (request.ValidatePerson)
         {
             var personRequest = new GetPersonByIdRequest(request.PersonId);
+
             var personResult = await _mediator.Send(
                 personRequest,
                 cancellationToken
