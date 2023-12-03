@@ -51,6 +51,17 @@ public class CreateMediumTest
 
     private void SetupMocks()
     {
+        _mediator
+            .Setup(mediator => mediator.Send(
+                It.IsAny<GetPersonByIdRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
+                isSuccess: true,
+                httpStatusCode: HttpStatusCode.OK,
+                appStatusCode: AppStatusCode.Empty
+            ));
+
         _mediumRepository
             .Setup(repository => repository
                 .CreateAsync(It.IsAny<MediumDomain>())
@@ -71,20 +82,6 @@ public class CreateMediumTest
     [Fact]
     public async Task Success()
     {
-        _mediator
-            .Setup(mediator => mediator.Send(
-                It.IsAny<GetPersonByIdRequest>(),
-                It.IsAny<CancellationToken>()
-            ))
-            .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
-                isSuccess: true,
-                httpStatusCode: HttpStatusCode.OK,
-                appStatusCode: AppStatusCode.FoundOne,
-                data: new GetPersonByIdResponse(
-                    id: PersonId
-                )
-            ));
-
         var response = await _handler.Handle(_request, CancellationToken.None);
 
         Assert.True(response.IsSuccess);
@@ -118,8 +115,7 @@ public class CreateMediumTest
             ))
             .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
                 httpStatusCode: HttpStatusCode.NotFound,
-                appStatusCode: AppStatusCode.PersonNotFound,
-                errors: new List<string>()
+                appStatusCode: AppStatusCode.PersonNotFound
             ));
 
         var request = new CreateMediumRequest(

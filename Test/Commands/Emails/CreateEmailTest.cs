@@ -2,11 +2,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using BrazilianTypes.Types;
 using Lira.Application.CQRS.Emails.Commands.CreateEmail;
+using Lira.Application.CQRS.People.Queries.GetPersonById;
 using Lira.Application.Messages;
+using Lira.Application.Responses;
 using Lira.Common.Enums;
 using Lira.Domain.Domains.Emails;
-using Lira.Domain.Domains.Person;
 using Lira.Domain.Enums;
+using MediatR;
 using Moq;
 
 namespace Lira.Test.Commands.Emails;
@@ -16,8 +18,8 @@ public class CreateEmailTest
 {
     # region ---- properties ---------------------------------------------------
 
+    private readonly Mock<IMediator> _mediator = new();
     private readonly Mock<IEmailRepository> _emailRepository = new();
-    private readonly Mock<IPersonRepository> _personRepository = new();
 
     private readonly CreateEmailHandler _handler;
     private readonly CreateEmailRequest _request;
@@ -36,8 +38,8 @@ public class CreateEmailTest
         SetupMocks();
 
         _handler = new CreateEmailHandler(
-            _emailRepository.Object,
-            _personRepository.Object
+            _mediator.Object,
+            _emailRepository.Object
         );
 
         _request = new CreateEmailRequest(
@@ -54,6 +56,17 @@ public class CreateEmailTest
 
     private void SetupMocks()
     {
+        _mediator
+            .Setup(mediator => mediator.Send(
+                It.IsAny<GetPersonByIdRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
+                isSuccess: true,
+                httpStatusCode: HttpStatusCode.OK,
+                appStatusCode: AppStatusCode.Empty
+            ));
+
         _emailRepository
             .Setup(repository => repository
                 .CreateAsync(It.IsAny<EmailDomain>())
@@ -65,21 +78,6 @@ public class CreateEmailTest
                 personId: PersonId,
                 createdAt: DateTime.UtcNow
             ));
-
-        _personRepository
-            .Setup(repository => repository
-                .FindByIdAsync(
-                    It.IsAny<Guid>(),
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
-                )
-            )
-            .ReturnsAsync(null as PersonDomain);
     }
 
     # endregion
@@ -118,6 +116,16 @@ public class CreateEmailTest
     [Fact]
     public async void ShouldReturnPersonNotFound()
     {
+        _mediator
+            .Setup(mediator => mediator.Send(
+                It.IsAny<GetPersonByIdRequest>(),
+                It.IsAny<CancellationToken>()
+            ))
+            .ReturnsAsync(new HandlerResponse<GetPersonByIdResponse>(
+                httpStatusCode: HttpStatusCode.NotFound,
+                appStatusCode: AppStatusCode.Empty
+            ));
+
         var request = new CreateEmailRequest(
             address: Email,
             personId: PersonId,
