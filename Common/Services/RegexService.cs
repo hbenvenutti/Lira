@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace Lira.Common.Services;
 
-public readonly partial struct RegexService
+public static partial class RegexService
 {
     # region ---- numbers ------------------------------------------------------
 
@@ -26,7 +26,7 @@ public readonly partial struct RegexService
 
     # region ---- username -----------------------------------------------------
 
-    [GeneratedRegex(@"^[a-zA-Z]\w{2,14}$")]
+    [GeneratedRegex(pattern: @"^[a-zA-Z]\w{2,14}$")]
     public static partial Regex UsernameRegex();
 
     # endregion
