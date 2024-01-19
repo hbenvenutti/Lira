@@ -19,7 +19,7 @@ public static class SwaggerBootstrap
         services.AddSwaggerGen(options =>
             options.SwaggerDoc(
                 name: "v1",
-                info: new OpenApiInfo { Title = "Demen API", Version = "v1" }
+                info: new OpenApiInfo { Title = "Lira API", Version = "v1" }
             )
         );
     }
