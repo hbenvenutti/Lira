@@ -4,7 +4,6 @@ using Lira.Data.Contexts;
 using Lira.Data.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -16,8 +15,7 @@ public static class ContextBootstrap
     # region ---- connection ---------------------------------------------------
 
     public static void ConfigureDbContext(
-        this IServiceCollection services,
-        IConfiguration configuration
+        this IServiceCollection services
     )
     {
         var connectionStringConfig = services
