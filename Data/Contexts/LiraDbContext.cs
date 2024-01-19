@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Lira.Data.Config;
 using Lira.Data.Entities;
 using Lira.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -43,14 +42,7 @@ public sealed class LiraDbContext : DbContext, IDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new PersonEntityConfig());
-        modelBuilder.ApplyConfiguration(new EmailEntityConfig());
-        modelBuilder.ApplyConfiguration(new PhoneEntityConfig());
-        modelBuilder.ApplyConfiguration(new OrixaEntityConfig());
-        modelBuilder.ApplyConfiguration(new AddressEntityConfig());
-        modelBuilder.ApplyConfiguration(new ManagerEntityConfig());
-        modelBuilder.ApplyConfiguration(new MediumEntityConfig());
-        modelBuilder.ApplyConfiguration(new PersonOrixaEntityConfig());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(LiraDbContext).Assembly);
 
         base.OnModelCreating(modelBuilder);
     }
